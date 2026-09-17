@@ -11,25 +11,31 @@
 const trainingNameInput =
     document.getElementById("training-name");
 
+
 // Eingabefeld für das Datum
 const trainingDateInput =
     document.getElementById("training-date");
+
 
 // Eingabefeld für die Notiz
 const trainingNoteInput =
     document.getElementById("training-note");
 
+
 // Alle Sterne holen
 const stars =
     document.querySelectorAll(".star");
+
 
 // Text unter den Sternen
 const ratingText =
     document.getElementById("rating-text");
 
+
 // Speichern-Button
 const saveTrainingButton =
     document.getElementById("save-training");
+
 
 // Bereich für gespeicherte Übungen
 const trainingList =
@@ -37,10 +43,33 @@ const trainingList =
 
 
 // ==================================================
+// POPUP ELEMENTE
+// ==================================================
+
+// Button zum Öffnen
+const openTrainingFormButton =
+    document.getElementById("open-training-form");
+
+
+// Das Popup
+const trainingFormModal =
+    document.getElementById("training-form-modal");
+
+
+// X oben rechts
+const closeTrainingFormButton =
+    document.getElementById("close-training-form");
+
+
+// Abbrechen-Button
+const cancelTrainingFormButton =
+    document.getElementById("cancel-training-form");
+
+
+// ==================================================
 // AKTUELLE STERNEBEWERTUNG
 // ==================================================
 
-// Am Anfang wurde noch kein Stern ausgewählt
 let selectedRating = 0;
 
 
@@ -58,14 +87,16 @@ setToday();
 const savedTrainings =
     localStorage.getItem("trainings");
 
+
 // Hier werden alle Übungen gespeichert
 let trainings = [];
+
 
 // Wenn bereits Übungen gespeichert wurden
 if (savedTrainings !== null) {
 
-    // Gespeicherten Text wieder in ein Array umwandeln
-    trainings = JSON.parse(savedTrainings);
+    trainings =
+        JSON.parse(savedTrainings);
 }
 
 
@@ -77,22 +108,103 @@ displayTrainings();
 
 
 // ==================================================
+// POPUP ÖFFNEN
+// ==================================================
+
+openTrainingFormButton.addEventListener(
+    "click",
+    function () {
+
+        resetTrainingForm();
+
+        trainingFormModal.classList.add("show");
+
+        document.body.style.overflow = "hidden";
+
+        trainingNameInput.focus();
+    }
+);
+
+
+// ==================================================
+// POPUP SCHLIESSEN
+// ==================================================
+
+function closeTrainingForm() {
+
+    trainingFormModal.classList.remove("show");
+
+    document.body.style.overflow = "";
+
+    resetTrainingForm();
+}
+
+
+// X oben rechts
+closeTrainingFormButton.addEventListener(
+    "click",
+    closeTrainingForm
+);
+
+
+// Abbrechen
+cancelTrainingFormButton.addEventListener(
+    "click",
+    closeTrainingForm
+);
+
+
+// ==================================================
+// KLICK AUF DUNKLEN HINTERGRUND
+// ==================================================
+
+trainingFormModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (event.target === trainingFormModal) {
+
+            closeTrainingForm();
+        }
+    }
+);
+
+
+// ==================================================
+// ESC-TASTE SCHLIESST DAS POPUP
+// ==================================================
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Escape" &&
+            trainingFormModal.classList.contains("show")
+        ) {
+
+            closeTrainingForm();
+        }
+    }
+);
+
+
+// ==================================================
 // STERNE ANKLICKBAR MACHEN
 // ==================================================
 
 stars.forEach(function (star) {
 
-    star.addEventListener("click", function () {
+    star.addEventListener(
+        "click",
+        function () {
 
-        // Wert des angeklickten Sterns holen
-        selectedRating =
-            Number(star.dataset.value);
+            selectedRating =
+                Number(star.dataset.value);
 
-        // Sterne aktualisieren
-        updateStars();
-
-    });
-
+            updateStars();
+        }
+    );
 });
 
 
@@ -107,7 +219,7 @@ function updateStars() {
         const starValue =
             Number(star.dataset.value);
 
-        // Prüfen, ob der Stern ausgefüllt sein soll
+
         if (starValue <= selectedRating) {
 
             star.textContent = "★";
@@ -116,11 +228,9 @@ function updateStars() {
 
             star.textContent = "☆";
         }
-
     });
 
 
-    // Text unter den Sternen ändern
     if (selectedRating === 0) {
 
         ratingText.textContent =
@@ -153,29 +263,34 @@ saveTrainingButton.addEventListener(
             trainingNoteInput.value.trim();
 
 
-        // Prüfen, ob eine Übung eingetragen wurde
+        // ==================================================
+        // EINGABEN PRÜFEN
+        // ==================================================
+
         if (name === "") {
 
             alert(
                 "Bitte gib eine Übung ein."
             );
 
+            trainingNameInput.focus();
+
             return;
         }
 
 
-        // Prüfen, ob ein Datum eingetragen wurde
         if (date === "") {
 
             alert(
                 "Bitte wähle ein Datum aus."
             );
 
+            trainingDateInput.focus();
+
             return;
         }
 
 
-        // Prüfen, ob Sterne ausgewählt wurden
         if (selectedRating === 0) {
 
             alert(
@@ -199,7 +314,6 @@ saveTrainingButton.addEventListener(
             rating: selectedRating,
 
             note: note
-
         };
 
 
@@ -211,12 +325,10 @@ saveTrainingButton.addEventListener(
         // NACH DATUM SORTIEREN
         // ==================================================
 
-        // Neueste Einträge stehen oben
         trainings.sort(function (a, b) {
 
             return new Date(b.date) -
                 new Date(a.date);
-
         });
 
 
@@ -234,23 +346,28 @@ saveTrainingButton.addEventListener(
         displayTrainings();
 
 
-        // ==================================================
-        // FORMULAR ZURÜCKSETZEN
-        // ==================================================
-
-        trainingNameInput.value = "";
-
-        trainingNoteInput.value = "";
-
-        selectedRating = 0;
-
-        updateStars();
-
-        // Datum wieder auf heute setzen
-        setToday();
-
+        // Popup schließen
+        closeTrainingForm();
     }
 );
+
+
+// ==================================================
+// FORMULAR ZURÜCKSETZEN
+// ==================================================
+
+function resetTrainingForm() {
+
+    trainingNameInput.value = "";
+
+    trainingNoteInput.value = "";
+
+    selectedRating = 0;
+
+    updateStars();
+
+    setToday();
+}
 
 
 // ==================================================
@@ -288,7 +405,6 @@ function displayTrainings() {
 
         return new Date(b.date) -
             new Date(a.date);
-
     });
 
 
@@ -340,12 +456,10 @@ function displayTrainings() {
             createStarText(training.rating);
 
 
-        // Name einfügen
         trainingHeader.appendChild(
             trainingName
         );
 
-        // Sterne einfügen
         trainingHeader.appendChild(
             trainingStars
         );
@@ -363,7 +477,6 @@ function displayTrainings() {
         );
 
 
-        // Alte Trainings ohne Datum berücksichtigen
         if (
             training.date !== undefined &&
             training.date !== ""
@@ -393,7 +506,6 @@ function displayTrainings() {
         );
 
 
-        // Wenn eine Notiz vorhanden ist
         if (
             training.note !== undefined &&
             training.note !== ""
@@ -424,7 +536,6 @@ function displayTrainings() {
         );
 
 
-        // Beim Klick auf Löschen
         deleteButton.addEventListener(
             "click",
             function () {
@@ -435,33 +546,26 @@ function displayTrainings() {
                     );
 
 
-                // Nur löschen, wenn OK gedrückt wurde
                 if (reallyDelete === true) {
 
-                    // Position des Eintrags finden
                     const index =
                         trainings.indexOf(training);
 
 
-                    // Eintrag aus der Liste entfernen
                     trainings.splice(
                         index,
                         1
                     );
 
 
-                    // Neue Liste speichern
                     localStorage.setItem(
                         "trainings",
                         JSON.stringify(trainings)
                     );
 
 
-                    // Anzeige aktualisieren
                     displayTrainings();
-
                 }
-
             }
         );
 
@@ -487,13 +591,10 @@ function displayTrainings() {
         );
 
 
-        // Karte auf der Seite anzeigen
         trainingList.appendChild(
             trainingItem
         );
-
     });
-
 }
 
 
@@ -506,20 +607,16 @@ function createStarText(rating) {
     let starText = "";
 
 
-    // Fünf Sterne durchgehen
     for (let i = 1; i <= 5; i++) {
 
-        // Ausgefüllter Stern
         if (i <= rating) {
 
             starText += "★";
 
         } else {
 
-            // Leerer Stern
             starText += "☆";
         }
-
     }
 
 
@@ -533,7 +630,6 @@ function createStarText(rating) {
 
 function formatTrainingDate(date) {
 
-    // Datum aufteilen
     const parts =
         date.split("-");
 
@@ -547,7 +643,6 @@ function formatTrainingDate(date) {
         parts[2];
 
 
-    // Deutsches Datumsformat zurückgeben
     return day + "." + month + "." + year;
 }
 

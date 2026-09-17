@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Wochenplan | DogBuddy</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================================== -->
+    <!-- HEADER -->
+    <!-- ========================================== -->
+
+    <header class="header">
+
+        <a
+            href="../index.html"
+            class="logo-link"
+        >
+
+            <img
+                src="../images/logo/dogbuddy-logo-full-blank.png"
+                alt="DogBuddy Logo"
+                class="logo"
+            >
+
+        </a>
+
+
+        <nav class="navigation">
+
+            <a href="../index.html">
+                Dashboard
+            </a>
+
+            <a href="tagebuch.html">
+                Tagebuch
+            </a>
+
+            <a href="training.html">
+                Training
+            </a>
+
+            <a href="entwicklung.html">
+                Entwicklung
+            </a>
+
+            <a
+                href="wochenplan.html"
+                class="active"
+            >
+                Wochenplan
+            </a>
+
+            <a href="gesundheit.html">
+                Gesundheit
+            </a>
+
+            <a href="galerie.html">
+                Galerie
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ========================================== -->
+    <!-- HAUPTINHALT -->
+    <!-- ========================================== -->
+
+    <main class="weekly-page">
+
+
+        <!-- ====================================== -->
+        <!-- ÜBERSCHRIFT -->
+        <!-- ====================================== -->
+
+        <section class="weekly-header">
+
+            <div>
+
+                <p class="small-heading">
+                    WOCHENPLAN
+                </p>
+
+                <h1>
+                    Majors Woche 🐾
+                </h1>
+
+                <p>
+                    Hier plane ich, was ich diese Woche
+                    mit Major üben, erleben oder erledigen möchte.
+                </p>
+
+            </div>
+
+
+            <!-- POPUP ÖFFNEN -->
+
+            <button
+                type="button"
+                id="open-weekly-form"
+                class="gallery-add-button"
+            >
+
+                <span class="gallery-add-icon">
+                    ＋
+                </span>
+
+                Neue Aufgabe
+
+            </button>
+
+        </section>
+
+
+        <!-- ====================================== -->
+        <!-- OFFENE AUFGABEN -->
+        <!-- ====================================== -->
+
+        <section class="weekly-section">
+
+            <div class="weekly-section-header">
+
+                <div>
+
+                    <p class="small-heading">
+                        DIESE WOCHE
+                    </p>
+
+                    <h2>
+                        Offene Aufgaben
+                    </h2>
+
+                </div>
+
+
+                <span
+                    class="weekly-counter"
+                    id="open-weekly-count"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div id="open-weekly-tasks">
+
+                <p class="empty-weekly">
+                    Noch keine Aufgaben geplant.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================== -->
+        <!-- ERLEDIGTE AUFGABEN -->
+        <!-- ====================================== -->
+
+        <section class="weekly-section completed-weekly-section">
+
+            <div class="weekly-section-header">
+
+                <div>
+
+                    <p class="small-heading">
+                        GESCHAFFT
+                    </p>
+
+                    <h2>
+                        Erledigte Aufgaben
+                    </h2>
+
+                </div>
+
+
+                <span
+                    class="weekly-counter"
+                    id="completed-weekly-count"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div id="completed-weekly-tasks">
+
+                <p class="empty-weekly">
+                    Noch keine Aufgabe erledigt.
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ========================================== -->
+    <!-- POPUP - AUFGABE -->
+    <!-- ========================================== -->
+
+    <div
+        id="weekly-form-modal"
+        class="app-modal"
+    >
+
+        <div class="app-modal-content">
+
+
+            <!-- ================================== -->
+            <!-- POPUP KOPF -->
+            <!-- ================================== -->
+
+            <div class="app-modal-header">
+
+                <div>
+
+                    <p class="small-heading">
+                        WOCHENPLAN
+                    </p>
+
+                    <h2 id="weekly-form-title">
+                        Neue Aufgabe
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="close-weekly-form"
+                    class="app-modal-close"
+                    aria-label="Popup schließen"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- ================================== -->
+            <!-- POPUP INHALT -->
+            <!-- ================================== -->
+
+            <div class="app-modal-body">
+
+
+                <!-- KATEGORIE -->
+
+                <div class="weekly-form-group">
+
+                    <label for="weekly-category">
+                        Kategorie
+                    </label>
+
+                    <select id="weekly-category">
+
+                        <option value="Training">
+                            ⭐ Training
+                        </option>
+
+                        <option value="Sozialisierung">
+                            🐕 Sozialisierung
+                        </option>
+
+                        <option value="Ausflug">
+                            🌲 Ausflug
+                        </option>
+
+                        <option value="Pflege">
+                            ✂️ Pflege
+                        </option>
+
+                        <option value="Sonstiges">
+                            📌 Sonstiges
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- AUFGABE -->
+
+                <div class="weekly-form-group">
+
+                    <label for="weekly-title">
+                        Aufgabe
+                    </label>
+
+                    <input
+                        type="text"
+                        id="weekly-title"
+                        placeholder="z. B. Rückruf üben"
+                    >
+
+                </div>
+
+
+                <!-- NOTIZ / ZIEL -->
+
+                <div class="weekly-form-group">
+
+                    <label for="weekly-note">
+                        Notiz / Ziel
+                    </label>
+
+                    <textarea
+                        id="weekly-note"
+                        rows="4"
+                        placeholder="z. B. 3 kurze Einheiten draußen"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="weekly-form-group">
+
+                    <label>
+                        Status
+                    </label>
+
+
+                    <div class="weekly-status-selection">
+
+                        <label>
+
+                            <input
+                                type="radio"
+                                name="weekly-status"
+                                value="open"
+                                checked
+                            >
+
+                            Offen
+
+                        </label>
+
+
+                        <label>
+
+                            <input
+                                type="radio"
+                                name="weekly-status"
+                                value="completed"
+                            >
+
+                            Erledigt
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ================================== -->
+            <!-- POPUP BUTTONS -->
+            <!-- ================================== -->
+
+            <div class="app-modal-buttons">
+
+                <button
+                    type="button"
+                    id="cancel-weekly-form"
+                    class="app-cancel-button"
+                >
+                    Abbrechen
+                </button>
+
+
+                <button
+                    type="button"
+                    id="save-weekly-task"
+                    class="primary-button"
+                >
+                    Aufgabe speichern
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- FOOTER -->
+    <!-- ========================================== -->
+
+    <footer>
+
+        <p>
+            DogBuddy – Gemeinsam wachsen 🐾
+        </p>
+
+    </footer>
+
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================================== -->
+
+    <script src="../js/wochenplan.js"></script>
+
+
+</body>
+
+</html>

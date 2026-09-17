@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Gesundheit & Termine | DogBuddy</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================================== -->
+    <!-- HEADER -->
+    <!-- ========================================== -->
+
+    <header class="header">
+
+        <a href="../index.html">
+
+            <img
+                src="../images/logo/dogbuddy-logo-full-blank.png"
+                alt="DogBuddy Logo"
+                class="logo"
+            >
+
+        </a>
+
+
+        <nav class="navigation">
+
+            <a href="../index.html">
+                Dashboard
+            </a>
+
+            <a href="tagebuch.html">
+                Tagebuch
+            </a>
+
+            <a href="training.html">
+                Training
+            </a>
+
+            <a href="entwicklung.html">
+                Entwicklung
+            </a>
+
+            <a href="wochenplan.html">
+                Wochenplan
+            </a>
+
+            <a
+                href="gesundheit.html"
+                class="active"
+            >
+                Gesundheit
+            </a>
+
+            <a href="galerie.html">
+                Galerie
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ========================================== -->
+    <!-- HAUPTINHALT -->
+    <!-- ========================================== -->
+
+    <main class="health-page">
+
+
+        <!-- ====================================== -->
+        <!-- ÜBERSCHRIFT -->
+        <!-- ====================================== -->
+
+        <section class="health-header">
+
+            <div>
+
+                <p class="small-heading">
+                    GESUNDHEIT & TERMINE
+                </p>
+
+                <h1>
+                    Majors Termine
+                </h1>
+
+                <p>
+                    Hier kann ich Tierarzttermine,
+                    Hundeschule und andere wichtige
+                    Termine für Major verwalten.
+                </p>
+
+            </div>
+
+
+            <!-- POPUP ÖFFNEN -->
+
+            <button
+                type="button"
+                id="open-appointment-form"
+                class="gallery-add-button"
+            >
+
+                <span class="gallery-add-icon">
+                    ＋
+                </span>
+
+                Neuer Termin
+
+            </button>
+
+        </section>
+
+
+        <!-- ====================================== -->
+        <!-- AUSSTEHENDE TERMINE -->
+        <!-- ====================================== -->
+
+        <section class="appointment-section">
+
+            <div class="appointment-section-header">
+
+                <div>
+
+                    <p class="small-heading">
+                        ALS NÄCHSTES
+                    </p>
+
+                    <h2>
+                        Ausstehende Termine
+                    </h2>
+
+                </div>
+
+
+                <span
+                    class="appointment-counter"
+                    id="open-appointment-count"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div id="open-appointments">
+
+                <p class="empty-appointments">
+                    Noch keine ausstehenden Termine.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================== -->
+        <!-- ERLEDIGTE TERMINE -->
+        <!-- ====================================== -->
+
+        <section class="appointment-section completed-section">
+
+            <div class="appointment-section-header">
+
+                <div>
+
+                    <p class="small-heading">
+                        VERGANGENHEIT
+                    </p>
+
+                    <h2>
+                        Erledigte Termine
+                    </h2>
+
+                </div>
+
+
+                <span
+                    class="appointment-counter"
+                    id="completed-appointment-count"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div id="completed-appointments">
+
+                <p class="empty-appointments">
+                    Noch keine erledigten Termine.
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ========================================== -->
+    <!-- POPUP - TERMIN -->
+    <!-- ========================================== -->
+
+    <div
+        id="appointment-form-modal"
+        class="app-modal"
+    >
+
+        <div class="app-modal-content">
+
+
+            <!-- ================================== -->
+            <!-- POPUP KOPF -->
+            <!-- ================================== -->
+
+            <div class="app-modal-header">
+
+                <div>
+
+                    <p class="small-heading">
+                        GESUNDHEIT & TERMINE
+                    </p>
+
+                    <h2 id="appointment-form-title">
+                        Neuer Termin
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="close-appointment-form"
+                    class="app-modal-close"
+                    aria-label="Popup schließen"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- ================================== -->
+            <!-- POPUP INHALT -->
+            <!-- ================================== -->
+
+            <div class="app-modal-body">
+
+
+                <!-- KATEGORIE -->
+
+                <div class="health-form-group">
+
+                    <label for="appointment-category">
+                        Kategorie
+                    </label>
+
+                    <select id="appointment-category">
+
+                        <option value="Tierarzt">
+                            🩺 Tierarzt
+                        </option>
+
+                        <option value="Hundeschule">
+                            🐕 Hundeschule
+                        </option>
+
+                        <option value="Impfung">
+                            💉 Impfung
+                        </option>
+
+                        <option value="Untersuchung">
+                            🔎 Untersuchung
+                        </option>
+
+                        <option value="Pflege">
+                            ✂️ Pflege
+                        </option>
+
+                        <option value="Sonstiges">
+                            📌 Sonstiges
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- BEZEICHNUNG -->
+
+                <div class="health-form-group">
+
+                    <label for="appointment-title">
+                        Termin / Bezeichnung
+                    </label>
+
+                    <input
+                        type="text"
+                        id="appointment-title"
+                        placeholder="z. B. Welpengruppe"
+                    >
+
+                </div>
+
+
+                <!-- DATUM UND UHRZEIT -->
+
+                <div class="health-form-row">
+
+                    <div class="health-form-group">
+
+                        <label for="appointment-date">
+                            Datum
+                        </label>
+
+                        <input
+                            type="date"
+                            id="appointment-date"
+                        >
+
+                    </div>
+
+
+                    <div class="health-form-group">
+
+                        <label for="appointment-time">
+                            Uhrzeit
+                        </label>
+
+                        <input
+                            type="time"
+                            id="appointment-time"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ORT -->
+
+                <div class="health-form-group">
+
+                    <label for="appointment-location">
+                        Ort
+                    </label>
+
+                    <input
+                        type="text"
+                        id="appointment-location"
+                        placeholder="z. B. Tierarztpraxis Traunstein"
+                    >
+
+                </div>
+
+
+                <!-- NOTIZ -->
+
+                <div class="health-form-group">
+
+                    <label for="appointment-note">
+                        Notiz
+                    </label>
+
+                    <textarea
+                        id="appointment-note"
+                        rows="4"
+                        placeholder="z. B. Impfpass mitnehmen"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="health-form-group">
+
+                    <label>
+                        Status
+                    </label>
+
+
+                    <div class="appointment-status-selection">
+
+                        <label>
+
+                            <input
+                                type="radio"
+                                name="appointment-status"
+                                value="open"
+                                checked
+                            >
+
+                            Ausstehend
+
+                        </label>
+
+
+                        <label>
+
+                            <input
+                                type="radio"
+                                name="appointment-status"
+                                value="completed"
+                            >
+
+                            Erledigt
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ================================== -->
+            <!-- POPUP BUTTONS -->
+            <!-- ================================== -->
+
+            <div class="app-modal-buttons">
+
+                <button
+                    type="button"
+                    id="cancel-appointment-form"
+                    class="app-cancel-button"
+                >
+                    Abbrechen
+                </button>
+
+
+                <button
+                    type="button"
+                    id="save-appointment"
+                    class="primary-button"
+                >
+                    Termin speichern
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- FOOTER -->
+    <!-- ========================================== -->
+
+    <footer>
+
+        <p>
+            © 2026 DogBuddy – Gemeinsam wachsen 🐾
+        </p>
+
+    </footer>
+
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================================== -->
+
+    <script src="../js/gesundheit.js"></script>
+
+
+</body>
+
+</html>

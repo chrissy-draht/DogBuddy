@@ -98,8 +98,8 @@
                     DOGBUDDY DASHBOARD
                 </p>
 
-                <h1>
-                    Willkommen bei DogBuddy 🐾
+                <h1 class="welcome-title">
+                    Willkommen bei DogBuddy
                 </h1>
 
                 <p class="welcome-text">
@@ -402,6 +402,12 @@
 
                 </div>
 
+                <!-- Kleine grafische Gewichtsentwicklung -->
+                <div
+                    id="dashboard-weight-chart"
+                    class="mini-chart">
+                </div>
+
             </article>
 
 
@@ -433,6 +439,11 @@
                         Wert eintragen
                     </a>
 
+                </div>
+                <!-- Kleine grafische Größenentwicklung -->
+                <div
+                    id="dashboard-height-chart"
+                    class="mini-chart">
                 </div>
 
             </article>
@@ -487,60 +498,49 @@
             <!-- ================================================== -->
 
             <article class="dashboard-card">
-
+            
                 <div class="card-header">
-
+                
                     <div>
-
+                    
                         <p class="small-heading">
                             WOCHENPLAN
                         </p>
-
+                    
                         <h2>
                             Diese Woche
                         </h2>
-
+                    
                     </div>
-
+                
                     <span class="big-icon">
                         📅
                     </span>
-
+                
                 </div>
-
-
-                <ul class="task-list">
-
-                    <li>
-                        <input type="checkbox">
-                        Rückruf üben
-                    </li>
-
-                    <li>
-                        <input type="checkbox">
-                        Ruhetraining
-                    </li>
-
-                    <li>
-                        <input type="checkbox">
-                        Neue Umgebung kennenlernen
-                    </li>
-
-                    <li>
-                        <input type="checkbox">
-                        Leinenführigkeit üben
-                    </li>
-
-                </ul>
-
-
+            
+            
+                <!--
+                    Hier fügt app.js automatisch
+                    die offenen Aufgaben aus dem Wochenplan ein.
+                -->
+            
+                <div id="dashboard-weekly-list">
+                
+                    <p class="empty-info">
+                        Noch keine Aufgaben für diese Woche geplant.
+                    </p>
+                
+                </div>
+            
+            
                 <a
                     href="html/wochenplan.html"
                     class="card-link"
                 >
                     Zum Wochenplan →
                 </a>
-
+            
             </article>
 
 
@@ -550,49 +550,66 @@
             <!-- ================================================== -->
 
             <article class="dashboard-card">
-
+            
                 <div class="card-header">
-
+                
                     <div>
-
+                    
                         <p class="small-heading">
                             GESUNDHEIT
                         </p>
-
+                    
                         <h2>
                             Nächster Termin
                         </h2>
-
+                    
                     </div>
-
+                
                     <span class="big-icon">
                         🩺
                     </span>
-
+                
                 </div>
-
-
+            
+            
+                <!-- ================================================== -->
+                <!-- NÄCHSTER TERMIN                                    -->
+                <!-- ================================================== -->
+            
                 <div class="appointment">
-
-                    <p class="appointment-title">
+                
+                
+                    <!-- Terminbezeichnung -->
+                    <p
+                        class="appointment-title"
+                        id="dashboard-appointment-title"
+                    >
                         Noch kein Termin eingetragen
                     </p>
-
-                    <p>
-                        Hier erscheint später automatisch
-                        der nächste Tierarzttermin.
+                
+                
+                    <!-- Datum und Uhrzeit -->
+                    <p id="dashboard-appointment-date">
+                        Hier erscheint automatisch der nächste Termin.
                     </p>
-
+                
+                
+                    <!-- Ort -->
+                    <p id="dashboard-appointment-location">
+                    </p>
+                
+                
                 </div>
-
-
+            
+            
+                <!-- Link zur Gesundheitsseite -->
                 <a
                     href="html/gesundheit.html"
                     class="card-link"
                 >
                     Termin eintragen →
                 </a>
-
+            
             </article>
 
 

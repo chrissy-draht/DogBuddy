@@ -27,11 +27,13 @@
     <header class="header">
 
         <a href="../index.html">
+
             <img
                 src="../images/logo/dogbuddy-logo-full-blank.png"
                 alt="DogBuddy Logo"
                 class="logo"
             >
+
         </a>
 
 
@@ -79,37 +81,159 @@
 
     <main class="development-page">
 
+
+        <!-- ====================================== -->
+        <!-- ÜBERSCHRIFT -->
+        <!-- ====================================== -->
+
         <section class="development-header">
 
-            <p class="eyebrow">
-                ENTWICKLUNG
-            </p>
+            <div>
 
-            <h1>
-                Majors Entwicklung
-            </h1>
+                <p class="eyebrow">
+                    ENTWICKLUNG
+                </p>
 
-            <p>
-                Gewicht und Größe im Blick behalten.
-            </p>
+                <h1>
+                    Majors Entwicklung
+                </h1>
+
+                <p>
+                    Gewicht und Größe im Blick behalten.
+                </p>
+
+            </div>
+
+
+            <!-- POPUP ÖFFNEN -->
+
+            <button
+                type="button"
+                id="open-measurement-form"
+                class="gallery-add-button"
+            >
+
+                <span class="gallery-add-icon">
+                    ＋
+                </span>
+
+                Neue Messung
+
+            </button>
 
         </section>
 
 
         <!-- ====================================== -->
-        <!-- NEUE MESSUNG -->
+        <!-- BISHERIGE MESSUNGEN -->
         <!-- ====================================== -->
 
-        <section class="measurement-card">
+        <section class="measurement-history">
+
+            <p class="eyebrow">
+                VERLAUF
+            </p>
 
             <h2>
-                Neue Messung
+                Bisherige Messungen
             </h2>
 
 
-            <div class="measurement-form">
+            <table class="measurement-table">
 
-                <!-- Datum -->
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Datum
+                        </th>
+
+                        <th>
+                            Gewicht
+                        </th>
+
+                        <th>
+                            Schulterhöhe
+                        </th>
+
+                        <th>
+                            Aktion
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="measurement-list">
+
+                    <!--
+                        Hier fügt entwicklung.js
+                        automatisch die gespeicherten
+                        Messungen ein.
+                    -->
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+
+    <!-- ========================================== -->
+    <!-- POPUP - NEUE MESSUNG -->
+    <!-- ========================================== -->
+
+    <div
+        id="measurement-form-modal"
+        class="app-modal"
+    >
+
+        <div class="app-modal-content">
+
+
+            <!-- ================================== -->
+            <!-- POPUP KOPF -->
+            <!-- ================================== -->
+
+            <div class="app-modal-header">
+
+                <div>
+
+                    <p class="eyebrow">
+                        ENTWICKLUNG
+                    </p>
+
+                    <h2>
+                        Neue Messung
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="close-measurement-form"
+                    class="app-modal-close"
+                    aria-label="Popup schließen"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- ================================== -->
+            <!-- POPUP INHALT -->
+            <!-- ================================== -->
+
+            <div class="app-modal-body">
+
+
+                <!-- DATUM -->
 
                 <div class="form-group">
 
@@ -125,7 +249,7 @@
                 </div>
 
 
-                <!-- Gewicht -->
+                <!-- GEWICHT -->
 
                 <div class="form-group">
 
@@ -144,7 +268,7 @@
                 </div>
 
 
-                <!-- Schulterhöhe -->
+                <!-- SCHULTERHÖHE -->
 
                 <div class="form-group">
 
@@ -165,56 +289,39 @@
             </div>
 
 
-            <button
-                type="button"
-                id="save-measurement"
-                class="primary-button"
-            >
-                + Messung speichern
-            </button>
+            <!-- ================================== -->
+            <!-- POPUP BUTTONS -->
+            <!-- ================================== -->
 
-        </section>
+            <div class="app-modal-buttons">
 
 
-        <!-- ====================================== -->
-        <!-- BISHERIGE MESSUNGEN -->
-        <!-- ====================================== -->
+                <!-- ABBRECHEN -->
 
-        <section class="measurement-history">
-
-            <h2>
-                Bisherige Messungen
-            </h2>
-
-
-            <table class="measurement-table">
-
-                <thead>
-
-                    <tr>
-                        <th>Datum</th>
-                        <th>Gewicht</th>
-                        <th>Schulterhöhe</th>
-                        <th>Aktion</th>
-                    </tr>
-
-                </thead>
+                <button
+                    type="button"
+                    id="cancel-measurement-form"
+                    class="app-cancel-button"
+                >
+                    Abbrechen
+                </button>
 
 
-                <tbody id="measurement-list">
+                <!-- SPEICHERN -->
 
-                    <!--
-                        Hier fügt JavaScript später
-                        automatisch die Messungen ein.
-                    -->
+                <button
+                    type="button"
+                    id="save-measurement"
+                    class="primary-button"
+                >
+                    Messung speichern
+                </button>
 
-                </tbody>
+            </div>
 
-            </table>
+        </div>
 
-        </section>
-
-    </main>
+    </div>
 
 
     <!-- ========================================== -->

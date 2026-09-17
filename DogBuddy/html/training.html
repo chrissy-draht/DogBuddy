@@ -88,156 +88,37 @@
 
         <section class="training-header">
 
-            <p class="eyebrow">
-                TRAINING
-            </p>
+            <div>
 
-            <h1>
-                Majors Training
-            </h1>
+                <p class="eyebrow">
+                    TRAINING
+                </p>
 
-            <p>
-                Übungen und Fortschritte im Blick behalten.
-            </p>
+                <h1>
+                    Majors Training
+                </h1>
 
-        </section>
-
-
-        <!-- ====================================== -->
-        <!-- NEUE ÜBUNG -->
-        <!-- ====================================== -->
-
-        <section class="training-form-card">
-
-            <h2>
-                Neue Übung hinzufügen
-            </h2>
-
-
-            <!-- ÜBUNG -->
-
-            <div class="training-form-group">
-
-                <label for="training-name">
-                    Übung
-                </label>
-
-                <input
-                    type="text"
-                    id="training-name"
-                    placeholder="z. B. Rückruf"
-                >
+                <p>
+                    Übungen und Fortschritte im Blick behalten.
+                </p>
 
             </div>
 
 
-            <!-- DATUM -->
-
-            <div class="training-form-group">
-
-                <label for="training-date">
-                    Datum
-                </label>
-
-                <input
-                    type="date"
-                    id="training-date"
-                >
-
-            </div>
-
-
-            <!-- BEWERTUNG -->
-
-            <div class="training-form-group">
-
-                <label>
-                    Aktueller Trainingsstand
-                </label>
-
-                <div
-                    class="star-rating"
-                    id="star-rating"
-                >
-
-                    <button
-                        type="button"
-                        class="star"
-                        data-value="1"
-                    >
-                        ☆
-                    </button>
-
-                    <button
-                        type="button"
-                        class="star"
-                        data-value="2"
-                    >
-                        ☆
-                    </button>
-
-                    <button
-                        type="button"
-                        class="star"
-                        data-value="3"
-                    >
-                        ☆
-                    </button>
-
-                    <button
-                        type="button"
-                        class="star"
-                        data-value="4"
-                    >
-                        ☆
-                    </button>
-
-                    <button
-                        type="button"
-                        class="star"
-                        data-value="5"
-                    >
-                        ☆
-                    </button>
-
-                </div>
-
-
-                <span
-                    class="rating-text"
-                    id="rating-text"
-                >
-                    Noch keine Bewertung
-                </span>
-
-            </div>
-
-
-            <!-- NOTIZ -->
-
-            <div class="training-form-group">
-
-                <label for="training-note">
-                    Notiz
-                </label>
-
-                <textarea
-                    id="training-note"
-                    rows="4"
-                    placeholder="z. B. Klappt im Garten schon sehr gut."
-                ></textarea>
-
-            </div>
-
-
-            <!-- SPEICHERN -->
+            <!-- POPUP ÖFFNEN -->
 
             <button
                 type="button"
-                id="save-training"
-                class="primary-button"
+                id="open-training-form"
+                class="gallery-add-button"
             >
-                + Übung speichern
+
+                <span class="gallery-add-icon">
+                    ＋
+                </span>
+
+                Neue Übung
+
             </button>
 
         </section>
@@ -248,6 +129,10 @@
         <!-- ====================================== -->
 
         <section class="training-overview">
+
+            <p class="eyebrow">
+                ÜBERSICHT
+            </p>
 
             <h2>
                 Trainingsstand
@@ -268,6 +153,207 @@
 
 
     </main>
+
+
+    <!-- ========================================== -->
+    <!-- POPUP - NEUE ÜBUNG -->
+    <!-- ========================================== -->
+
+    <div
+        id="training-form-modal"
+        class="app-modal"
+    >
+
+        <div class="app-modal-content">
+
+
+            <!-- ================================== -->
+            <!-- POPUP KOPF -->
+            <!-- ================================== -->
+
+            <div class="app-modal-header">
+
+                <div>
+
+                    <p class="eyebrow">
+                        TRAINING
+                    </p>
+
+                    <h2 id="training-form-title">
+                        Neue Übung
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="close-training-form"
+                    class="app-modal-close"
+                    aria-label="Popup schließen"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- ================================== -->
+            <!-- POPUP INHALT -->
+            <!-- ================================== -->
+
+            <div class="app-modal-body">
+
+
+                <!-- ÜBUNG -->
+
+                <div class="training-form-group">
+
+                    <label for="training-name">
+                        Übung
+                    </label>
+
+                    <input
+                        type="text"
+                        id="training-name"
+                        placeholder="z. B. Rückruf"
+                    >
+
+                </div>
+
+
+                <!-- DATUM -->
+
+                <div class="training-form-group">
+
+                    <label for="training-date">
+                        Datum
+                    </label>
+
+                    <input
+                        type="date"
+                        id="training-date"
+                    >
+
+                </div>
+
+
+                <!-- BEWERTUNG -->
+
+                <div class="training-form-group">
+
+                    <label>
+                        Aktueller Trainingsstand
+                    </label>
+
+
+                    <div
+                        class="star-rating"
+                        id="star-rating"
+                    >
+
+                        <button
+                            type="button"
+                            class="star"
+                            data-value="1"
+                        >
+                            ☆
+                        </button>
+
+                        <button
+                            type="button"
+                            class="star"
+                            data-value="2"
+                        >
+                            ☆
+                        </button>
+
+                        <button
+                            type="button"
+                            class="star"
+                            data-value="3"
+                        >
+                            ☆
+                        </button>
+
+                        <button
+                            type="button"
+                            class="star"
+                            data-value="4"
+                        >
+                            ☆
+                        </button>
+
+                        <button
+                            type="button"
+                            class="star"
+                            data-value="5"
+                        >
+                            ☆
+                        </button>
+
+                    </div>
+
+
+                    <span
+                        class="rating-text"
+                        id="rating-text"
+                    >
+                        Noch keine Bewertung
+                    </span>
+
+                </div>
+
+
+                <!-- NOTIZ -->
+
+                <div class="training-form-group">
+
+                    <label for="training-note">
+                        Notiz
+                    </label>
+
+                    <textarea
+                        id="training-note"
+                        rows="4"
+                        placeholder="z. B. Klappt im Garten schon sehr gut."
+                    ></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ================================== -->
+            <!-- POPUP BUTTONS -->
+            <!-- ================================== -->
+
+            <div class="app-modal-buttons">
+
+                <button
+                    type="button"
+                    id="cancel-training-form"
+                    class="app-cancel-button"
+                >
+                    Abbrechen
+                </button>
+
+
+                <button
+                    type="button"
+                    id="save-training"
+                    class="primary-button"
+                >
+                    Übung speichern
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
 
 
     <!-- ========================================== -->

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Galerie | DogBuddy</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================================== -->
+    <!-- HEADER -->
+    <!-- ========================================== -->
+
+    <header class="header">
+
+        <a
+            href="../index.html"
+            class="logo-link"
+        >
+
+            <img
+                src="../images/logo/dogbuddy-logo-full-blank.png"
+                alt="DogBuddy Logo"
+                class="logo"
+            >
+
+        </a>
+
+
+        <nav class="navigation">
+
+            <a href="../index.html">
+                Dashboard
+            </a>
+
+            <a href="tagebuch.html">
+                Tagebuch
+            </a>
+
+            <a href="training.html">
+                Training
+            </a>
+
+            <a href="entwicklung.html">
+                Entwicklung
+            </a>
+
+            <a href="wochenplan.html">
+                Wochenplan
+            </a>
+
+            <a href="gesundheit.html">
+                Gesundheit
+            </a>
+
+            <a
+                href="galerie.html"
+                class="active"
+            >
+                Galerie
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- ========================================== -->
+    <!-- HAUPTINHALT -->
+    <!-- ========================================== -->
+
+    <main class="gallery-page">
+
+
+        <!-- ========================================== -->
+        <!-- GALERIE-KOPF -->
+        <!-- ========================================== -->
+
+        <section class="gallery-header">
+
+            <div class="gallery-header-text">
+
+                <p class="small-heading">
+                    GALERIE
+                </p>
+
+                <h1>
+                    Majors Fotoalbum 📸
+                </h1>
+
+                <p>
+                    Besondere Momente, Abenteuer und Erinnerungen mit Major.
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="open-gallery-form"
+                class="gallery-add-button"
+            >
+
+                <span class="gallery-add-icon">
+                    ＋
+                </span>
+
+                Foto oder Video hinzufügen
+
+            </button>
+
+        </section>
+
+
+
+        <!-- ========================================== -->
+        <!-- GALERIE-FILTER -->
+        <!-- ========================================== -->
+
+        <section class="gallery-filter">
+
+            <button
+                type="button"
+                class="gallery-filter-button active"
+                data-category="Alle"
+            >
+                Alle
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-filter-button"
+                data-category="Alltag"
+            >
+                🐾 Alltag
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-filter-button"
+                data-category="Ausflug"
+            >
+                🌲 Ausflug
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-filter-button"
+                data-category="Training"
+            >
+                🎓 Training
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-filter-button"
+                data-category="Wasser"
+            >
+                💦 Wasser
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-filter-button"
+                data-category="Zuhause"
+            >
+                💤 Zuhause
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-filter-button"
+                data-category="Besonderer Moment"
+            >
+                ❤️ Besonderer Moment
+            </button>
+
+
+            <button
+                type="button"
+                class="gallery-filter-button"
+                data-category="Tagebuch"
+            >
+                📖 Tagebuch
+            </button>
+
+        </section>
+
+
+
+        <!-- ========================================== -->
+        <!-- FOTO- UND VIDEO-GALERIE -->
+        <!-- ========================================== -->
+
+        <section class="gallery-album">
+
+            <div
+                id="gallery-grid"
+                class="gallery-grid"
+            >
+
+                <p class="empty-gallery">
+                    Noch keine Fotos oder Videos vorhanden.
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ========================================== -->
+    <!-- POPUP: FOTO ODER VIDEO HINZUFÜGEN -->
+    <!-- ========================================== -->
+
+    <div
+        id="gallery-form-modal"
+        class="app-modal"
+    >
+
+        <div class="app-modal-content">
+
+
+            <!-- ========================================== -->
+            <!-- POPUP-KOPF -->
+            <!-- ========================================== -->
+
+            <div class="app-modal-header">
+
+                <div>
+
+                    <p class="small-heading">
+                        GALERIE
+                    </p>
+
+                    <h2 id="gallery-form-title">
+                        Foto oder Video hinzufügen
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="close-gallery-form"
+                    class="app-modal-close"
+                    aria-label="Popup schließen"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <!-- ========================================== -->
+            <!-- POPUP-INHALT -->
+            <!-- ========================================== -->
+
+            <div class="app-modal-body">
+
+
+                <!-- ========================================== -->
+                <!-- FOTO ODER VIDEO -->
+                <!-- ========================================== -->
+
+                <div class="gallery-form-group">
+
+                    <label>
+                        Foto oder Video
+                    </label>
+
+
+                    <div class="gallery-file-picker">
+
+                        <label
+                            for="gallery-photo"
+                            class="gallery-file-button"
+                        >
+                            📁 Dateien durchsuchen
+                        </label>
+
+
+                        <span
+                            id="gallery-file-name"
+                            class="gallery-file-name"
+                        >
+                            Keine Datei ausgewählt
+                        </span>
+
+
+                        <input
+                            type="file"
+                            id="gallery-photo"
+                            class="gallery-file-input"
+                            accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ========================================== -->
+                <!-- VORSCHAU -->
+                <!-- ========================================== -->
+
+                <div
+                    id="gallery-upload-preview"
+                    class="gallery-upload-preview"
+                ></div>
+
+
+
+                <!-- ========================================== -->
+                <!-- TITEL -->
+                <!-- ========================================== -->
+
+                <div class="gallery-form-group">
+
+                    <label for="gallery-title">
+                        Titel
+                    </label>
+
+                    <input
+                        type="text"
+                        id="gallery-title"
+                        placeholder="z. B. Erstes Mal am See"
+                    >
+
+                </div>
+
+
+
+                <!-- ========================================== -->
+                <!-- DATUM UND KATEGORIE -->
+                <!-- ========================================== -->
+
+                <div class="gallery-form-row">
+
+
+                    <!-- DATUM -->
+
+                    <div class="gallery-form-group">
+
+                        <label for="gallery-date">
+                            Datum
+                        </label>
+
+                        <input
+                            type="date"
+                            id="gallery-date"
+                        >
+
+                    </div>
+
+
+                    <!-- KATEGORIE -->
+
+                    <div class="gallery-form-group">
+
+                        <label for="gallery-category">
+                            Kategorie
+                        </label>
+
+                        <select id="gallery-category">
+
+                            <option value="Alltag">
+                                🐾 Alltag
+                            </option>
+
+                            <option value="Ausflug">
+                                🌲 Ausflug
+                            </option>
+
+                            <option value="Training">
+                                🎓 Training
+                            </option>
+
+                            <option value="Wasser">
+                                💦 Wasser
+                            </option>
+
+                            <option value="Zuhause">
+                                💤 Zuhause
+                            </option>
+
+                            <option value="Besonderer Moment">
+                                ❤️ Besonderer Moment
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ========================================== -->
+                <!-- BESCHREIBUNG -->
+                <!-- ========================================== -->
+
+                <div class="gallery-form-group">
+
+                    <label for="gallery-description">
+                        Beschreibung
+                    </label>
+
+                    <textarea
+                        id="gallery-description"
+                        rows="4"
+                        placeholder="Was war an diesem Moment besonders?"
+                    ></textarea>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ========================================== -->
+            <!-- POPUP-BUTTONS -->
+            <!-- ========================================== -->
+
+            <div class="app-modal-buttons">
+
+                <button
+                    type="button"
+                    id="cancel-gallery-form"
+                    class="app-cancel-button"
+                >
+                    Abbrechen
+                </button>
+
+
+                <button
+                    type="button"
+                    id="save-gallery-photo"
+                    class="primary-button"
+                >
+                    Speichern
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================== -->
+    <!-- LIGHTBOX -->
+    <!-- ========================================== -->
+
+    <div
+        id="gallery-lightbox"
+        class="gallery-lightbox"
+    >
+
+        <div class="gallery-lightbox-content">
+
+
+            <!-- LIGHTBOX SCHLIESSEN -->
+
+            <button
+                type="button"
+                id="close-gallery-lightbox"
+                class="gallery-lightbox-close"
+                aria-label="Großansicht schließen"
+            >
+                ×
+            </button>
+
+
+
+            <!-- FOTO ODER VIDEO -->
+
+            <div
+                id="gallery-lightbox-media"
+                class="gallery-lightbox-media"
+            ></div>
+
+
+
+            <!-- INFORMATIONEN -->
+
+            <div class="gallery-lightbox-info">
+
+                <p
+                    id="gallery-lightbox-category"
+                    class="small-heading"
+                ></p>
+
+                <h2 id="gallery-lightbox-title"></h2>
+
+                <p id="gallery-lightbox-date"></p>
+
+                <p id="gallery-lightbox-description"></p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================== -->
+    <!-- FOOTER -->
+    <!-- ========================================== -->
+
+    <footer>
+
+        <p>
+            DogBuddy – Gemeinsam wachsen 🐾
+        </p>
+
+    </footer>
+
+
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================================== -->
+
+    <script src="../js/galerie.js"></script>
+
+
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 
 
 // ==================================================
-// ELEMENTE AUS DEM HTML HOLEN
+// HTML-ELEMENTE
 // ==================================================
 
 const diaryDateInput =
@@ -42,61 +42,192 @@ const diaryList =
 
 
 // ==================================================
-// AUSGEWÄHLTE NEUE FOTOS
+// POPUP-ELEMENTE
+// ==================================================
+
+const diaryModal =
+    document.getElementById("diary-form-modal");
+
+const openDiaryButton =
+    document.getElementById("open-diary-form");
+
+const closeDiaryButton =
+    document.getElementById("close-diary-form");
+
+const cancelDiaryButton =
+    document.getElementById("cancel-diary-form");
+
+const diaryFormTitle =
+    document.getElementById("diary-form-title");
+
+
+// ==================================================
+// VARIABLEN
 // ==================================================
 
 let selectedPhotos = [];
 
-
-// ==================================================
-// BEARBEITUNG
-// ==================================================
-
-// null bedeutet:
-// Es wird gerade kein Eintrag bearbeitet
 let editingEntryId = null;
 
+let database = null;
+
+let diaryEntries = [];
+
 
 // ==================================================
-// TAGEBUCHEINTRÄGE LADEN
+// EINTRÄGE AUS LOCALSTORAGE LADEN
 // ==================================================
 
 const savedDiaryEntries =
     localStorage.getItem("diaryEntries");
 
-let diaryEntries = [];
 
 if (savedDiaryEntries !== null) {
 
-    diaryEntries =
-        JSON.parse(savedDiaryEntries);
+    try {
+
+        const parsedEntries =
+            JSON.parse(savedDiaryEntries);
+
+
+        if (Array.isArray(parsedEntries)) {
+
+            diaryEntries =
+                parsedEntries;
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Tagebucheinträge konnten nicht geladen werden.",
+            error
+        );
+    }
 }
 
 
 // ==================================================
-// HEUTIGES DATUM EINTRAGEN
+// HEUTIGES DATUM
 // ==================================================
 
 setToday();
 
 
 // ==================================================
+// POPUP ÖFFNEN - NEUER EINTRAG
+// ==================================================
+
+openDiaryButton.addEventListener(
+    "click",
+    function () {
+
+        editingEntryId = null;
+
+        clearDiaryForm();
+
+        diaryFormTitle.textContent =
+            "Neuer Tagebucheintrag";
+
+        saveDiaryButton.textContent =
+            "Tagebucheintrag speichern";
+
+        openDiaryModal();
+    }
+);
+
+
+// ==================================================
+// POPUP SCHLIESSEN
+// ==================================================
+
+closeDiaryButton.addEventListener(
+    "click",
+    closeDiaryModal
+);
+
+
+cancelDiaryButton.addEventListener(
+    "click",
+    closeDiaryModal
+);
+
+
+// Klick auf dunklen Hintergrund schließt Popup.
+
+diaryModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (event.target === diaryModal) {
+
+            closeDiaryModal();
+        }
+    }
+);
+
+
+// ESC schließt Popup.
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Escape" &&
+            diaryModal.classList.contains("show")
+        ) {
+
+            closeDiaryModal();
+        }
+    }
+);
+
+
+// ==================================================
+// POPUP ÖFFNEN
+// ==================================================
+
+function openDiaryModal() {
+
+    diaryModal.classList.add("show");
+
+    document.body.classList.add(
+        "modal-open"
+    );
+}
+
+
+// ==================================================
+// POPUP SCHLIESSEN
+// ==================================================
+
+function closeDiaryModal() {
+
+    diaryModal.classList.remove("show");
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+    editingEntryId = null;
+
+    clearDiaryForm();
+}
+
+
+// ==================================================
 // INDEXEDDB
 // ==================================================
 
-let database;
-
-
-// Datenbank öffnen
 const databaseRequest =
     indexedDB.open(
         "DogBuddyDB",
-        1
+        2
     );
 
 
 // ==================================================
-// DATENBANK ERSTELLEN
+// DATENBANK ERSTELLEN / AKTUALISIEREN
 // ==================================================
 
 databaseRequest.onupgradeneeded =
@@ -106,8 +237,8 @@ databaseRequest.onupgradeneeded =
             event.target.result;
 
 
-        // Prüfen, ob der Fotospeicher
-        // bereits vorhanden ist
+        // Tagebuch-Fotos
+
         if (
             !database.objectStoreNames.contains(
                 "diaryPhotos"
@@ -120,14 +251,29 @@ databaseRequest.onupgradeneeded =
                     keyPath: "id"
                 }
             );
-
         }
 
+
+        // Galerie-Fotos und Videos
+
+        if (
+            !database.objectStoreNames.contains(
+                "galleryPhotos"
+            )
+        ) {
+
+            database.createObjectStore(
+                "galleryPhotos",
+                {
+                    keyPath: "id"
+                }
+            );
+        }
     };
 
 
 // ==================================================
-// DATENBANK ERFOLGREICH GEÖFFNET
+// DATENBANK GEÖFFNET
 // ==================================================
 
 databaseRequest.onsuccess =
@@ -137,21 +283,23 @@ databaseRequest.onsuccess =
             event.target.result;
 
         displayDiaryEntries();
-
     };
 
 
 // ==================================================
-// FEHLER BEIM ÖFFNEN DER DATENBANK
+// DATENBANK-FEHLER
 // ==================================================
 
 databaseRequest.onerror =
-    function () {
+    function (event) {
 
         console.error(
-            "Die DogBuddy-Datenbank konnte nicht geöffnet werden."
+            "DogBuddyDB konnte nicht geöffnet werden.",
+            event.target.error
         );
 
+        // Texte trotzdem anzeigen.
+        displayDiaryEntries();
     };
 
 
@@ -169,32 +317,23 @@ diaryPhotoInput.addEventListener(
             );
 
 
-        // Neue Fotos zur bisherigen
-        // Auswahl hinzufügen
         newPhotos.forEach(
             function (photo) {
 
-                selectedPhotos.push(
-                    photo
-                );
-
+                selectedPhotos.push(photo);
             }
         );
 
 
-        // Vorschau aktualisieren
         displayPhotoPreview();
 
-
-        // Input zurücksetzen
         diaryPhotoInput.value = "";
-
     }
 );
 
 
 // ==================================================
-// FOTO-VORSCHAU ANZEIGEN
+// FOTO-VORSCHAU
 // ==================================================
 
 function displayPhotoPreview() {
@@ -205,30 +344,19 @@ function displayPhotoPreview() {
     selectedPhotos.forEach(
         function (photo, index) {
 
-
-            // Container erstellen
             const previewItem =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
             previewItem.classList.add(
                 "photo-preview-item"
             );
 
 
-            // Bild erstellen
             const image =
-                document.createElement(
-                    "img"
-                );
-
+                document.createElement("img");
 
             const imageUrl =
-                URL.createObjectURL(
-                    photo
-                );
-
+                URL.createObjectURL(photo);
 
             image.src =
                 imageUrl;
@@ -236,15 +364,17 @@ function displayPhotoPreview() {
             image.alt =
                 "Vorschau";
 
+            image.onload =
+                function () {
 
-            // ==================================================
-            // FOTO AUS AUSWAHL ENTFERNEN
-            // ==================================================
+                    URL.revokeObjectURL(
+                        imageUrl
+                    );
+                };
+
 
             const removeButton =
-                document.createElement(
-                    "button"
-                );
+                document.createElement("button");
 
             removeButton.type =
                 "button";
@@ -267,14 +397,11 @@ function displayPhotoPreview() {
                     );
 
                     displayPhotoPreview();
-
                 }
             );
 
 
-            previewItem.appendChild(
-                image
-            );
+            previewItem.appendChild(image);
 
             previewItem.appendChild(
                 removeButton
@@ -283,25 +410,18 @@ function displayPhotoPreview() {
             photoPreview.appendChild(
                 previewItem
             );
-
         }
     );
-
 }
 
 
 // ==================================================
-// TAGEBUCHEINTRAG SPEICHERN ODER ÄNDERN
+// SPEICHERN
 // ==================================================
 
 saveDiaryButton.addEventListener(
     "click",
     async function () {
-
-
-        // ==================================================
-        // WERTE AUS DEM FORMULAR HOLEN
-        // ==================================================
 
         const date =
             diaryDateInput.value;
@@ -325,9 +445,7 @@ saveDiaryButton.addEventListener(
             diaryNoteInput.value.trim();
 
 
-        // ==================================================
-        // EINGABEN PRÜFEN
-        // ==================================================
+        // Pflichtfelder prüfen.
 
         if (date === "") {
 
@@ -350,7 +468,7 @@ saveDiaryButton.addEventListener(
 
 
         // ==================================================
-        // NEUEN EINTRAG ERSTELLEN
+        // NEUER EINTRAG
         // ==================================================
 
         if (editingEntryId === null) {
@@ -358,13 +476,8 @@ saveDiaryButton.addEventListener(
             const entryId =
                 Date.now();
 
-
             const photoIds = [];
 
-
-            // ==================================================
-            // FOTOS SPEICHERN
-            // ==================================================
 
             for (
                 let i = 0;
@@ -375,7 +488,6 @@ saveDiaryButton.addEventListener(
                 const photo =
                     selectedPhotos[i];
 
-
                 const photoId =
                     entryId +
                     "-" +
@@ -384,23 +496,25 @@ saveDiaryButton.addEventListener(
                     i;
 
 
-                await savePhotoToDatabase(
-                    photoId,
-                    entryId,
-                    photo
-                );
+                try {
 
+                    await savePhotoToDatabase(
+                        photoId,
+                        entryId,
+                        photo
+                    );
 
-                photoIds.push(
-                    photoId
-                );
+                    photoIds.push(photoId);
 
+                } catch (error) {
+
+                    console.error(
+                        "Foto konnte nicht gespeichert werden.",
+                        error
+                    );
+                }
             }
 
-
-            // ==================================================
-            // NEUEN EINTRAG ERSTELLEN
-            // ==================================================
 
             const newEntry = {
 
@@ -421,19 +535,17 @@ saveDiaryButton.addEventListener(
                 note: note,
 
                 photos: photoIds
-
             };
 
 
             diaryEntries.push(
                 newEntry
             );
-
         }
 
 
         // ==================================================
-        // VORHANDENEN EINTRAG ÄNDERN
+        // EINTRAG BEARBEITEN
         // ==================================================
 
         else {
@@ -444,14 +556,12 @@ saveDiaryButton.addEventListener(
 
                         return savedEntry.id ===
                             editingEntryId;
-
                     }
                 );
 
 
             if (entry !== undefined) {
 
-                // Texte aktualisieren
                 entry.date =
                     date;
 
@@ -474,20 +584,17 @@ saveDiaryButton.addEventListener(
                     note;
 
 
-                // Falls alter Eintrag
-                // noch kein photos-Array hat
                 if (
-                    entry.photos === undefined
+                    !Array.isArray(
+                        entry.photos
+                    )
                 ) {
 
                     entry.photos = [];
-
                 }
 
 
-                // ==================================================
-                // NEUE FOTOS ZUM EINTRAG HINZUFÜGEN
-                // ==================================================
+                // Neue Fotos hinzufügen.
 
                 for (
                     let i = 0;
@@ -498,7 +605,6 @@ saveDiaryButton.addEventListener(
                     const photo =
                         selectedPhotos[i];
 
-
                     const photoId =
                         entry.id +
                         "-" +
@@ -507,55 +613,43 @@ saveDiaryButton.addEventListener(
                         i;
 
 
-                    await savePhotoToDatabase(
-                        photoId,
-                        entry.id,
-                        photo
-                    );
+                    try {
 
+                        await savePhotoToDatabase(
+                            photoId,
+                            entry.id,
+                            photo
+                        );
 
-                    entry.photos.push(
-                        photoId
-                    );
+                        entry.photos.push(
+                            photoId
+                        );
 
+                    } catch (error) {
+
+                        console.error(
+                            "Foto konnte nicht gespeichert werden.",
+                            error
+                        );
+                    }
                 }
-
             }
-
         }
 
 
-        // ==================================================
-        // LOCALSTORAGE AKTUALISIEREN
-        // ==================================================
+        // Änderungen sichern.
 
         saveDiaryEntries();
 
 
-        // ==================================================
-        // BEARBEITUNG BEENDEN
-        // ==================================================
-
-        editingEntryId = null;
-
-
-        saveDiaryButton.textContent =
-            "+ Tagebucheintrag speichern";
-
-
-        // ==================================================
-        // FORMULAR LEEREN
-        // ==================================================
-
-        clearDiaryForm();
-
-
-        // ==================================================
-        // ANZEIGE AKTUALISIEREN
-        // ==================================================
+        // Liste aktualisieren.
 
         displayDiaryEntries();
 
+
+        // Popup schließen.
+
+        closeDiaryModal();
     }
 );
 
@@ -572,6 +666,15 @@ function savePhotoToDatabase(
 
     return new Promise(
         function (resolve, reject) {
+
+            if (database === null) {
+
+                reject(
+                    "Datenbank ist noch nicht verfügbar."
+                );
+
+                return;
+            }
 
 
             const transaction =
@@ -594,7 +697,6 @@ function savePhotoToDatabase(
                 entryId: entryId,
 
                 file: photo
-
             };
 
 
@@ -608,7 +710,6 @@ function savePhotoToDatabase(
                 function () {
 
                     resolve();
-
                 };
 
 
@@ -616,19 +717,16 @@ function savePhotoToDatabase(
                 function () {
 
                     reject(
-                        "Foto konnte nicht gespeichert werden."
+                        request.error
                     );
-
                 };
-
         }
     );
-
 }
 
 
 // ==================================================
-// ALLE TAGEBUCHEINTRÄGE ANZEIGEN
+// TAGEBUCHEINTRÄGE ANZEIGEN
 // ==================================================
 
 function displayDiaryEntries() {
@@ -636,20 +734,19 @@ function displayDiaryEntries() {
     diaryList.innerHTML = "";
 
 
-    // ==================================================
-    // KEINE EINTRÄGE
-    // ==================================================
+    // Keine Einträge.
 
     if (diaryEntries.length === 0) {
 
         const emptyText =
-            document.createElement(
-                "p"
-            );
+            document.createElement("p");
+
+        emptyText.classList.add(
+            "empty-info"
+        );
 
         emptyText.textContent =
             "Noch kein Tagebucheintrag vorhanden.";
-
 
         diaryList.appendChild(
             emptyText
@@ -659,9 +756,7 @@ function displayDiaryEntries() {
     }
 
 
-    // ==================================================
-    // NEUESTE EINTRÄGE ZUERST
-    // ==================================================
+    // Neueste zuerst.
 
     const sortedEntries =
         [...diaryEntries];
@@ -675,30 +770,22 @@ function displayDiaryEntries() {
                 new Date(a.date);
 
 
-            // Unterschiedliches Datum
             if (dateDifference !== 0) {
 
                 return dateDifference;
             }
 
 
-            // Gleiches Datum:
-            // zuletzt angelegter Eintrag zuerst
             return b.id - a.id;
-
         }
     );
 
 
-    // ==================================================
-    // EINTRÄGE DURCHGEHEN
-    // ==================================================
+    // Karten erzeugen.
 
     sortedEntries.forEach(
         function (entry) {
 
-
-            // Ganze Karte
             const diaryItem =
                 document.createElement(
                     "article"
@@ -709,14 +796,10 @@ function displayDiaryEntries() {
             );
 
 
-            // ==================================================
-            // DATUM
-            // ==================================================
+            // Datum.
 
             const date =
-                document.createElement(
-                    "p"
-                );
+                document.createElement("p");
 
             date.classList.add(
                 "diary-item-date"
@@ -728,36 +811,23 @@ function displayDiaryEntries() {
                 );
 
 
-            // ==================================================
-            // TITEL
-            // ==================================================
+            // Titel.
 
             const title =
-                document.createElement(
-                    "h3"
-                );
+                document.createElement("h3");
 
             title.textContent =
                 entry.title;
 
 
-            diaryItem.appendChild(
-                date
-            );
+            diaryItem.appendChild(date);
 
-            diaryItem.appendChild(
-                title
-            );
+            diaryItem.appendChild(title);
 
 
-            // ==================================================
-            // HEUTE GELERNT
-            // ==================================================
+            // Texte.
 
-            if (
-                entry.learned !== undefined &&
-                entry.learned !== ""
-            ) {
+            if (entry.learned) {
 
                 diaryItem.appendChild(
                     createDiarySection(
@@ -765,18 +835,10 @@ function displayDiaryEntries() {
                         entry.learned
                     )
                 );
-
             }
 
 
-            // ==================================================
-            // DAS LIEF GUT
-            // ==================================================
-
-            if (
-                entry.good !== undefined &&
-                entry.good !== ""
-            ) {
+            if (entry.good) {
 
                 diaryItem.appendChild(
                     createDiarySection(
@@ -784,18 +846,10 @@ function displayDiaryEntries() {
                         entry.good
                     )
                 );
-
             }
 
 
-            // ==================================================
-            // DAS WAR SCHWIERIG
-            // ==================================================
-
-            if (
-                entry.difficult !== undefined &&
-                entry.difficult !== ""
-            ) {
+            if (entry.difficult) {
 
                 diaryItem.appendChild(
                     createDiarySection(
@@ -803,18 +857,10 @@ function displayDiaryEntries() {
                         entry.difficult
                     )
                 );
-
             }
 
 
-            // ==================================================
-            // BESONDERER MOMENT
-            // ==================================================
-
-            if (
-                entry.highlight !== undefined &&
-                entry.highlight !== ""
-            ) {
+            if (entry.highlight) {
 
                 diaryItem.appendChild(
                     createDiarySection(
@@ -822,18 +868,10 @@ function displayDiaryEntries() {
                         entry.highlight
                     )
                 );
-
             }
 
 
-            // ==================================================
-            // SONSTIGE NOTIZEN
-            // ==================================================
-
-            if (
-                entry.note !== undefined &&
-                entry.note !== ""
-            ) {
+            if (entry.note) {
 
                 diaryItem.appendChild(
                     createDiarySection(
@@ -841,16 +879,15 @@ function displayDiaryEntries() {
                         entry.note
                     )
                 );
-
             }
 
 
             // ==================================================
-            // FOTO-BEREICH
+            // FOTOS
             // ==================================================
 
             if (
-                entry.photos !== undefined &&
+                Array.isArray(entry.photos) &&
                 entry.photos.length > 0
             ) {
 
@@ -863,13 +900,11 @@ function displayDiaryEntries() {
                     "diary-item-photos"
                 );
 
-
                 diaryItem.appendChild(
                     photoArea
                 );
 
 
-                // Fotos aus IndexedDB holen
                 entry.photos.forEach(
                     function (photoId) {
 
@@ -878,15 +913,13 @@ function displayDiaryEntries() {
                             photoArea,
                             entry
                         );
-
                     }
                 );
-
             }
 
 
             // ==================================================
-            // BUTTON-BEREICH
+            // BUTTONS
             // ==================================================
 
             const buttonArea =
@@ -899,9 +932,7 @@ function displayDiaryEntries() {
             );
 
 
-            // ==================================================
-            // ÄNDERN-BUTTON
-            // ==================================================
+            // Bearbeiten.
 
             const editButton =
                 document.createElement(
@@ -926,14 +957,11 @@ function displayDiaryEntries() {
                     editDiaryEntry(
                         entry
                     );
-
                 }
             );
 
 
-            // ==================================================
-            // LÖSCHEN-BUTTON
-            // ==================================================
+            // Löschen.
 
             const deleteButton =
                 document.createElement(
@@ -958,12 +986,10 @@ function displayDiaryEntries() {
                     deleteDiaryEntry(
                         entry
                     );
-
                 }
             );
 
 
-            // Buttons einfügen
             buttonArea.appendChild(
                 editButton
             );
@@ -972,25 +998,20 @@ function displayDiaryEntries() {
                 deleteButton
             );
 
-
             diaryItem.appendChild(
                 buttonArea
             );
 
-
-            // Karte anzeigen
             diaryList.appendChild(
                 diaryItem
             );
-
         }
     );
-
 }
 
 
 // ==================================================
-// TEXTBEREICH FÜR EINEN EINTRAG ERSTELLEN
+// TEXTABSCHNITT ERSTELLEN
 // ==================================================
 
 function createDiarySection(
@@ -999,9 +1020,7 @@ function createDiarySection(
 ) {
 
     const section =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
     section.classList.add(
         "diary-item-section"
@@ -1009,18 +1028,14 @@ function createDiarySection(
 
 
     const sectionHeading =
-        document.createElement(
-            "h4"
-        );
+        document.createElement("h4");
 
     sectionHeading.textContent =
         heading;
 
 
     const sectionText =
-        document.createElement(
-            "p"
-        );
+        document.createElement("p");
 
     sectionText.textContent =
         text;
@@ -1036,27 +1051,20 @@ function createDiarySection(
 
 
     return section;
-
 }
 
 
 // ==================================================
-// TAGEBUCHEINTRAG BEARBEITEN
+// EINTRAG BEARBEITEN
 // ==================================================
 
 function editDiaryEntry(entry) {
-
-    // ==================================================
-    // ID DES EINTRAGS MERKEN
-    // ==================================================
 
     editingEntryId =
         entry.id;
 
 
-    // ==================================================
-    // DATEN INS FORMULAR LADEN
-    // ==================================================
+    // Vorhandene Werte eintragen.
 
     diaryDateInput.value =
         entry.date;
@@ -1080,10 +1088,7 @@ function editDiaryEntry(entry) {
         entry.note || "";
 
 
-    // ==================================================
-    // NEUE FOTOAUSWAHL ZURÜCKSETZEN
-    // ==================================================
-
+    // Nur NEU ausgewählte Fotos landen hier.
     selectedPhotos = [];
 
     photoPreview.innerHTML = "";
@@ -1091,35 +1096,18 @@ function editDiaryEntry(entry) {
     diaryPhotoInput.value = "";
 
 
-    // ==================================================
-    // SPEICHERN-BUTTON ÄNDERN
-    // ==================================================
+    // Popup auf Bearbeiten umstellen.
+
+    diaryFormTitle.textContent =
+        "Tagebucheintrag bearbeiten";
 
     saveDiaryButton.textContent =
         "Änderungen speichern";
 
 
-    // ==================================================
-    // ZUM FORMULAR SCROLLEN
-    // ==================================================
+    // Popup öffnen.
 
-    const formCard =
-        document.querySelector(
-            ".diary-form-card"
-        );
-
-
-    if (formCard !== null) {
-
-        formCard.scrollIntoView(
-            {
-                behavior: "smooth",
-                block: "start"
-            }
-        );
-
-    }
-
+    openDiaryModal();
 }
 
 
@@ -1132,6 +1120,12 @@ function loadPhotoFromDatabase(
     photoArea,
     entry
 ) {
+
+    if (database === null) {
+
+        return;
+    }
+
 
     const transaction =
         database.transaction(
@@ -1155,8 +1149,6 @@ function loadPhotoFromDatabase(
     request.onsuccess =
         function () {
 
-
-            // Foto nicht gefunden
             if (
                 request.result === undefined
             ) {
@@ -1169,10 +1161,6 @@ function loadPhotoFromDatabase(
                 request.result;
 
 
-            // ==================================================
-            // FOTO-CONTAINER
-            // ==================================================
-
             const photoContainer =
                 document.createElement(
                     "div"
@@ -1183,21 +1171,15 @@ function loadPhotoFromDatabase(
             );
 
 
-            // ==================================================
-            // BILD
-            // ==================================================
+            // Bild.
 
             const image =
-                document.createElement(
-                    "img"
-                );
-
+                document.createElement("img");
 
             const imageUrl =
                 URL.createObjectURL(
                     photoData.file
                 );
-
 
             image.src =
                 imageUrl;
@@ -1205,22 +1187,16 @@ function loadPhotoFromDatabase(
             image.alt =
                 entry.title;
 
-
-            // Speicher der temporären URL
-            // nach dem Laden wieder freigeben
             image.onload =
                 function () {
 
                     URL.revokeObjectURL(
                         imageUrl
                     );
-
                 };
 
 
-            // ==================================================
-            // EINZELNES FOTO LÖSCHEN
-            // ==================================================
+            // Foto löschen.
 
             const deletePhotoButton =
                 document.createElement(
@@ -1248,17 +1224,13 @@ function loadPhotoFromDatabase(
                         );
 
 
-                    if (
-                        reallyDelete === true
-                    ) {
+                    if (reallyDelete) {
 
                         deleteSinglePhoto(
                             photoId,
                             entry
                         );
-
                     }
-
                 }
             );
 
@@ -1271,13 +1243,10 @@ function loadPhotoFromDatabase(
                 deletePhotoButton
             );
 
-
             photoArea.appendChild(
                 photoContainer
             );
-
         };
-
 }
 
 
@@ -1289,6 +1258,12 @@ function deleteSinglePhoto(
     photoId,
     entry
 ) {
+
+    if (database === null) {
+
+        return;
+    }
+
 
     const transaction =
         database.transaction(
@@ -1312,34 +1287,25 @@ function deleteSinglePhoto(
     request.onsuccess =
         function () {
 
-
-            // Foto-ID auch aus dem
-            // Tagebucheintrag entfernen
             entry.photos =
                 entry.photos.filter(
                     function (id) {
 
                         return id !==
                             photoId;
-
                     }
                 );
 
 
-            // Änderungen speichern
             saveDiaryEntries();
 
-
-            // Anzeige aktualisieren
             displayDiaryEntries();
-
         };
-
 }
 
 
 // ==================================================
-// GANZEN TAGEBUCHEINTRAG LÖSCHEN
+// TAGEBUCHEINTRAG LÖSCHEN
 // ==================================================
 
 function deleteDiaryEntry(entry) {
@@ -1350,19 +1316,15 @@ function deleteDiaryEntry(entry) {
         );
 
 
-    if (reallyDelete === false) {
+    if (!reallyDelete) {
 
         return;
     }
 
 
-    // ==================================================
-    // ZUGEHÖRIGE FOTOS LÖSCHEN
-    // ==================================================
+    // Fotos löschen.
 
-    if (
-        entry.photos !== undefined
-    ) {
+    if (Array.isArray(entry.photos)) {
 
         entry.photos.forEach(
             function (photoId) {
@@ -1370,16 +1332,12 @@ function deleteDiaryEntry(entry) {
                 deletePhotoFromDatabase(
                     photoId
                 );
-
             }
         );
-
     }
 
 
-    // ==================================================
-    // EINTRAG AUS ARRAY ENTFERNEN
-    // ==================================================
+    // Eintrag entfernen.
 
     diaryEntries =
         diaryEntries.filter(
@@ -1387,42 +1345,13 @@ function deleteDiaryEntry(entry) {
 
                 return savedEntry.id !==
                     entry.id;
-
             }
         );
 
 
-    // ==================================================
-    // FALLS DIESER EINTRAG GERADE BEARBEITET WIRD
-    // ==================================================
-
-    if (
-        editingEntryId === entry.id
-    ) {
-
-        editingEntryId = null;
-
-        clearDiaryForm();
-
-        saveDiaryButton.textContent =
-            "+ Tagebucheintrag speichern";
-
-    }
-
-
-    // ==================================================
-    // SPEICHERN
-    // ==================================================
-
     saveDiaryEntries();
 
-
-    // ==================================================
-    // ANZEIGE AKTUALISIEREN
-    // ==================================================
-
     displayDiaryEntries();
-
 }
 
 
@@ -1433,6 +1362,12 @@ function deleteDiaryEntry(entry) {
 function deletePhotoFromDatabase(
     photoId
 ) {
+
+    if (database === null) {
+
+        return;
+    }
+
 
     const transaction =
         database.transaction(
@@ -1450,12 +1385,11 @@ function deletePhotoFromDatabase(
     photoStore.delete(
         photoId
     );
-
 }
 
 
 // ==================================================
-// TAGEBUCHEINTRÄGE IM LOCALSTORAGE SPEICHERN
+// LOCALSTORAGE SPEICHERN
 // ==================================================
 
 function saveDiaryEntries() {
@@ -1466,7 +1400,6 @@ function saveDiaryEntries() {
             diaryEntries
         )
     );
-
 }
 
 
@@ -1490,18 +1423,11 @@ function clearDiaryForm() {
 
     diaryPhotoInput.value = "";
 
-
-    // Neue ausgewählte Fotos entfernen
     selectedPhotos = [];
 
-
-    // Vorschau leeren
     photoPreview.innerHTML = "";
 
-
-    // Datum wieder auf heute
     setToday();
-
 }
 
 
@@ -1511,26 +1437,29 @@ function clearDiaryForm() {
 
 function formatDiaryDate(date) {
 
+    if (!date) {
+
+        return "";
+    }
+
+
     const parts =
         date.split("-");
 
 
-    const year =
-        parts[0];
+    if (parts.length !== 3) {
 
-    const month =
-        parts[1];
-
-    const day =
-        parts[2];
+        return date;
+    }
 
 
-    return day +
+    return (
+        parts[2] +
         "." +
-        month +
+        parts[1] +
         "." +
-        year;
-
+        parts[0]
+    );
 }
 
 
@@ -1572,5 +1501,4 @@ function setToday() {
         month +
         "-" +
         day;
-
 }

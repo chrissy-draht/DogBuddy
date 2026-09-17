@@ -11,17 +11,21 @@
 const measurementDateInput =
     document.getElementById("measurement-date");
 
+
 // Eingabefeld Gewicht
 const measurementWeightInput =
     document.getElementById("measurement-weight");
+
 
 // Eingabefeld Schulterhöhe
 const measurementHeightInput =
     document.getElementById("measurement-height");
 
+
 // Speichern-Button
 const saveMeasurementButton =
     document.getElementById("save-measurement");
+
 
 // Tabelle für die bisherigen Messungen
 const measurementList =
@@ -29,22 +33,46 @@ const measurementList =
 
 
 // ==================================================
+// POPUP ELEMENTE
+// ==================================================
+
+// Button "Neue Messung"
+const openMeasurementFormButton =
+    document.getElementById("open-measurement-form");
+
+
+// Das Popup
+const measurementFormModal =
+    document.getElementById("measurement-form-modal");
+
+
+// X oben rechts
+const closeMeasurementFormButton =
+    document.getElementById("close-measurement-form");
+
+
+// Abbrechen-Button
+const cancelMeasurementFormButton =
+    document.getElementById("cancel-measurement-form");
+
+
+// ==================================================
 // GESPEICHERTE MESSUNGEN LADEN
 // ==================================================
 
-// Versuchen, vorhandene Messungen aus dem
-// localStorage zu holen
 const savedMeasurements =
     localStorage.getItem("measurements");
+
 
 // Hier speichern wir alle Messungen
 let measurements = [];
 
+
 // Wenn bereits Messungen vorhanden sind
 if (savedMeasurements !== null) {
 
-    // Gespeicherten Text wieder in ein Array umwandeln
-    measurements = JSON.parse(savedMeasurements);
+    measurements =
+        JSON.parse(savedMeasurements);
 }
 
 
@@ -52,24 +80,7 @@ if (savedMeasurements !== null) {
 // HEUTIGES DATUM VOREINSTELLEN
 // ==================================================
 
-const today = new Date();
-
-// Jahr holen
-const year = today.getFullYear();
-
-// Monat holen
-const month = String(
-    today.getMonth() + 1
-).padStart(2, "0");
-
-// Tag holen
-const day = String(
-    today.getDate()
-).padStart(2, "0");
-
-// Datum für das HTML-Datumsfeld erstellen
-measurementDateInput.value =
-    year + "-" + month + "-" + day;
+setToday();
 
 
 // ==================================================
@@ -77,6 +88,101 @@ measurementDateInput.value =
 // ==================================================
 
 displayMeasurements();
+
+
+// ==================================================
+// POPUP ÖFFNEN
+// ==================================================
+
+openMeasurementFormButton.addEventListener(
+    "click",
+    function () {
+
+        // Formular leeren
+        resetMeasurementForm();
+
+        // Popup anzeigen
+        measurementFormModal.classList.add("show");
+
+        // Hintergrundseite nicht scrollen lassen
+        document.body.style.overflow = "hidden";
+
+        // Gewichtsfeld auswählen
+        measurementWeightInput.focus();
+    }
+);
+
+
+// ==================================================
+// POPUP SCHLIESSEN
+// ==================================================
+
+function closeMeasurementForm() {
+
+    // Popup ausblenden
+    measurementFormModal.classList.remove("show");
+
+    // Scrollen der Seite wieder erlauben
+    document.body.style.overflow = "";
+
+    // Formular zurücksetzen
+    resetMeasurementForm();
+}
+
+
+// ==================================================
+// X OBEN RECHTS
+// ==================================================
+
+closeMeasurementFormButton.addEventListener(
+    "click",
+    closeMeasurementForm
+);
+
+
+// ==================================================
+// ABBRECHEN
+// ==================================================
+
+cancelMeasurementFormButton.addEventListener(
+    "click",
+    closeMeasurementForm
+);
+
+
+// ==================================================
+// KLICK AUF DUNKLEN HINTERGRUND
+// ==================================================
+
+measurementFormModal.addEventListener(
+    "click",
+    function (event) {
+
+        if (event.target === measurementFormModal) {
+
+            closeMeasurementForm();
+        }
+    }
+);
+
+
+// ==================================================
+// ESC-TASTE SCHLIESST DAS POPUP
+// ==================================================
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key === "Escape" &&
+            measurementFormModal.classList.contains("show")
+        ) {
+
+            closeMeasurementForm();
+        }
+    }
+);
 
 
 // ==================================================
@@ -88,18 +194,26 @@ saveMeasurementButton.addEventListener(
     function () {
 
         // Werte aus den Eingabefeldern holen
-        const date = measurementDateInput.value;
-
-        const weight = measurementWeightInput.value
-            .trim()
-            .replace(",", ".");
-            
-        const height = measurementHeightInput.value
-            .trim()
-            .replace(",", ".");
+        const date =
+            measurementDateInput.value;
 
 
-        // Prüfen, ob alle Felder ausgefüllt wurden
+        const weight =
+            measurementWeightInput.value
+                .trim()
+                .replace(",", ".");
+
+
+        const height =
+            measurementHeightInput.value
+                .trim()
+                .replace(",", ".");
+
+
+        // ==================================================
+        // PRÜFEN, OB ALLE FELDER AUSGEFÜLLT SIND
+        // ==================================================
+
         if (
             date === "" ||
             weight === "" ||
@@ -114,43 +228,80 @@ saveMeasurementButton.addEventListener(
         }
 
 
-        // Neue Messung erstellen
+        // ==================================================
+        // NEUE MESSUNG ERSTELLEN
+        // ==================================================
+
         const newMeasurement = {
+
             date: date,
+
             weight: weight,
+
             height: height
         };
 
 
         // Neue Messung zur Liste hinzufügen
-        measurements.push(newMeasurement);
+        measurements.push(
+            newMeasurement
+        );
 
 
-        // Messungen nach Datum sortieren
-        measurements.sort(function (a, b) {
+        // ==================================================
+        // MESSUNGEN NACH DATUM SORTIEREN
+        // ==================================================
 
-            return new Date(b.date) - new Date(a.date);
+        measurements.sort(
+            function (a, b) {
 
-        });
+                return new Date(b.date) -
+                    new Date(a.date);
+            }
+        );
 
 
-        // Komplette Liste im localStorage speichern
+        // ==================================================
+        // IM LOCALSTORAGE SPEICHERN
+        // ==================================================
+
         localStorage.setItem(
             "measurements",
             JSON.stringify(measurements)
         );
 
 
-        // Tabelle neu anzeigen
+        // ==================================================
+        // TABELLE AKTUALISIEREN
+        // ==================================================
+
         displayMeasurements();
 
 
-        // Eingabefelder leeren
-        measurementWeightInput.value = "";
-        measurementHeightInput.value = "";
+        // ==================================================
+        // POPUP SCHLIESSEN
+        // ==================================================
 
+        closeMeasurementForm();
     }
 );
+
+
+// ==================================================
+// FORMULAR ZURÜCKSETZEN
+// ==================================================
+
+function resetMeasurementForm() {
+
+    // Gewicht leeren
+    measurementWeightInput.value = "";
+
+    // Schulterhöhe leeren
+    measurementHeightInput.value = "";
+
+    // Datum wieder auf heute setzen
+    setToday();
+}
 
 
 // ==================================================
@@ -162,113 +313,162 @@ function displayMeasurements() {
     // Alte Tabellenzeilen entfernen
     measurementList.innerHTML = "";
 
-    // Alle gespeicherten Messungen durchgehen
-    measurements.forEach(function (measurement) {
 
-        // Neue Tabellenzeile erstellen
-        const row = document.createElement("tr");
+    // ==================================================
+    // ALLE GESPEICHERTEN MESSUNGEN DURCHGEHEN
+    // ==================================================
 
-
-        // ==================================================
-        // DATUM
-        // ==================================================
-
-        const dateCell = document.createElement("td");
-
-        dateCell.textContent =
-            formatDate(measurement.date);
+    measurements.forEach(
+        function (measurement) {
 
 
-        // ==================================================
-        // GEWICHT
-        // ==================================================
-
-        const weightCell = document.createElement("td");
-
-        weightCell.textContent =
-            measurement.weight.replace(".", ",") + " kg";
+            // Neue Tabellenzeile erstellen
+            const row =
+                document.createElement("tr");
 
 
-        // ==================================================
-        // SCHULTERHÖHE
-        // ==================================================
+            // ==================================================
+            // DATUM
+            // ==================================================
 
-        const heightCell = document.createElement("td");
-
-        heightCell.textContent =
-            measurement.height.replace(".", ",") + " cm";
+            const dateCell =
+                document.createElement("td");
 
 
-        // ==================================================
-        // LÖSCHEN-BUTTON
-        // ==================================================
-
-        const deleteCell = document.createElement("td");
-
-        const deleteButton = document.createElement("button");
-
-        deleteButton.textContent = "Löschen";
-
-        deleteButton.classList.add(
-            "delete-measurement-button"
-        );
-
-
-        // Beim Klick auf Löschen
-        deleteButton.addEventListener(
-            "click",
-            function () {
-
-                // Sicherheitsabfrage
-                const reallyDelete = confirm(
-                    "Möchtest du diese Messung wirklich löschen?"
+            dateCell.textContent =
+                formatDate(
+                    measurement.date
                 );
 
-                // Wenn OK gedrückt wurde
-                if (reallyDelete === true) {
 
-                    // Position der Messung finden
-                    const index =
-                        measurements.indexOf(measurement);
+            // ==================================================
+            // GEWICHT
+            // ==================================================
 
-                    // Messung aus der Liste löschen
-                    measurements.splice(index, 1);
+            const weightCell =
+                document.createElement("td");
 
-                    // Neue Liste speichern
-                    localStorage.setItem(
-                        "measurements",
-                        JSON.stringify(measurements)
-                    );
 
-                    // Tabelle neu anzeigen
-                    displayMeasurements();
+            weightCell.textContent =
+                String(measurement.weight)
+                    .replace(".", ",") +
+                " kg";
+
+
+            // ==================================================
+            // SCHULTERHÖHE
+            // ==================================================
+
+            const heightCell =
+                document.createElement("td");
+
+
+            heightCell.textContent =
+                String(measurement.height)
+                    .replace(".", ",") +
+                " cm";
+
+
+            // ==================================================
+            // LÖSCHEN-BUTTON
+            // ==================================================
+
+            const deleteCell =
+                document.createElement("td");
+
+
+            const deleteButton =
+                document.createElement("button");
+
+
+            deleteButton.textContent =
+                "Löschen";
+
+
+            deleteButton.classList.add(
+                "delete-measurement-button"
+            );
+
+
+            // ==================================================
+            // MESSUNG LÖSCHEN
+            // ==================================================
+
+            deleteButton.addEventListener(
+                "click",
+                function () {
+
+                    const reallyDelete =
+                        confirm(
+                            "Möchtest du diese Messung wirklich löschen?"
+                        );
+
+
+                    if (reallyDelete === true) {
+
+                        // Position der Messung finden
+                        const index =
+                            measurements.indexOf(
+                                measurement
+                            );
+
+
+                        // Messung aus der Liste löschen
+                        measurements.splice(
+                            index,
+                            1
+                        );
+
+
+                        // Neue Liste speichern
+                        localStorage.setItem(
+                            "measurements",
+                            JSON.stringify(
+                                measurements
+                            )
+                        );
+
+
+                        // Tabelle neu anzeigen
+                        displayMeasurements();
+                    }
                 }
-            }
-        );
+            );
 
 
-        // Löschen-Button in die Zelle einfügen
-        deleteCell.appendChild(deleteButton);
+            // Löschen-Button in die Zelle
+            deleteCell.appendChild(
+                deleteButton
+            );
 
 
-        // ==================================================
-        // ALLE ZELLEN IN DIE TABELLENZEILE EINFÜGEN
-        // ==================================================
+            // ==================================================
+            // ZELLEN IN DIE TABELLENZEILE EINFÜGEN
+            // ==================================================
 
-        row.appendChild(dateCell);
+            row.appendChild(
+                dateCell
+            );
 
-        row.appendChild(weightCell);
+            row.appendChild(
+                weightCell
+            );
 
-        row.appendChild(heightCell);
+            row.appendChild(
+                heightCell
+            );
 
-        row.appendChild(deleteCell);
+            row.appendChild(
+                deleteCell
+            );
 
 
-        // Tabellenzeile in die Tabelle einfügen
-        measurementList.appendChild(row);
-
-    });
-
+            // Tabellenzeile anzeigen
+            measurementList.appendChild(
+                row
+            );
+        }
+    );
 }
 
 
@@ -279,18 +479,62 @@ function displayMeasurements() {
 function formatDate(date) {
 
     // Datum zerlegen
-    const parts = date.split("-");
+    const parts =
+        date.split("-");
+
 
     // Jahr
-    const year = parts[0];
+    const year =
+        parts[0];
+
 
     // Monat
-    const month = parts[1];
+    const month =
+        parts[1];
+
 
     // Tag
-    const day = parts[2];
+    const day =
+        parts[2];
+
 
     // Deutsches Datumsformat zurückgeben
     return day + "." + month + "." + year;
+}
 
+
+// ==================================================
+// HEUTIGES DATUM SETZEN
+// ==================================================
+
+function setToday() {
+
+    const today =
+        new Date();
+
+
+    const year =
+        today.getFullYear();
+
+
+    const month =
+        String(
+            today.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const day =
+        String(
+            today.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    measurementDateInput.value =
+        year + "-" + month + "-" + day;
 }
