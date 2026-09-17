@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DogBuddy - Tagebuch</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/styles.css"
+    >
+</head>
+
+
+<body>
+
+    <!-- ================================================== -->
+    <!-- HEADER -->
+    <!-- ================================================== -->
+
+    <header class="header">
+
+        <a href="../index.html">
+
+            <img
+                src="../images/logo/dogbuddy-logo-full-blank.png"
+                alt="DogBuddy Logo"
+                class="logo"
+            >
+
+        </a>
+
+
+        <nav class="navigation">
+
+            <a href="../index.html">
+                Dashboard
+            </a>
+
+            <a
+                href="tagebuch.html"
+                class="active"
+            >
+                Tagebuch
+            </a>
+
+            <a href="training.html">
+                Training
+            </a>
+
+            <a href="entwicklung.html">
+                Entwicklung
+            </a>
+
+            <a href="wochenplan.html">
+                Wochenplan
+            </a>
+
+            <a href="gesundheit.html">
+                Gesundheit
+            </a>
+
+            <a href="galerie.html">
+                Galerie
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================================================== -->
+    <!-- HAUPTINHALT -->
+    <!-- ================================================== -->
+
+    <main class="diary-page">
+
+
+        <!-- ================================================== -->
+        <!-- ÜBERSCHRIFT -->
+        <!-- ================================================== -->
+
+        <section class="diary-header">
+
+            <p class="eyebrow">
+                TAGEBUCH
+            </p>
+
+            <h1>
+                Majors Tagebuch
+            </h1>
+
+            <p>
+                Besondere Momente, Fortschritte und Erinnerungen
+                gemeinsam festhalten.
+            </p>
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- NEUER TAGEBUCHEINTRAG -->
+        <!-- ================================================== -->
+
+        <section class="diary-form-card">
+
+            <h2>
+                Neuer Tagebucheintrag
+            </h2>
+
+
+            <!-- ================================================== -->
+            <!-- DATUM -->
+            <!-- ================================================== -->
+
+            <div class="diary-form-group">
+
+                <label for="diary-date">
+                    Datum
+                </label>
+
+                <input
+                    type="date"
+                    id="diary-date"
+                >
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- TITEL -->
+            <!-- ================================================== -->
+
+            <div class="diary-form-group">
+
+                <label for="diary-title">
+                    Titel
+                </label>
+
+                <input
+                    type="text"
+                    id="diary-title"
+                    placeholder="z. B. Erstes Mal schwimmen"
+                >
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- HEUTE GELERNT -->
+            <!-- ================================================== -->
+
+            <div class="diary-form-group">
+
+                <label for="diary-learned">
+                    Heute gelernt
+                </label>
+
+                <textarea
+                    id="diary-learned"
+                    rows="3"
+                    placeholder="Was hat Major heute Neues gelernt?"
+                ></textarea>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- DAS LIEF GUT -->
+            <!-- ================================================== -->
+
+            <div class="diary-form-group">
+
+                <label for="diary-good">
+                    Das lief gut
+                </label>
+
+                <textarea
+                    id="diary-good"
+                    rows="3"
+                    placeholder="Was hat heute besonders gut funktioniert?"
+                ></textarea>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- DAS WAR SCHWIERIG -->
+            <!-- ================================================== -->
+
+            <div class="diary-form-group">
+
+                <label for="diary-difficult">
+                    Das war schwierig
+                </label>
+
+                <textarea
+                    id="diary-difficult"
+                    rows="3"
+                    placeholder="Was war heute noch schwierig?"
+                ></textarea>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- BESONDERER MOMENT -->
+            <!-- ================================================== -->
+
+            <div class="diary-form-group">
+
+                <label for="diary-highlight">
+                    Besonderer Moment
+                </label>
+
+                <textarea
+                    id="diary-highlight"
+                    rows="3"
+                    placeholder="Gab es einen besonderen oder lustigen Moment?"
+                ></textarea>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- SONSTIGE NOTIZEN -->
+            <!-- ================================================== -->
+
+            <div class="diary-form-group">
+
+                <label for="diary-note">
+                    Sonstige Notizen
+                </label>
+
+                <textarea
+                    id="diary-note"
+                    rows="4"
+                    placeholder="Alles, was du sonst noch festhalten möchtest."
+                ></textarea>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- FOTOS -->
+            <!-- ================================================== -->
+
+            <div class="diary-form-group">
+
+                <label for="diary-photos">
+                    Fotos
+                </label>
+
+                <p class="diary-photo-info">
+                    Du kannst mehrere Fotos für diesen
+                    Tagebucheintrag auswählen.
+                </p>
+
+
+                <label
+                    for="diary-photos"
+                    class="photo-upload-button"
+                >
+                    📷 Fotos auswählen
+                </label>
+
+
+                <input
+                    type="file"
+                    id="diary-photos"
+                    accept="image/*"
+                    multiple
+                    hidden
+                >
+
+
+                <!-- ================================================== -->
+                <!-- VORSCHAU DER AUSGEWÄHLTEN FOTOS -->
+                <!-- ================================================== -->
+
+                <div
+                    id="photo-preview"
+                    class="photo-preview"
+                >
+
+                    <!--
+                        Hier werden später automatisch
+                        die ausgewählten Bilder angezeigt.
+                    -->
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- SPEICHERN -->
+            <!-- ================================================== -->
+
+            <button
+                type="button"
+                id="save-diary"
+                class="primary-button"
+            >
+                + Tagebucheintrag speichern
+            </button>
+
+        </section>
+
+
+        <!-- ================================================== -->
+        <!-- BISHERIGE TAGEBUCHEINTRÄGE -->
+        <!-- ================================================== -->
+
+        <section class="diary-history">
+
+            <div class="diary-history-header">
+
+                <div>
+
+                    <p class="eyebrow">
+                        ERINNERUNGEN
+                    </p>
+
+                    <h2>
+                        Bisherige Einträge
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- HIER ERSCHEINEN DIE EINTRÄGE -->
+            <!-- ================================================== -->
+
+            <div id="diary-list">
+
+                <p class="empty-info">
+                    Noch kein Tagebucheintrag vorhanden.
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ================================================== -->
+
+    <script src="../js/tagebuch.js"></script>
+
+</body>
+
+</html>

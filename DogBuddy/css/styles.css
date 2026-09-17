@@ -608,13 +608,15 @@ body {
 }
 
 
-/* ================================================== */
-/* FUSSBEREICH                                        */
-/* ================================================== */
+/* ==================================================
+FUSSBEREICH
+================================================== */
 
 footer {
-    background-color: #302a26;
+    width: 100%;
+    box-sizing: border-box;
 
+    background-color: #302a26;
     color: #ffffff;
 
     text-align: center;
@@ -736,4 +738,973 @@ footer {
 /* Abbrechen - Maus darüber */
 .cancel-button:hover {
     background-color: #f7f3ee;
+}
+
+/* ==================================================
+   ENTWICKLUNG
+   ================================================== */
+
+.development-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 40px 80px;
+}
+
+
+/* ==================================================
+   ÜBERSCHRIFT
+   ================================================== */
+
+.development-header {
+    margin-bottom: 35px;
+}
+
+.development-header .eyebrow {
+    color: #b87333;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.development-header h1 {
+    font-size: 36px;
+    margin: 0 0 10px;
+    color: #302a26;
+}
+
+.development-header > p:last-child {
+    color: #6f665f;
+    margin: 0;
+}
+
+
+/* ==================================================
+   KARTE - NEUE MESSUNG
+   ================================================== */
+
+.measurement-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+.measurement-card h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #302a26;
+}
+
+
+/* ==================================================
+   FORMULAR
+   ================================================== */
+
+.measurement-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.measurement-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.measurement-form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #514941;
+    margin-bottom: 8px;
+}
+
+.measurement-form input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+
+    border: 1px solid #ddd3ca;
+    border-radius: 8px;
+
+    font-size: 15px;
+    color: #302a26;
+    background-color: #ffffff;
+}
+
+.measurement-form input:focus {
+    outline: none;
+    border-color: #b87333;
+}
+
+
+/* ==================================================
+   SPEICHERN BUTTON
+   ================================================== */
+
+.measurement-card .primary-button {
+    background-color: #b87333;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 8px;
+
+    padding: 12px 20px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.measurement-card .primary-button:hover {
+    opacity: 0.85;
+}
+
+
+/* ==================================================
+   BISHERIGE MESSUNGEN
+   ================================================== */
+
+.measurement-history {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+.measurement-history h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #302a26;
+}
+
+
+/* ==================================================
+   TABELLE
+   ================================================== */
+
+.measurement-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.measurement-table th {
+    text-align: left;
+
+    padding: 14px;
+
+    background-color: #f5eee8;
+    color: #302a26;
+
+    border-bottom: 2px solid #b87333;
+}
+
+.measurement-table td {
+    padding: 14px;
+    border-bottom: 1px solid #eee6df;
+    color: #514941;
+}
+
+.measurement-table tbody tr:hover {
+    background-color: #faf7f4;
+}
+
+/* ==================================================
+   TRAINING
+   ================================================== */
+
+.training-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 40px 80px;
+}
+
+
+/* ==================================================
+   TRAINING - ÜBERSCHRIFT
+   ================================================== */
+
+.training-header {
+    margin-bottom: 35px;
+}
+
+.training-header .eyebrow {
+    color: #b87333;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.training-header h1 {
+    font-size: 36px;
+    margin: 0 0 10px;
+    color: #302a26;
+}
+
+.training-header > p:last-child {
+    color: #6f665f;
+    margin: 0;
+}
+
+
+/* ==================================================
+   TRAINING - FORMULAR KARTE
+   ================================================== */
+
+.training-form-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+.training-form-card h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #302a26;
+}
+
+
+/* ==================================================
+   TRAINING - FORMULARFELDER
+   ================================================== */
+
+.training-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 22px;
+}
+
+.training-form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #514941;
+    margin-bottom: 8px;
+}
+
+.training-form-group input,
+.training-form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid #ddd3ca;
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-family: inherit;
+
+    color: #302a26;
+    background-color: #ffffff;
+}
+
+.training-form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.training-form-group input:focus,
+.training-form-group textarea:focus {
+    outline: none;
+    border-color: #b87333;
+}
+
+
+/* ==================================================
+   TRAINING - STERNE
+   ================================================== */
+
+.star-rating {
+    display: flex;
+    gap: 5px;
+    margin-top: 3px;
+}
+
+.star {
+    background: none;
+    border: none;
+    padding: 0;
+
+    font-size: 32px;
+    line-height: 1;
+
+    color: #b87333;
+
+    cursor: pointer;
+}
+
+.star:hover {
+    transform: scale(1.12);
+}
+
+.rating-text {
+    margin-top: 10px;
+
+    font-size: 14px;
+    color: #8a7d73;
+}
+
+
+/* ==================================================
+   TRAINING - SPEICHERN BUTTON
+   ================================================== */
+
+.training-form-card .primary-button {
+    background-color: #b87333;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 8px;
+
+    padding: 12px 20px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.training-form-card .primary-button:hover {
+    opacity: 0.85;
+}
+
+
+/* ==================================================
+   TRAINING - ÜBERSICHT
+   ================================================== */
+
+.training-overview {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+.training-overview h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: #302a26;
+}
+
+
+/* ==================================================
+   TRAINING - GESPEICHERTE ÜBUNG
+   ================================================== */
+
+.training-item {
+    padding: 20px;
+
+    border: 1px solid #eee6df;
+    border-radius: 10px;
+
+    margin-bottom: 15px;
+
+    background-color: #faf7f4;
+}
+
+.training-item:last-child {
+    margin-bottom: 0;
+}
+
+.training-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.training-item h3 {
+    margin: 0;
+
+    font-size: 18px;
+    color: #302a26;
+}
+
+.training-item-stars {
+    color: #b87333;
+    font-size: 21px;
+    letter-spacing: 2px;
+}
+
+.training-item-note {
+    margin: 12px 0 0;
+
+    color: #6f665f;
+    line-height: 1.5;
+}
+
+
+/* ==================================================
+   TRAINING - LÖSCHEN BUTTON
+   ================================================== */
+
+.delete-training-button {
+    margin-top: 15px;
+
+    background-color: transparent;
+    color: #b87333;
+
+    border: 1px solid #b87333;
+    border-radius: 6px;
+
+    padding: 7px 12px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.delete-training-button:hover {
+    background-color: #b87333;
+    color: #ffffff;
+}
+
+/* ==================================================
+   TRAINING - DATUM
+   ================================================== */
+
+.training-item-date {
+    margin: 8px 0 0;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #b87333;
+}
+
+/* ==================================================
+   TAGEBUCH
+   ================================================== */
+
+.diary-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 40px 80px;
+}
+
+
+/* ==================================================
+   TAGEBUCH - ÜBERSCHRIFT
+   ================================================== */
+
+.diary-header {
+    margin-bottom: 35px;
+}
+
+.diary-header .eyebrow {
+    margin-bottom: 8px;
+
+    color: #b87333;
+
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.diary-header h1 {
+    margin: 0 0 10px;
+
+    color: #302a26;
+
+    font-size: 38px;
+}
+
+.diary-header > p:last-child {
+    margin: 0;
+
+    color: #746b65;
+}
+
+
+/* ==================================================
+   FORMULAR-KARTE
+   ================================================== */
+
+.diary-form-card {
+    margin-bottom: 40px;
+    padding: 30px;
+
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.diary-form-card h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+
+    color: #302a26;
+}
+
+
+/* ==================================================
+   FORMULAR-FELDER
+   ================================================== */
+
+.diary-form-group {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 22px;
+}
+
+.diary-form-group label {
+    margin-bottom: 8px;
+
+    color: #4c433d;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.diary-form-group input,
+.diary-form-group textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #ddd5cf;
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #302a26;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    box-sizing: border-box;
+}
+
+.diary-form-group textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.diary-form-group input:focus,
+.diary-form-group textarea:focus {
+    outline: none;
+
+    border-color: #b87333;
+
+    box-shadow:
+        0 0 0 2px rgba(184, 115, 51, 0.12);
+}
+
+
+/* ==================================================
+   FOTO-UPLOAD
+   ================================================== */
+
+.diary-photo-upload {
+    margin-bottom: 25px;
+}
+
+.diary-photo-upload label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #4c433d;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.diary-photo-upload input[type="file"] {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px dashed #c8b6a8;
+    border-radius: 8px;
+
+    background-color: #faf7f4;
+
+    color: #625852;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+
+/* ==================================================
+   FOTO-VORSCHAU VOR DEM SPEICHERN
+   ================================================== */
+
+#photo-preview {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(150px, 1fr));
+
+    gap: 15px;
+
+    margin-top: 15px;
+}
+
+.photo-preview-item {
+    position: relative;
+
+    overflow: hidden;
+
+    height: 150px;
+
+    border-radius: 12px;
+
+    background-color: #f3eee9;
+}
+
+.photo-preview-item img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+/* ==================================================
+   X-BUTTON BEI FOTO-VORSCHAU
+   ================================================== */
+
+.remove-photo-button {
+    position: absolute;
+
+    top: 8px;
+    right: 8px;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color:
+        rgba(255, 255, 255, 0.92);
+
+    color: #8f3f35;
+
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 30px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.remove-photo-button:hover {
+    background-color: #8f3f35;
+
+    color: #ffffff;
+}
+
+
+/* ==================================================
+   SPEICHERN-BUTTON
+   ================================================== */
+
+.diary-form-card .primary-button {
+    margin-top: 5px;
+
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 8px;
+
+    background-color: #b87333;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.diary-form-card .primary-button:hover {
+    background-color: #9f612b;
+}
+
+
+/* ==================================================
+   BISHERIGE TAGEBUCHEINTRÄGE
+   ================================================== */
+
+.diary-history {
+    padding: 30px;
+
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.diary-history > h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+
+    color: #302a26;
+}
+
+
+/* ==================================================
+   EIN TAGEBUCHEINTRAG
+   ================================================== */
+
+.diary-item {
+    margin-bottom: 25px;
+    padding: 25px;
+
+    border: 1px solid #eee7e1;
+    border-radius: 14px;
+
+    background-color: #faf7f4;
+}
+
+.diary-item:last-child {
+    margin-bottom: 0;
+}
+
+.diary-item-date {
+    margin: 0 0 6px;
+
+    color: #b87333;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.diary-item > h3 {
+    margin: 0 0 22px;
+
+    color: #302a26;
+
+    font-size: 23px;
+}
+
+
+/* ==================================================
+   INHALT DES TAGEBUCHEINTRAGS
+   ================================================== */
+
+.diary-item-section {
+    margin-bottom: 18px;
+}
+
+.diary-item-section h4 {
+    margin: 0 0 5px;
+
+    color: #4c433d;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.diary-item-section p {
+    margin: 0;
+
+    color: #625852;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    white-space: pre-line;
+}
+
+
+/* ==================================================
+   FOTOS IM GESPEICHERTEN TAGEBUCHEINTRAG
+   ================================================== */
+
+.diary-item-photos {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(180px, 1fr));
+
+    gap: 15px;
+
+    margin-top: 22px;
+    margin-bottom: 22px;
+}
+
+.diary-photo {
+    position: relative;
+
+    overflow: hidden;
+
+    height: 190px;
+
+    border-radius: 12px;
+
+    background-color: #eee7e1;
+}
+
+.diary-photo img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* ==================================================
+   X-BUTTON BEI GESPEICHERTEN FOTOS
+   ================================================== */
+
+.delete-photo-button {
+    position: absolute;
+
+    top: 8px;
+    right: 8px;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color:
+        rgba(255, 255, 255, 0.92);
+
+    color: #8f3f35;
+
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 30px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.delete-photo-button:hover {
+    background-color: #8f3f35;
+
+    color: #ffffff;
+}
+
+
+/* ==================================================
+   TAGEBUCHEINTRAG LÖSCHEN
+   ================================================== */
+
+.delete-diary-button {
+    margin-top: 8px;
+
+    padding: 9px 14px;
+
+    border: 1px solid #d8b8b2;
+    border-radius: 7px;
+
+    background-color: transparent;
+
+    color: #9b4b40;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.delete-diary-button:hover {
+    background-color: #9b4b40;
+
+    border-color: #9b4b40;
+
+    color: #ffffff;
+}
+
+/* ==================================================
+   TAGEBUCH - ÄNDERN-BUTTON
+   ================================================== */
+
+.edit-diary-button {
+    margin-top: 8px;
+    margin-right: 10px;
+
+    padding: 9px 14px;
+
+    border: 1px solid #b87333;
+    border-radius: 7px;
+
+    background-color: transparent;
+
+    color: #b87333;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.edit-diary-button:hover {
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+/* ==================================================
+   TAGEBUCH - BUTTONBEREICH
+   ================================================== */
+
+.diary-button-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+
+/* ==================================================
+   TAGEBUCH - ÄNDERN-BUTTON
+   ================================================== */
+
+.edit-diary-button {
+    padding: 9px 14px;
+
+    border: 1px solid #b87333;
+    border-radius: 7px;
+
+    background-color: transparent;
+
+    color: #b87333;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.edit-diary-button:hover {
+    background-color: #b87333;
+
+    color: #ffffff;
 }

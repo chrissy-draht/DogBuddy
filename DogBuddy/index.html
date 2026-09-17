@@ -367,13 +367,16 @@
 
 
         <!-- ================================================== -->
-        <!-- SCHNELLÜBERSICHT                                   -->
+        <!-- SCHNELLÜBERSICHT                                    -->
         <!-- ================================================== -->
 
         <section class="overview">
 
 
-            <!-- Gewicht -->
+            <!-- ================================================== -->
+            <!-- GEWICHT                                            -->
+            <!-- ================================================== -->
+
             <article class="info-card">
 
                 <span class="card-icon">
@@ -386,7 +389,10 @@
                         Gewicht
                     </p>
 
-                    <p class="card-value">
+                    <p
+                        class="card-value"
+                        id="dashboard-weight"
+                    >
                         – kg
                     </p>
 
@@ -400,7 +406,10 @@
 
 
 
-            <!-- Größe -->
+            <!-- ================================================== -->
+            <!-- GRÖSSE                                              -->
+            <!-- ================================================== -->
+
             <article class="info-card">
 
                 <span class="card-icon">
@@ -410,10 +419,13 @@
                 <div>
 
                     <p class="card-title">
-                        Größe
+                        Schulterhöhe
                     </p>
 
-                    <p class="card-value">
+                    <p
+                        class="card-value"
+                        id="dashboard-height"
+                    >
                         – cm
                     </p>
 
@@ -427,7 +439,10 @@
 
 
 
-            <!-- Alter -->
+            <!-- ================================================== -->
+            <!-- ALTER                                               -->
+            <!-- ================================================== -->
+
             <article class="info-card">
 
                 <span class="card-icon">
@@ -454,6 +469,7 @@
                 </div>
 
             </article>
+
 
         </section>
 
@@ -608,41 +624,16 @@
                 </div>
 
 
-                <div class="skill">
+                <!--
+                    Hier fügt app.js automatisch
+                    die aktuellen Trainingsstände ein.
+                -->
 
-                    <span>
-                        Sitz
-                    </span>
+                <div id="dashboard-training-list">
 
-                    <span class="stars">
-                        ★★★★★
-                    </span>
-
-                </div>
-
-
-                <div class="skill">
-
-                    <span>
-                        Rückruf
-                    </span>
-
-                    <span class="stars">
-                        ★★★☆☆
-                    </span>
-
-                </div>
-
-
-                <div class="skill">
-
-                    <span>
-                        Leinenführigkeit
-                    </span>
-
-                    <span class="stars">
-                        ★★☆☆☆
-                    </span>
+                    <p class="empty-info">
+                        Noch kein Training eingetragen.
+                    </p>
 
                 </div>
 
@@ -663,62 +654,79 @@
             <!-- ================================================== -->
 
             <article class="dashboard-card">
-
+            
                 <div class="card-header">
-
+                
                     <div>
-
+                    
                         <p class="small-heading">
                             TAGEBUCH
                         </p>
-
+                    
                         <h2>
                             Letzter Eintrag
                         </h2>
-
+                    
                     </div>
-
+                
                     <span class="big-icon">
                         📖
                     </span>
-
+                
                 </div>
-
-
+            
+            
+                <!-- ================================================== -->
+                <!-- LETZTER TAGEBUCHEINTRAG                            -->
+                <!-- ================================================== -->
+            
                 <div class="diary-preview">
-
-                    <p class="appointment-title">
+                
+                    <!-- Titel -->
+                    <p
+                        class="appointment-title"
+                        id="dashboard-diary-title"
+                    >
                         Noch kein Tagebucheintrag
                     </p>
-
-                    <p>
+                
+                
+                    <!-- Datum -->
+                    <p
+                        class="diary-preview-date"
+                        id="dashboard-diary-date"
+                    >
+                    </p>
+                
+                
+                    <!-- Vorschautext -->
+                    <p id="dashboard-diary-text">
                         Halte besondere Momente,
                         Fortschritte und Erlebnisse fest.
                     </p>
-
+                
                 </div>
-
-
+            
+            
+                <!-- Link zum Tagebuch -->
                 <a
                     href="html/tagebuch.html"
                     class="card-link"
                 >
                     Zum Tagebuch →
                 </a>
-
+            
             </article>
-
         </section>
 
     </main>
-
 
 
     <!-- ================================================== -->
     <!-- FUSSBEREICH                                        -->
     <!-- ================================================== -->
 
-    <footer>
+     <footer>
 
         <p>
             DogBuddy – Gemeinsam wachsen 🐾
@@ -727,12 +735,10 @@
     </footer>
 
 
-
     <!-- ================================================== -->
     <!-- JAVASCRIPT                                         -->
     <!-- ================================================== -->
 
-    <!-- Verbindung zu app.js -->
     <script src="js/app.js"></script>
 
 

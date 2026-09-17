@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DogBuddy - Entwicklung</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/styles.css"
+    >
+</head>
+
+
+<body>
+
+    <!-- ========================================== -->
+    <!-- HEADER -->
+    <!-- ========================================== -->
+
+    <header class="header">
+
+        <a href="../index.html">
+            <img
+                src="../images/logo/dogbuddy-logo-full-blank.png"
+                alt="DogBuddy Logo"
+                class="logo"
+            >
+        </a>
+
+
+        <nav class="navigation">
+
+            <a href="../index.html">
+                Dashboard
+            </a>
+
+            <a href="tagebuch.html">
+                Tagebuch
+            </a>
+
+            <a href="training.html">
+                Training
+            </a>
+
+            <a
+                href="entwicklung.html"
+                class="active"
+            >
+                Entwicklung
+            </a>
+
+            <a href="wochenplan.html">
+                Wochenplan
+            </a>
+
+            <a href="gesundheit.html">
+                Gesundheit
+            </a>
+
+            <a href="galerie.html">
+                Galerie
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ========================================== -->
+    <!-- HAUPTINHALT -->
+    <!-- ========================================== -->
+
+    <main class="development-page">
+
+        <section class="development-header">
+
+            <p class="eyebrow">
+                ENTWICKLUNG
+            </p>
+
+            <h1>
+                Majors Entwicklung
+            </h1>
+
+            <p>
+                Gewicht und Größe im Blick behalten.
+            </p>
+
+        </section>
+
+
+        <!-- ====================================== -->
+        <!-- NEUE MESSUNG -->
+        <!-- ====================================== -->
+
+        <section class="measurement-card">
+
+            <h2>
+                Neue Messung
+            </h2>
+
+
+            <div class="measurement-form">
+
+                <!-- Datum -->
+
+                <div class="form-group">
+
+                    <label for="measurement-date">
+                        Datum
+                    </label>
+
+                    <input
+                        type="date"
+                        id="measurement-date"
+                    >
+
+                </div>
+
+
+                <!-- Gewicht -->
+
+                <div class="form-group">
+
+                    <label for="measurement-weight">
+                        Gewicht in kg
+                    </label>
+
+                    <input
+                        type="number"
+                        id="measurement-weight"
+                        step="0.1"
+                        min="0"
+                        placeholder="z. B. 8,4"
+                    >
+
+                </div>
+
+
+                <!-- Schulterhöhe -->
+
+                <div class="form-group">
+
+                    <label for="measurement-height">
+                        Schulterhöhe in cm
+                    </label>
+
+                    <input
+                        type="number"
+                        id="measurement-height"
+                        step="0.1"
+                        min="0"
+                        placeholder="z. B. 35"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="save-measurement"
+                class="primary-button"
+            >
+                + Messung speichern
+            </button>
+
+        </section>
+
+
+        <!-- ====================================== -->
+        <!-- BISHERIGE MESSUNGEN -->
+        <!-- ====================================== -->
+
+        <section class="measurement-history">
+
+            <h2>
+                Bisherige Messungen
+            </h2>
+
+
+            <table class="measurement-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Datum</th>
+                        <th>Gewicht</th>
+                        <th>Schulterhöhe</th>
+                        <th>Aktion</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="measurement-list">
+
+                    <!--
+                        Hier fügt JavaScript später
+                        automatisch die Messungen ein.
+                    -->
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================================== -->
+
+    <script src="../js/entwicklung.js"></script>
+
+</body>
+
+</html>
