@@ -7,20 +7,6 @@ const BACKUP_DATABASE_NAME = "DogBuddyDB";
 
 
 // ==================================================
-// HTML-ELEMENTE
-// ==================================================
-
-const createBackupButton =
-    document.getElementById("create-backup");
-
-const restoreBackupButton =
-    document.getElementById("restore-backup");
-
-const backupFileInput =
-    document.getElementById("backup-file");
-
-
-// ==================================================
 // LOCALSTORAGE SICHERN
 // ==================================================
 
@@ -606,50 +592,89 @@ async function restoreBackup(file) {
 
 
 // ==================================================
-// BUTTON - BACKUP ERSTELLEN
+// BACKUP-BUTTONS VERBINDEN
 // ==================================================
 
-createBackupButton.addEventListener(
-    "click",
-    createBackup
-);
-
-
-// ==================================================
-// BUTTON - BACKUP WIEDERHERSTELLEN
-// ==================================================
-
-restoreBackupButton.addEventListener(
-    "click",
+document.addEventListener(
+    "DOMContentLoaded",
     function () {
 
-        // Unsichtbare Dateiauswahl öffnen
-        backupFileInput.click();
-    }
-);
+        // ==================================================
+        // HTML-ELEMENTE HOLEN
+        // ==================================================
+
+        const createBackupButton =
+            document.getElementById("export-backup");
+
+        const restoreBackupButton =
+            document.getElementById("import-backup");
+
+        const backupFileInput =
+            document.getElementById("backup-file-input");
 
 
-// ==================================================
-// AUSGEWÄHLTE BACKUP-DATEI LADEN
-// ==================================================
+        // ==================================================
+        // PRÜFEN, OB FOOTER-ELEMENTE VORHANDEN SIND
+        // ==================================================
 
-backupFileInput.addEventListener(
-    "change",
-    function () {
+        if (
+            !createBackupButton ||
+            !restoreBackupButton ||
+            !backupFileInput
+        ) {
 
-        const file =
-            backupFileInput.files[0];
-
-        if (!file) {
+            console.error(
+                "DogBuddy Backup: Footer-Elemente wurden nicht gefunden."
+            );
 
             return;
         }
 
 
-        restoreBackup(file);
+        // ==================================================
+        // BACKUP ERSTELLEN
+        // ==================================================
+
+        createBackupButton.addEventListener(
+            "click",
+            createBackup
+        );
 
 
-        // Dateiauswahl wieder zurücksetzen
-        backupFileInput.value = "";
+        // ==================================================
+        // BACKUP WIEDERHERSTELLEN
+        // ==================================================
+
+        restoreBackupButton.addEventListener(
+            "click",
+            function () {
+
+                backupFileInput.click();
+            }
+        );
+
+
+        // ==================================================
+        // BACKUP-DATEI AUSWÄHLEN
+        // ==================================================
+
+        backupFileInput.addEventListener(
+            "change",
+            function () {
+
+                const file =
+                    backupFileInput.files[0];
+
+                if (!file) {
+
+                    return;
+                }
+
+
+                restoreBackup(file);
+
+                backupFileInput.value = "";
+            }
+        );
     }
 );

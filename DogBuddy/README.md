@@ -5196,6 +5196,8 @@ Bereits umgesetzt:
 ```text
 ✓ Dashboard
 ✓ Hundeprofil
+✓ Profilbearbeitung
+✓ automatische Altersberechnung
 ✓ Entwicklung und Wachstum
 ✓ Tagebuch
 ✓ Galerie
@@ -5206,17 +5208,29 @@ Bereits umgesetzt:
 ✓ Verknüpfung von Kommandos mit dem Wochenplan
 ✓ Verknüpfung der Entdecker-Checkliste mit dem Wochenplan
 ✓ automatische Fortschrittsübernahme aus dem Wochenplan
-✓ Anzeige der nächsten Termine auf dem Dashboard
-✓ Anzeige der letzten Tagebucheinträge auf dem Dashboard
+✓ Wochenaufgaben direkt auf dem Dashboard abschließen
+✓ Anzeige der nächsten drei Termine auf dem Dashboard
+✓ Anzeige der letzten zwei Tagebucheinträge auf dem Dashboard
+✓ Anzeige der nächsten drei offenen Wochenaufgaben
 ✓ Speicherung strukturierter Daten über localStorage
 ✓ Speicherung von Bildern über IndexedDB
 ✓ Backup-Funktion
+✓ zentraler Header
+✓ zentraler Footer
+✓ Dark Mode
+✓ Speicherung des ausgewählten Themes
+✓ responsive Hamburger-Navigation
 ✓ Nach-oben-Button
 ```
 
-Anschließend soll Version 1 noch einmal getestet und auf kleinere Fehler überprüft werden.
+Damit besitzt Version 1 inzwischen auch erste responsive Bestandteile.
 
-Danach bleibt dieser Stand als **lokale Version und Portfolio-Projekt** erhalten.
+Vor dem endgültigen Abschluss der Portfolio-Version sollen insbesondere noch
+die Darstellung auf unterschiedlichen Bildschirmgrößen geprüft und kleinere
+Fehler beseitigt werden.
+
+Danach bleibt dieser Stand als **lokale Version und Portfolio-Projekt**
+erhalten.
 
 ---
 
@@ -5240,28 +5254,42 @@ Dadurch kann Version 2 verändert werden, ohne den bisherigen Projektstand zu ü
 
 ---
 
-## Stufe 3 – Responsive Design
+## Stufe 3 – Responsive Design weiter ausbauen
 
-DogBuddy Version 2 soll zunächst für unterschiedliche Bildschirmgrößen optimiert werden.
+Mit der responsiven Navigation wurde bereits ein erster Teil der Anpassung
+an unterschiedliche Bildschirmgrößen umgesetzt.
+
+Vorhanden sind bereits:
 
 ```text
-Desktop
-Tablet
-Smartphone
+Desktop-Navigation
+        +
+Hamburger-Menü
+        +
+ausklappbare Navigation
+        +
+Dark-Mode-Schalter unabhängig vom Menü
 ```
 
-Dazu gehören unter anderem:
+In DogBuddy Version 2 soll das Responsive Design auf die gesamte Anwendung
+ausgeweitet werden.
 
-- responsive Navigation
-- mobile Navigation
+Dazu gehören insbesondere:
+
+- Dashboard
+- Hundeprofil
+- Karten
+- Tabellen
+- Formulare
+- Kalender
+- Galerie
+- Popups
 - Touch-Bedienung
-- responsive Karten
-- responsive Tabellen
-- responsive Formulare
-- angepasste Popups
-- geeignete Abstände und Schriftgrößen
+- Abstände
+- Schriftgrößen
 
-Ziel ist, DogBuddy sowohl am PC als auch auf dem Smartphone komfortabel verwenden zu können.
+Ziel ist, DogBuddy sowohl am PC als auch auf Tablet und Smartphone
+komfortabel verwenden zu können.
 
 ---
 
