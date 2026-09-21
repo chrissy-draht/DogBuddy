@@ -6019,6 +6019,14 @@ main h1 {
         transform 0.2s ease;
 }
 
+/* ================================================== */
+/* GALERIE - LIGHTBOX PFEILE AUSBLENDEN               */
+/* ================================================== */
+
+.gallery-lightbox-arrow[hidden] {
+    display: none;
+}
+
 
 /* Linker Pfeil */
 
