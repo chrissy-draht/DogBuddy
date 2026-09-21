@@ -50,9 +50,34 @@
                 Tagebuch
             </a>
 
-            <a href="training.html">
-                Training
-            </a>
+            <!-- ================================== -->
+            <!-- TRAINING - DROPDOWN                -->
+            <!-- ================================== -->
+
+            <div class="nav-dropdown">
+            
+                <!--
+                    Training ist nur noch der Oberpunkt.
+                    Die alte training.html wird nicht mehr verlinkt.
+                -->
+            
+                <span class="nav-dropdown-button">
+                    Training
+                </span>
+            
+                <div class="nav-dropdown-menu">
+                
+                    <a href="kommandos.html">
+                        Kommandos
+                    </a>
+                
+                    <a href="entdecker.html">
+                        Entdecker-Checkliste
+                    </a>
+                
+                </div>
+            
+            </div>
 
             <a href="entwicklung.html">
                 Entwicklung
@@ -98,13 +123,13 @@
                 </p>
 
                 <h1>
-                    Majors Termine
+                    <span id="page-dog-name">Major</span>s Termine
                 </h1>
 
                 <p>
                     Hier kann ich Tierarzttermine,
                     Hundeschule und andere wichtige
-                    Termine für Major verwalten.
+                    Termine für <span id="page-dog-name-text">Major</span> verwalten.
                 </p>
 
             </div>
@@ -127,6 +152,145 @@
             </button>
 
         </section>
+
+
+                <!-- ====================================== -->
+                <!-- KALENDER                               -->
+                <!-- ====================================== -->
+            
+                <section class="health-calendar-section">
+                
+                    <!-- ================================== -->
+                    <!-- KALENDER KOPF                      -->
+                    <!-- ================================== -->
+                
+                    <div class="health-calendar-header">
+                    
+                        <div>
+                        
+                            <p class="small-heading">
+                                TERMINÜBERSICHT
+                            </p>
+                        
+                            <h2 id="calendar-title">
+                                Kalender
+                            </h2>
+                        
+                        </div>
+                    
+                    
+                        <!-- ================================== -->
+                        <!-- WOCHEN- / MONATSANSICHT            -->
+                        <!-- ================================== -->
+                    
+                        <div class="calendar-view-switch">
+                        
+                            <button
+                                type="button"
+                                id="calendar-week-view"
+                                class="calendar-view-button active"
+                            >
+                                Woche
+                            </button>
+                        
+                            <button
+                                type="button"
+                                id="calendar-month-view"
+                                class="calendar-view-button"
+                            >
+                                Monat
+                            </button>
+                        
+                        </div>
+                    
+                    </div>
+                
+                
+                    <!-- ================================== -->
+                    <!-- KALENDER NAVIGATION                -->
+                    <!-- ================================== -->
+                
+                    <div class="calendar-navigation">
+                    
+                        <button
+                            type="button"
+                            id="calendar-previous"
+                            class="calendar-navigation-button"
+                            aria-label="Vorheriger Zeitraum"
+                        >
+                            ←
+                        </button>
+                    
+                    
+                        <button
+                            type="button"
+                            id="calendar-today"
+                            class="calendar-today-button"
+                        >
+                            Zur Aktuellen Woche
+                        </button>
+                    
+                    
+                        <button
+                            type="button"
+                            id="calendar-next"
+                            class="calendar-navigation-button"
+                            aria-label="Nächster Zeitraum"
+                        >
+                            →
+                        </button>
+                    
+                    </div>
+                
+                
+                    <!-- ================================== -->
+                    <!-- KALENDER                           -->
+                    <!-- ================================== -->
+                
+                    <div
+                        id="health-calendar"
+                        class="health-calendar"
+                    >
+                    </div>
+                
+                
+                    <!-- ================================== -->
+                    <!-- AUSGEWÄHLTER TAG                   -->
+                    <!-- ================================== -->
+                
+                    <div
+                        id="calendar-day-details"
+                        class="calendar-day-details"
+                    >
+                
+                        <div class="calendar-day-details-header">
+                        
+                            <div>
+                            
+                                <p class="small-heading">
+                                    AUSGEWÄHLTER TAG
+                                </p>
+                            
+                                <h3 id="calendar-selected-date">
+                                    Heute
+                                </h3>
+                            
+                            </div>
+                        
+                        </div>
+                    
+                    
+                        <div id="calendar-day-appointments">
+                        
+                            <p class="empty-appointments">
+                                Keine Termine an diesem Tag.
+                            </p>
+                        
+                        </div>
+                    
+                    </div>
+                
+                </section>
 
 
         <!-- ====================================== -->
@@ -484,6 +648,8 @@
     <!-- ========================================== -->
 
     <script src="../js/gesundheit.js"></script>
+
+    <script src="../js/scroll-top.js"></script>
 
 
 </body>

@@ -53,9 +53,30 @@
                 Tagebuch
             </a>
 
-            <a href="html/training.html">
-                Training
-            </a>
+
+            <!-- ================================== -->
+            <!-- TRAINING - DROPDOWN                -->
+            <!-- ================================== -->
+                    
+            <div class="nav-dropdown">
+            
+                <span class="nav-dropdown-button">
+                    Training
+                </span>
+            
+                <div class="nav-dropdown-menu">
+                
+                    <a href="html/kommandos.html">
+                        Kommandos
+                    </a>
+                
+                    <a href="html/entdecker.html">
+                        Entdecker-Checkliste
+                    </a>
+                
+                </div>
+            
+            </div>
 
             <a href="html/entwicklung.html">
                 Entwicklung
@@ -416,36 +437,82 @@
             <!-- GRÖSSE                                              -->
             <!-- ================================================== -->
 
-            <article class="info-card">
-
-                <span class="card-icon">
+            <!-- ========================================== -->
+            <!-- KÖRPERMASSE - WECHSELANZEIGE -->
+            <!-- ========================================== -->
+                    
+            <article class="info-card body-measurement-card">
+            
+                <!-- Pfeil nach links -->
+                <button
+                    type="button"
+                    id="body-measurement-prev"
+                    class="body-measurement-arrow"
+                    aria-label="Vorheriges Körpermaß"
+                >
+                    ‹
+                </button>
+            
+            
+                <!-- Icon -->
+                <span
+                    class="card-icon"
+                    id="body-measurement-icon"
+                >
                     📏
                 </span>
+            
+            
+                <!-- ================================================== -->
+                <!-- KÖRPERMASSE - TEXTBEREICH                          -->
+                <!-- ================================================== -->
 
-                <div>
-
-                    <p class="card-title">
+                <div class="body-measurement-content">
+                
+                    <!-- Name des aktuell angezeigten Körpermaßes -->
+                    <p
+                        class="card-title"
+                        id="body-measurement-title"
+                    >
                         Schulterhöhe
                     </p>
-
+                
+                    <!-- Aktueller Messwert -->
                     <p
                         class="card-value"
-                        id="dashboard-height"
+                        id="body-measurement-value"
                     >
                         – cm
                     </p>
-
-                    <a href="html/entwicklung.html">
+                
+                    <!-- Link zur Entwicklungsseite -->
+                    <a
+                        href="html/entwicklung.html"
+                        class="body-measurement-link"
+                    >
                         Wert eintragen
                     </a>
-
+                
                 </div>
-                <!-- Kleine grafische Größenentwicklung -->
+            
+            
+                <!-- Kleine grafische Entwicklung -->
                 <div
                     id="dashboard-height-chart"
-                    class="mini-chart">
-                </div>
-
+                    class="mini-chart"
+                ></div>
+            
+            
+                <!-- Pfeil nach rechts -->
+                <button
+                    type="button"
+                    id="body-measurement-next"
+                    class="body-measurement-arrow"
+                    aria-label="Nächstes Körpermaß"
+                >
+                    ›
+                </button>
+            
             </article>
 
 
@@ -573,94 +640,127 @@
             
             
                 <!-- ================================================== -->
-                <!-- NÄCHSTER TERMIN                                    -->
+                <!-- NÄCHSTE TERMINE                                    -->
                 <!-- ================================================== -->
-            
-                <div class="appointment">
-                
-                
-                    <!-- Terminbezeichnung -->
-                    <p
-                        class="appointment-title"
-                        id="dashboard-appointment-title"
-                    >
-                        Noch kein Termin eingetragen
-                    </p>
-                
-                
-                    <!-- Datum und Uhrzeit -->
-                    <p id="dashboard-appointment-date">
-                        Hier erscheint automatisch der nächste Termin.
-                    </p>
-                
-                
-                    <!-- Ort -->
-                    <p id="dashboard-appointment-location">
-                    </p>
-                
-                
-                </div>
-            
-            
-                <!-- Link zur Gesundheitsseite -->
-                <a
-                    href="html/gesundheit.html"
-                    class="card-link"
+
+                <div
+                    class="dashboard-appointment-list"
+                    id="dashboard-appointment-list"
                 >
-                    Termin eintragen →
-                </a>
+                </div>
+
+
+                                <!-- Link zur Gesundheitsseite -->
+                                <a
+                                    href="html/gesundheit.html"
+                                    class="card-link"
+                                >
+                                    Termin eintragen →
+                                </a>
+                            
+                            </article>
+
+
+
+            <!-- ================================================== -->
+            <!-- TRAINING - FORTSCHRITT                             -->
+            <!-- ================================================== -->
+        
+            <article class="dashboard-card training-progress-card">
             
-            </article>
-
-
-
-            <!-- ================================================== -->
-            <!-- TRAINING                                           -->
-            <!-- ================================================== -->
-
-            <article class="dashboard-card">
-
                 <div class="card-header">
-
+                
                     <div>
-
+                    
                         <p class="small-heading">
                             TRAINING
                         </p>
-
+                    
                         <h2>
-                            Aktueller Stand
+                            Fortschritt
                         </h2>
-
+                    
                     </div>
-
+                
                     <span class="big-icon">
                         ⭐
                     </span>
-
+                
                 </div>
+            
+            
+                <!-- ================================================== -->
+                <!-- ÜBERSCHRIFTEN                                      -->
+                <!-- ================================================== -->
+            
+                <!-- ================================================== -->
+                <!-- TRAINING - KOMMANDOS UND ENTDECKER                 -->
+                <!-- ================================================== -->
 
-
-                <!--
-                    Hier fügt app.js automatisch
-                    die aktuellen Trainingsstände ein.
-                -->
-
-                <div id="dashboard-training-list">
-
-                    <p class="empty-info">
-                        Noch kein Training eingetragen.
-                    </p>
-
+                <div class="dashboard-training-boxes">
+                
+                    <!-- KOMMANDOS -->
+                
+                    <div class="dashboard-training-box">
+                    
+                        <h3>Kommandos</h3>
+                    
+                        <div class="dashboard-training-box-row">
+                            <span>👀 Kennengelernt</span>
+                            <strong id="dashboard-command-seen">0 %</strong>
+                        </div>
+                    
+                        <div class="dashboard-training-box-row">
+                            <span>🐾 Selbst erlebt</span>
+                            <strong id="dashboard-command-experienced">0 %</strong>
+                        </div>
+                    
+                        <div class="dashboard-training-box-row">
+                            <span>😌 Entspannt dabei</span>
+                            <strong id="dashboard-command-relaxed">0 %</strong>
+                        </div>
+                    
+                        <a
+                            href="html/kommandos.html"
+                            class="card-link dashboard-training-box-link"
+                        >
+                            Zu den Kommandos →
+                        </a>
+                    
+                    </div>
+                
+                
+                    <!-- ENTDECKER -->
+                
+                    <div class="dashboard-training-box">
+                    
+                        <h3>Entdecker</h3>
+                    
+                        <div class="dashboard-training-box-row">
+                            <span>👀 Kennengelernt</span>
+                            <strong id="dashboard-discovery-seen">0 %</strong>
+                        </div>
+                    
+                        <div class="dashboard-training-box-row">
+                            <span>🐾 Selbst erlebt</span>
+                            <strong id="dashboard-discovery-experienced">0 %</strong>
+                        </div>
+                    
+                        <div class="dashboard-training-box-row">
+                            <span>😌 Entspannt dabei</span>
+                            <strong id="dashboard-discovery-relaxed">0 %</strong>
+                        </div>
+                    
+                        <a
+                            href="html/entdecker.html"
+                            class="card-link dashboard-training-box-link"
+                        >
+                            Zum Entdecker →
+                        </a>
+                    
+                    </div>
+                
                 </div>
-
-
-                <a
-                    href="html/training.html"
-                    class="card-link"
-                >
-                    Zum Training →
-                </a>
 
             </article>
 
@@ -681,7 +781,7 @@
                         </p>
                     
                         <h2>
-                            Letzter Eintrag
+                            Letzte Einträge
                         </h2>
                     
                     </div>
@@ -694,62 +794,87 @@
             
             
                 <!-- ================================================== -->
-                <!-- LETZTER TAGEBUCHEINTRAG                            -->
+                <!-- LETZTE TAGEBUCHEINTRÄGE                            -->
                 <!-- ================================================== -->
-            
-                <div class="diary-preview">
-                
-                    <!-- Titel -->
-                    <p
-                        class="appointment-title"
-                        id="dashboard-diary-title"
-                    >
-                        Noch kein Tagebucheintrag
-                    </p>
-                
-                
-                    <!-- Datum -->
-                    <p
-                        class="diary-preview-date"
-                        id="dashboard-diary-date"
-                    >
-                    </p>
-                
-                
-                    <!-- Vorschautext -->
-                    <p id="dashboard-diary-text">
-                        Halte besondere Momente,
-                        Fortschritte und Erlebnisse fest.
-                    </p>
-                
-                </div>
-            
-            
-                <!-- Link zum Tagebuch -->
-                <a
-                    href="html/tagebuch.html"
-                    class="card-link"
+
+                <div
+                    class="dashboard-diary-list"
+                    id="dashboard-diary-list"
                 >
-                    Zum Tagebuch →
-                </a>
-            
-            </article>
-        </section>
+                </div>
 
-    </main>
+
+                                <!-- Link zum Tagebuch -->
+                                <a
+                                    href="html/tagebuch.html"
+                                    class="card-link"
+                                >
+                                    Zum Tagebuch →
+                                </a>
+                            
+                            </article>
+                        </section>
+                    
+                    </main>
 
 
     <!-- ================================================== -->
-    <!-- FUSSBEREICH                                        -->
+    <!-- DATENSICHERUNG - AUFKLAPPBAR                       -->
     <!-- ================================================== -->
 
-     <footer>
+    <div class="footer-area">
 
-        <p>
-            DogBuddy – Gemeinsam wachsen 🐾
+        <details class="footer-backup">
+
+            <!-- Anklickbare Überschrift -->
+            <summary class="footer-backup-summary">
+
+                <span class="footer-backup-arrow">›</span>
+
+                💾 Datensicherung
+
+            </summary>
+
+
+            <!-- Wird erst nach einem Klick angezeigt -->
+            <div class="footer-backup-actions">
+
+                <button
+                    type="button"
+                    id="create-backup"
+                    class="footer-backup-button"
+                >
+                    💾 Backup erstellen
+                </button>
+
+                <button
+                    type="button"
+                    id="restore-backup"
+                    class="footer-backup-button"
+                >
+                    📂 Backup wiederherstellen
+                </button>
+
+            </div>
+
+
+            <!-- Unsichtbare Dateiauswahl -->
+            <input
+                type="file"
+                id="backup-file"
+                accept=".json"
+                hidden
+            >
+
+        </details>
+
+
+        <!-- Immer sichtbarer Footer-Text -->
+        <p class="footer-text">
+            DogBuddy 🐾 Gemeinsam wachsen 🐾
         </p>
 
-    </footer>
+    </div>
 
 
     <!-- ================================================== -->
@@ -758,7 +883,11 @@
 
     <script src="js/app.js"></script>
 
+    <!-- Datensicherung -->
+    <script src="js/backup.js"></script>
 
-</body>
+    <script src="js/scroll-top.js"></script>
+
+    </body>
 
 </html>

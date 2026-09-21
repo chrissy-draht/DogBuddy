@@ -23,9 +23,9 @@
 <body>
 
 
-    <!-- ========================================== -->
-    <!-- HEADER -->
-    <!-- ========================================== -->
+    <!-- ================================================== -->
+    <!-- HEADER                                             -->
+    <!-- ================================================== -->
 
     <header class="header">
 
@@ -53,9 +53,34 @@
                 Tagebuch
             </a>
 
-            <a href="training.html">
-                Training
-            </a>
+            <!-- ================================== -->
+            <!-- TRAINING - DROPDOWN                -->
+            <!-- ================================== -->
+                    
+            <div class="nav-dropdown">
+            
+                <!--
+                    Training ist nur noch der Oberpunkt.
+                    Die alte training.html wird nicht mehr verlinkt.
+                -->
+            
+                <span class="nav-dropdown-button">
+                    Training
+                </span>
+            
+                <div class="nav-dropdown-menu">
+                
+                    <a href="kommandos.html">
+                        Kommandos
+                    </a>
+                
+                    <a href="entdecker.html">
+                        Entdecker-Checkliste
+                    </a>
+                
+                </div>
+            
+            </div>
 
             <a href="entwicklung.html">
                 Entwicklung
@@ -81,17 +106,14 @@
     </header>
 
 
-
-    <!-- ========================================== -->
-    <!-- HAUPTINHALT -->
-    <!-- ========================================== -->
+    <!-- ================================================== -->
+    <!-- HAUPTINHALT                                        -->
+    <!-- ================================================== -->
 
     <main class="gallery-page">
 
 
-        <!-- ========================================== -->
         <!-- GALERIE-KOPF -->
-        <!-- ========================================== -->
 
         <section class="gallery-header">
 
@@ -102,7 +124,7 @@
                 </p>
 
                 <h1>
-                    Majors Fotoalbum 📸
+                    <span id="page-dog-name">Major</span>s Fotoalbum 📸
                 </h1>
 
                 <p>
@@ -129,10 +151,9 @@
         </section>
 
 
-
-        <!-- ========================================== -->
-        <!-- GALERIE-FILTER -->
-        <!-- ========================================== -->
+        <!-- ================================================== -->
+        <!-- FILTER                                             -->
+        <!-- ================================================== -->
 
         <section class="gallery-filter">
 
@@ -144,7 +165,6 @@
                 Alle
             </button>
 
-
             <button
                 type="button"
                 class="gallery-filter-button"
@@ -152,7 +172,6 @@
             >
                 🐾 Alltag
             </button>
-
 
             <button
                 type="button"
@@ -162,7 +181,6 @@
                 🌲 Ausflug
             </button>
 
-
             <button
                 type="button"
                 class="gallery-filter-button"
@@ -170,7 +188,6 @@
             >
                 🎓 Training
             </button>
-
 
             <button
                 type="button"
@@ -180,7 +197,6 @@
                 💦 Wasser
             </button>
 
-
             <button
                 type="button"
                 class="gallery-filter-button"
@@ -189,7 +205,6 @@
                 💤 Zuhause
             </button>
 
-
             <button
                 type="button"
                 class="gallery-filter-button"
@@ -197,7 +212,6 @@
             >
                 ❤️ Besonderer Moment
             </button>
-
 
             <button
                 type="button"
@@ -210,10 +224,9 @@
         </section>
 
 
-
-        <!-- ========================================== -->
-        <!-- FOTO- UND VIDEO-GALERIE -->
-        <!-- ========================================== -->
+        <!-- ================================================== -->
+        <!-- GALERIE                                            -->
+        <!-- ================================================== -->
 
         <section class="gallery-album">
 
@@ -230,14 +243,12 @@
 
         </section>
 
-
     </main>
 
 
-
-    <!-- ========================================== -->
-    <!-- POPUP: FOTO ODER VIDEO HINZUFÜGEN -->
-    <!-- ========================================== -->
+    <!-- ================================================== -->
+    <!-- POPUP: FOTO ODER VIDEO HINZUFÜGEN                   -->
+    <!-- ================================================== -->
 
     <div
         id="gallery-form-modal"
@@ -247,9 +258,7 @@
         <div class="app-modal-content">
 
 
-            <!-- ========================================== -->
             <!-- POPUP-KOPF -->
-            <!-- ========================================== -->
 
             <div class="app-modal-header">
 
@@ -278,17 +287,12 @@
             </div>
 
 
-
-            <!-- ========================================== -->
             <!-- POPUP-INHALT -->
-            <!-- ========================================== -->
 
             <div class="app-modal-body">
 
 
-                <!-- ========================================== -->
-                <!-- FOTO ODER VIDEO -->
-                <!-- ========================================== -->
+                <!-- DATEI -->
 
                 <div class="gallery-form-group">
 
@@ -327,10 +331,7 @@
                 </div>
 
 
-
-                <!-- ========================================== -->
                 <!-- VORSCHAU -->
-                <!-- ========================================== -->
 
                 <div
                     id="gallery-upload-preview"
@@ -338,10 +339,7 @@
                 ></div>
 
 
-
-                <!-- ========================================== -->
                 <!-- TITEL -->
-                <!-- ========================================== -->
 
                 <div class="gallery-form-group">
 
@@ -358,15 +356,10 @@
                 </div>
 
 
-
-                <!-- ========================================== -->
                 <!-- DATUM UND KATEGORIE -->
-                <!-- ========================================== -->
 
                 <div class="gallery-form-row">
 
-
-                    <!-- DATUM -->
 
                     <div class="gallery-form-group">
 
@@ -381,8 +374,6 @@
 
                     </div>
 
-
-                    <!-- KATEGORIE -->
 
                     <div class="gallery-form-group">
 
@@ -423,10 +414,7 @@
                 </div>
 
 
-
-                <!-- ========================================== -->
                 <!-- BESCHREIBUNG -->
-                <!-- ========================================== -->
 
                 <div class="gallery-form-group">
 
@@ -442,14 +430,10 @@
 
                 </div>
 
-
             </div>
 
 
-
-            <!-- ========================================== -->
             <!-- POPUP-BUTTONS -->
-            <!-- ========================================== -->
 
             <div class="app-modal-buttons">
 
@@ -472,16 +456,14 @@
 
             </div>
 
-
         </div>
 
     </div>
 
 
-
-    <!-- ========================================== -->
-    <!-- LIGHTBOX -->
-    <!-- ========================================== -->
+    <!-- ================================================== -->
+    <!-- LIGHTBOX                                           -->
+    <!-- ================================================== -->
 
     <div
         id="gallery-lightbox"
@@ -491,7 +473,7 @@
         <div class="gallery-lightbox-content">
 
 
-            <!-- LIGHTBOX SCHLIESSEN -->
+            <!-- SCHLIESSEN -->
 
             <button
                 type="button"
@@ -503,17 +485,61 @@
             </button>
 
 
+            <!-- ================================================== -->
+            <!-- MEDIENBEREICH MIT PFEILEN                           -->
+            <!-- ================================================== -->
 
-            <!-- FOTO ODER VIDEO -->
-
-            <div
-                id="gallery-lightbox-media"
-                class="gallery-lightbox-media"
-            ></div>
+            <div class="gallery-lightbox-media-wrapper">
 
 
+                <!-- VORHERIGES FOTO -->
 
-            <!-- INFORMATIONEN -->
+                <button
+                    type="button"
+                    id="gallery-lightbox-previous"
+                    class="gallery-lightbox-arrow gallery-lightbox-arrow-left"
+                    aria-label="Vorheriges Foto"
+                    hidden
+                >
+                    ‹
+                </button>
+
+
+                <!-- FOTO ODER VIDEO -->
+
+                <div
+                    id="gallery-lightbox-media"
+                    class="gallery-lightbox-media"
+                ></div>
+
+
+                <!-- NÄCHSTES FOTO -->
+
+                <button
+                    type="button"
+                    id="gallery-lightbox-next"
+                    class="gallery-lightbox-arrow gallery-lightbox-arrow-right"
+                    aria-label="Nächstes Foto"
+                    hidden
+                >
+                    ›
+                </button>
+
+
+                <!-- BILDZÄHLER -->
+
+                <div
+                    id="gallery-lightbox-counter"
+                    class="gallery-lightbox-counter"
+                    hidden
+                ></div>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- INFORMATIONEN                                      -->
+            <!-- ================================================== -->
 
             <div class="gallery-lightbox-info">
 
@@ -530,16 +556,14 @@
 
             </div>
 
-
         </div>
 
     </div>
 
 
-
-    <!-- ========================================== -->
-    <!-- FOOTER -->
-    <!-- ========================================== -->
+    <!-- ================================================== -->
+    <!-- FOOTER                                             -->
+    <!-- ================================================== -->
 
     <footer>
 
@@ -550,13 +574,13 @@
     </footer>
 
 
-
-    <!-- ========================================== -->
-    <!-- JAVASCRIPT -->
-    <!-- ========================================== -->
+    <!-- ================================================== -->
+    <!-- JAVASCRIPT                                         -->
+    <!-- ================================================== -->
 
     <script src="../js/galerie.js"></script>
 
+    <script src="../js/scroll-top.js"></script>
 
 </body>
 

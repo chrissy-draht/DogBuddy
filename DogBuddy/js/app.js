@@ -308,235 +308,458 @@ function calculateAge(birthday) {
 const dashboardWeight =
     document.getElementById("dashboard-weight");
 
-// Größe auf dem Dashboard
-const dashboardHeight =
-    document.getElementById("dashboard-height");
+
+// ==================================================
+// KÖRPERMASSE - WECHSELANZEIGE
+// ==================================================
+
+const bodyMeasurementTitle =
+    document.getElementById("body-measurement-title");
+
+const bodyMeasurementValue =
+    document.getElementById("body-measurement-value");
+
+const bodyMeasurementIcon =
+    document.getElementById("body-measurement-icon");
+
+const bodyMeasurementPrev =
+    document.getElementById("body-measurement-prev");
+
+const bodyMeasurementNext =
+    document.getElementById("body-measurement-next");
+
+
+// Die vier Körpermaße
+const bodyMeasurements = [
+
+    {
+        title: "Schulterhöhe",
+        property: "height",
+        icon: "📏"
+    },
+
+    {
+        title: "Brustumfang",
+        property: "chest",
+        icon: "📐"
+    },
+
+    {
+        title: "Halsumfang",
+        property: "neck",
+        icon: "📏"
+    },
+
+    {
+        title: "Rückenlänge",
+        property: "back",
+        icon: "📐"
+    }
+
+];
+
+
+// Schulterhöhe ist beim Start ausgewählt
+let currentBodyMeasurementIndex = 0;
+
 
 // Gespeicherte Messungen aus localStorage holen
 const dashboardMeasurements =
     localStorage.getItem("measurements");
 
-// Prüfen, ob Messungen gespeichert sind
+let measurements = [];
+
+
+// ==================================================
+// MESSUNGEN LADEN
+// ==================================================
+
 if (dashboardMeasurements !== null) {
 
-    // Gespeicherte Messungen wieder in ein Array umwandeln
-    const measurements =
+    measurements =
         JSON.parse(dashboardMeasurements);
 
-    // Prüfen, ob mindestens eine Messung vorhanden ist
+    // Neueste Messung zuerst
+    measurements.sort(function (a, b) {
+
+        return new Date(b.date) -
+            new Date(a.date);
+
+    });
+
+
+    // Gewicht anzeigen
     if (measurements.length > 0) {
 
-        // Messungen nach Datum sortieren
-        measurements.sort(function (a, b) {
-
-            return new Date(b.date) - new Date(a.date);
-
-        });
-
-        // Neueste Messung holen
-        const latestMeasurement = measurements[0];
-
-        // Gewicht auf dem Dashboard anzeigen
-        dashboardWeight.textContent =
-            latestMeasurement.weight.replace(".", ",") + " kg";
-
-        // Größe auf dem Dashboard anzeigen
-        dashboardHeight.textContent =
-            latestMeasurement.height.replace(".", ",") + " cm";
-    }
-}
-
-// ==================================================
-// TRAINING AUF DEM DASHBOARD ANZEIGEN
-// ==================================================
-
-// Bereich für Training auf dem Dashboard holen
-const dashboardTrainingList =
-    document.getElementById("dashboard-training-list");
-
-// Gespeicherte Trainingsdaten aus localStorage holen
-const dashboardTrainings =
-    localStorage.getItem("trainings");
-
-
-// Prüfen, ob Trainingsdaten gespeichert sind
-if (dashboardTrainings !== null) {
-
-    // Gespeicherten Text wieder in ein Array umwandeln
-    const trainings =
-        JSON.parse(dashboardTrainings);
-
-
-    // Prüfen, ob Trainings vorhanden sind
-    if (trainings.length > 0) {
-
-        // Platzhalter entfernen
-        dashboardTrainingList.innerHTML = "";
-
-
-        // ==================================================
-        // TRAININGS NACH DATUM SORTIEREN
-        // ==================================================
-
-        trainings.sort(function (a, b) {
-
-            return new Date(b.date) -
-                new Date(a.date);
-
-        });
-
-
-        // ==================================================
-        // NUR AKTUELLSTEN STAND JEDER ÜBUNG MERKEN
-        // ==================================================
-
-        const latestTrainings = [];
-
-
-        trainings.forEach(function (training) {
-
-            // Prüfen, ob diese Übung bereits
-            // in latestTrainings vorhanden ist
-            const alreadyExists =
-                latestTrainings.some(
-                    function (savedTraining) {
-
-                        return savedTraining.name
-                            .toLowerCase() ===
-                            training.name
-                                .toLowerCase();
-
-                    }
-                );
-
-
-            // Nur hinzufügen, wenn die Übung
-            // noch nicht vorhanden ist
-            if (alreadyExists === false) {
-
-                latestTrainings.push(
-                    training
-                );
-
-            }
-
-        });
-
-
-        // ==================================================
-        // MAXIMAL 3 ÜBUNGEN AUF DEM DASHBOARD
-        // ==================================================
-
-        const dashboardTrainingsToShow =
-            latestTrainings.slice(0, 3);
-
-
-        // ==================================================
-        // TRAININGS ANZEIGEN
-        // ==================================================
-
-        dashboardTrainingsToShow.forEach(
-            function (training) {
-
-                // Zeile erstellen
-                const trainingRow =
-                    document.createElement("div");
-
-                trainingRow.classList.add(
-                    "skill"
-                );
-
-
-                // Name
-                const trainingName =
-                    document.createElement("span");
-
-                trainingName.textContent =
-                    training.name;
-
-
-                // Sterne
-                const trainingStars =
-                    document.createElement("span");
-
-                trainingStars.classList.add(
-                    "stars"
-                );
-
-                trainingStars.textContent =
-                    createDashboardStars(
-                        training.rating
-                    );
-
-
-                // Name und Sterne in die Zeile
-                trainingRow.appendChild(
-                    trainingName
-                );
-
-                trainingRow.appendChild(
-                    trainingStars
-                );
-
-
-                // Zeile auf Dashboard anzeigen
-                dashboardTrainingList.appendChild(
-                    trainingRow
-                );
-
-            }
-        );
-
-    }
-
-}
-
-
-// ==================================================
-// STERNE FÜR DAS DASHBOARD ERSTELLEN
-// ==================================================
-
-function createDashboardStars(rating) {
-
-    let starText = "";
-
-
-    // Immer 5 Sterne erstellen
-    for (let i = 1; i <= 5; i++) {
-
-        if (i <= rating) {
-
-            starText += "★";
-
-        } else {
-
-            starText += "☆";
+        const latestMeasurement =
+            measurements[0];
+
+        if (
+            latestMeasurement.weight !== undefined &&
+            latestMeasurement.weight !== ""
+        ) {
+
+            dashboardWeight.textContent =
+                String(latestMeasurement.weight)
+                    .replace(".", ",") +
+                " kg";
 
         }
 
     }
 
+}
 
-    return starText;
+
+// ==================================================
+// AUSGEWÄHLTES KÖRPERMASS ANZEIGEN
+// ==================================================
+
+function displayBodyMeasurement() {
+
+    const selectedMeasurement =
+        bodyMeasurements[
+            currentBodyMeasurementIndex
+        ];
+
+    // Überschrift ändern
+    bodyMeasurementTitle.textContent =
+        selectedMeasurement.title;
+
+    // Icon ändern
+    bodyMeasurementIcon.textContent =
+        selectedMeasurement.icon;
+
+
+    // ==================================================
+    // NEUESTEN VORHANDENEN WERT FINDEN
+    // ==================================================
+
+    const measurementWithValue =
+        measurements.find(
+            function (measurement) {
+
+                const value =
+                    measurement[
+                        selectedMeasurement.property
+                    ];
+
+                return (
+                    value !== undefined &&
+                    value !== null &&
+                    value !== ""
+                );
+
+            }
+        );
+
+
+    // Wert anzeigen
+    if (measurementWithValue !== undefined) {
+
+        const value =
+            measurementWithValue[
+                selectedMeasurement.property
+            ];
+
+        bodyMeasurementValue.textContent =
+            String(value)
+                .replace(".", ",") +
+            " cm";
+
+    } else {
+
+        bodyMeasurementValue.textContent =
+            "– cm";
+
+    }
+
+
+    // Passendes Diagramm anzeigen
+    updateBodyMeasurementChart(
+        selectedMeasurement.property
+    );
+
+}
+
+
+// ==================================================
+// PFEIL NACH LINKS
+// ==================================================
+
+bodyMeasurementPrev.addEventListener(
+    "click",
+    function () {
+
+        currentBodyMeasurementIndex--;
+
+        if (currentBodyMeasurementIndex < 0) {
+
+            currentBodyMeasurementIndex =
+                bodyMeasurements.length - 1;
+
+        }
+
+        displayBodyMeasurement();
+
+    }
+);
+
+
+// ==================================================
+// PFEIL NACH RECHTS
+// ==================================================
+
+bodyMeasurementNext.addEventListener(
+    "click",
+    function () {
+
+        currentBodyMeasurementIndex++;
+
+        if (
+            currentBodyMeasurementIndex >=
+            bodyMeasurements.length
+        ) {
+
+            currentBodyMeasurementIndex = 0;
+
+        }
+
+        displayBodyMeasurement();
+
+    }
+);
+
+// ==================================================
+// TRAININGSFORTSCHRITT AUF DEM DASHBOARD
+// ==================================================
+
+
+// ==================================================
+// ELEMENTE AUS DEM HTML HOLEN
+// ==================================================
+
+const dashboardCommandSeen =
+    document.getElementById(
+        "dashboard-command-seen"
+    );
+
+const dashboardCommandExperienced =
+    document.getElementById(
+        "dashboard-command-experienced"
+    );
+
+const dashboardCommandRelaxed =
+    document.getElementById(
+        "dashboard-command-relaxed"
+    );
+
+
+const dashboardDiscoverySeen =
+    document.getElementById(
+        "dashboard-discovery-seen"
+    );
+
+const dashboardDiscoveryExperienced =
+    document.getElementById(
+        "dashboard-discovery-experienced"
+    );
+
+const dashboardDiscoveryRelaxed =
+    document.getElementById(
+        "dashboard-discovery-relaxed"
+    );
+
+
+// ==================================================
+// FORTSCHRITT BERECHNEN
+// ==================================================
+
+function calculateDashboardProgress(
+    storageKey
+) {
+
+    const savedState =
+        localStorage.getItem(
+            storageKey
+        );
+
+
+    // Keine Daten vorhanden
+    if (savedState === null) {
+
+        return {
+            seen: 0,
+            experienced: 0,
+            relaxed: 0
+        };
+    }
+
+
+    let state = {};
+
+    try {
+
+        state =
+            JSON.parse(
+                savedState
+            );
+
+    } catch (error) {
+
+        return {
+            seen: 0,
+            experienced: 0,
+            relaxed: 0
+        };
+    }
+
+
+    const entries =
+        Object.values(
+            state
+        );
+
+
+    // Keine Einträge vorhanden
+    if (entries.length === 0) {
+
+        return {
+            seen: 0,
+            experienced: 0,
+            relaxed: 0
+        };
+    }
+
+
+    // ==================================================
+    // HAKEN ZÄHLEN
+    // ==================================================
+
+    const seenCount =
+        entries.filter(
+            function (entry) {
+
+                return entry.seen === true;
+            }
+        ).length;
+
+
+    const experiencedCount =
+        entries.filter(
+            function (entry) {
+
+                return entry.experienced === true;
+            }
+        ).length;
+
+
+    const relaxedCount =
+        entries.filter(
+            function (entry) {
+
+                return entry.relaxed === true;
+            }
+        ).length;
+
+
+    // ==================================================
+    // PROZENTE BERECHNEN
+    // ==================================================
+
+    return {
+
+        seen:
+            Math.round(
+                seenCount /
+                entries.length *
+                100
+            ),
+
+        experienced:
+            Math.round(
+                experiencedCount /
+                entries.length *
+                100
+            ),
+
+        relaxed:
+            Math.round(
+                relaxedCount /
+                entries.length *
+                100
+            )
+    };
+}
+
+
+// ==================================================
+// KOMMANDOS
+// ==================================================
+
+const commandProgress =
+    calculateDashboardProgress(
+        "commandChecklist"
+    );
+
+
+// ==================================================
+// ENTDECKER
+// ==================================================
+
+const discoveryProgress =
+    calculateDashboardProgress(
+        "discoveryChecklist"
+    );
+
+
+// ==================================================
+// FORTSCHRITT ANZEIGEN
+// ==================================================
+
+if (
+    dashboardCommandSeen !== null
+) {
+
+    dashboardCommandSeen.textContent =
+        commandProgress.seen +
+        " %";
+
+    dashboardCommandExperienced.textContent =
+        commandProgress.experienced +
+        " %";
+
+    dashboardCommandRelaxed.textContent =
+        commandProgress.relaxed +
+        " %";
+
+
+    dashboardDiscoverySeen.textContent =
+        discoveryProgress.seen +
+        " %";
+
+    dashboardDiscoveryExperienced.textContent =
+        discoveryProgress.experienced +
+        " %";
+
+    dashboardDiscoveryRelaxed.textContent =
+        discoveryProgress.relaxed +
+        " %";
 }
 
 // ==================================================
-// LETZTEN TAGEBUCHEINTRAG AUF DEM DASHBOARD ANZEIGEN
+// LETZTE TAGEBUCHEINTRÄGE AUF DEM DASHBOARD
 // ==================================================
 
 
 // ==================================================
-// ELEMENTE AUS DEM DASHBOARD HOLEN
+// BEREICH AUS DEM HTML HOLEN
 // ==================================================
 
-const dashboardDiaryTitle =
-    document.getElementById("dashboard-diary-title");
-
-const dashboardDiaryDate =
-    document.getElementById("dashboard-diary-date");
-
-const dashboardDiaryText =
-    document.getElementById("dashboard-diary-text");
+const dashboardDiaryList =
+    document.getElementById(
+        "dashboard-diary-list"
+    );
 
 
 // ==================================================
@@ -544,16 +767,18 @@ const dashboardDiaryText =
 // ==================================================
 
 const dashboardDiaryEntries =
-    localStorage.getItem("diaryEntries");
+    localStorage.getItem(
+        "diaryEntries"
+    );
 
 
 // ==================================================
-// PRÜFEN, OB TAGEBUCHEINTRÄGE VORHANDEN SIND
+// TAGEBUCHEINTRÄGE ANZEIGEN
 // ==================================================
 
 if (
-    dashboardDiaryEntries !== null &&
-    dashboardDiaryTitle !== null
+    dashboardDiaryList !== null &&
+    dashboardDiaryEntries !== null
 ) {
 
     const diaryEntries =
@@ -562,131 +787,123 @@ if (
         );
 
 
-    if (diaryEntries.length > 0) {
+    // ==================================================
+    // NEUESTE EINTRÄGE ZUERST
+    // ==================================================
+
+    diaryEntries.sort(
+        function (a, b) {
+
+            const dateDifference =
+                new Date(b.date) -
+                new Date(a.date);
 
 
-        // ==================================================
-        // NEUESTEN EINTRAG FINDEN
-        // ==================================================
+            if (
+                dateDifference !== 0
+            ) {
 
-        diaryEntries.sort(
-            function (a, b) {
-
-                const dateDifference =
-                    new Date(b.date) -
-                    new Date(a.date);
-
-
-                // Unterschiedliches Datum
-                if (dateDifference !== 0) {
-
-                    return dateDifference;
-
-                }
-
-
-                // Gleiches Datum:
-                // zuletzt erstellter Eintrag zuerst
-                return b.id - a.id;
+                return dateDifference;
 
             }
+
+
+            return b.id - a.id;
+
+        }
+    );
+
+
+    // ==================================================
+    // ALTE ANZEIGE LEEREN
+    // ==================================================
+
+    dashboardDiaryList.innerHTML = "";
+
+
+    // ==================================================
+    // MAXIMAL 2 EINTRÄGE ANZEIGEN
+    // ==================================================
+
+    const diaryEntriesToShow =
+        diaryEntries.slice(
+            0,
+            2
         );
 
 
-        const latestDiaryEntry =
-            diaryEntries[0];
+    diaryEntriesToShow.forEach(
+        function (entry) {
 
+            // ==================================================
+            // KASTEN FÜR EINEN EINTRAG
+            // ==================================================
 
-        // ==================================================
-        // TITEL ANZEIGEN
-        // ==================================================
-
-        dashboardDiaryTitle.textContent =
-            latestDiaryEntry.title;
-
-
-        // ==================================================
-        // DATUM ANZEIGEN
-        // ==================================================
-
-        if (
-            dashboardDiaryDate !== null
-        ) {
-
-            dashboardDiaryDate.textContent =
-                formatDashboardDiaryDate(
-                    latestDiaryEntry.date
+            const diaryBox =
+                document.createElement(
+                    "div"
                 );
 
-        }
+            diaryBox.classList.add(
+                "dashboard-diary-box"
+            );
 
 
-        // ==================================================
-        // KURZEN TEXT ANZEIGEN
-        // ==================================================
+            // ==================================================
+            // DATUM
+            // ==================================================
 
-        if (
-            dashboardDiaryText !== null
-        ) {
+            const diaryDate =
+                document.createElement(
+                    "span"
+                );
 
-            let diaryText = "";
+            diaryDate.classList.add(
+                "dashboard-diary-box-date"
+            );
 
-
-            // Besonderer Moment bevorzugen
-            if (
-                latestDiaryEntry.highlight !== undefined &&
-                latestDiaryEntry.highlight !== ""
-            ) {
-
-                diaryText =
-                    latestDiaryEntry.highlight;
-
-            }
+            diaryDate.textContent =
+                formatDashboardDiaryDate(
+                    entry.date
+                );
 
 
-            // Sonst "Heute gelernt"
-            else if (
-                latestDiaryEntry.learned !== undefined &&
-                latestDiaryEntry.learned !== ""
-            ) {
+            // ==================================================
+            // TITEL
+            // ==================================================
 
-                diaryText =
-                    latestDiaryEntry.learned;
+            const diaryTitle =
+                document.createElement(
+                    "strong"
+                );
 
-            }
+            diaryTitle.classList.add(
+                "dashboard-diary-box-title"
+            );
 
-
-            // Sonst "Das lief gut"
-            else if (
-                latestDiaryEntry.good !== undefined &&
-                latestDiaryEntry.good !== ""
-            ) {
-
-                diaryText =
-                    latestDiaryEntry.good;
-
-            }
+            diaryTitle.textContent =
+                entry.title;
 
 
-            // Sonst Notizen
-            else if (
-                latestDiaryEntry.note !== undefined &&
-                latestDiaryEntry.note !== ""
-            ) {
+            // ==================================================
+            // IN DEN KASTEN EINFÜGEN
+            // ==================================================
 
-                diaryText =
-                    latestDiaryEntry.note;
+            diaryBox.appendChild(
+                diaryDate
+            );
 
-            }
+            diaryBox.appendChild(
+                diaryTitle
+            );
 
 
-            // Text auf Dashboard anzeigen
-            dashboardDiaryText.textContent =
-                diaryText;
+            dashboardDiaryList.appendChild(
+                diaryBox
+            );
 
         }
-
-    }
+    );
 
 }
 
@@ -720,34 +937,34 @@ function formatDashboardDiaryDate(date) {
 }
 
 // ==================================================
-// NÄCHSTER TERMIN AUF DEM DASHBOARD
+// NÄCHSTE TERMINE AUF DEM DASHBOARD
 // ==================================================
 
-// HTML-Elemente auf dem Dashboard holen
-const dashboardAppointmentTitle =
-    document.getElementById("dashboard-appointment-title");
-
-const dashboardAppointmentDate =
-    document.getElementById("dashboard-appointment-date");
-
-const dashboardAppointmentLocation =
-    document.getElementById("dashboard-appointment-location");
+// Bereich für die Termine aus dem HTML holen
+const dashboardAppointmentList =
+    document.getElementById(
+        "dashboard-appointment-list"
+    );
 
 
 // Gespeicherte Termine aus localStorage holen
 const dashboardAppointments =
-    localStorage.getItem("appointments");
+    localStorage.getItem(
+        "appointments"
+    );
 
 
 // Nur ausführen, wenn wir uns auf dem Dashboard befinden
 if (
-    dashboardAppointmentTitle !== null &&
+    dashboardAppointmentList !== null &&
     dashboardAppointments !== null
 ) {
 
     // JSON wieder in ein JavaScript-Array umwandeln
     const appointments =
-        JSON.parse(dashboardAppointments);
+        JSON.parse(
+            dashboardAppointments
+        );
 
 
     // ==================================================
@@ -758,7 +975,7 @@ if (
         appointments.filter(
             function (appointment) {
 
-                return appointment.completed === false;
+                return appointment.completed !== true;
 
             }
         );
@@ -779,59 +996,113 @@ if (
 
 
     // ==================================================
-    // NÄCHSTEN TERMIN ANZEIGEN
+    // ALTE ANZEIGE LEEREN
     // ==================================================
 
-    if (openAppointments.length > 0) {
-
-        const nextAppointment =
-            openAppointments[0];
+    dashboardAppointmentList.innerHTML = "";
 
 
-        // Kategorie + Titel anzeigen
-        dashboardAppointmentTitle.textContent =
-            getDashboardAppointmentIcon(
-                nextAppointment.category
-            ) +
-            " " +
-            nextAppointment.title;
+    // ==================================================
+    // MAXIMAL 3 TERMINE ANZEIGEN
+    // ==================================================
+
+    const appointmentsToShow =
+        openAppointments.slice(
+            0,
+            3
+        );
 
 
-        // Datum vorbereiten
-        let appointmentDateText =
-            formatDashboardAppointmentDate(
-                nextAppointment.date
+    appointmentsToShow.forEach(
+        function (appointment) {
+
+            // ==================================================
+            // KASTEN FÜR EINEN TERMIN
+            // ==================================================
+
+            const appointmentBox =
+                document.createElement(
+                    "div"
+                );
+
+            appointmentBox.classList.add(
+                "dashboard-appointment-box"
             );
 
 
-        // Uhrzeit ergänzen, falls vorhanden
-        if (nextAppointment.time !== "") {
+            // ==================================================
+            // TITEL
+            // ==================================================
 
-            appointmentDateText +=
-                " · " +
-                nextAppointment.time +
-                " Uhr";
+            const appointmentTitle =
+                document.createElement(
+                    "strong"
+                );
+
+            appointmentTitle.classList.add(
+                "dashboard-appointment-box-title"
+            );
+
+            appointmentTitle.textContent =
+                appointment.title;
+
+
+            // ==================================================
+            // DATUM UND UHRZEIT
+            // ==================================================
+
+            const appointmentDate =
+                document.createElement(
+                    "span"
+                );
+
+            appointmentDate.classList.add(
+                "dashboard-appointment-box-date"
+            );
+
+
+            let appointmentDateText =
+                formatDashboardAppointmentDate(
+                    appointment.date
+                );
+
+
+            if (
+                appointment.time !== ""
+            ) {
+
+                appointmentDateText +=
+                    " · " +
+                    appointment.time +
+                    " Uhr";
+
+            }
+
+
+            appointmentDate.textContent =
+                appointmentDateText;
+
+
+            // ==================================================
+            // TERMIN IN DEN KASTEN EINFÜGEN
+            // ==================================================
+
+            appointmentBox.appendChild(
+                appointmentTitle
+            );
+
+            appointmentBox.appendChild(
+                appointmentDate
+            );
+
+
+            // Kasten auf dem Dashboard anzeigen
+            dashboardAppointmentList.appendChild(
+                appointmentBox
+            );
 
         }
-
-
-        dashboardAppointmentDate.textContent =
-            appointmentDateText;
-
-
-        // Ort anzeigen, falls vorhanden
-        if (
-            dashboardAppointmentLocation !== null &&
-            nextAppointment.location !== ""
-        ) {
-
-            dashboardAppointmentLocation.textContent =
-                "📍 " +
-                nextAppointment.location;
-
-        }
-
-    }
+    );
 
 }
 
@@ -1299,49 +1570,70 @@ if (
             );
 
         }
-
-
-        // ==================================================
-        // SCHULTERHÖHE
-        // ==================================================
-
-        if (dashboardHeightChart !== null) {
-
-            const heightValues =
-                chartMeasurements
-                    .filter(
-                        function (measurement) {
-
-                            return (
-                                measurement.height !== undefined &&
-                                measurement.height !== null &&
-                                measurement.height !== ""
-                            );
-
-                        }
-                    )
-                    .map(
-                        function (measurement) {
-
-                            return Number(
-                                measurement.height
-                            );
-
-                        }
-                    );
-
-
-            createMiniChart(
-                dashboardHeightChart,
-                heightValues
-            );
-
-        }
-
     }
 
 }
 
+
+// ==================================================
+// DIAGRAMM FÜR AUSGEWÄHLTES KÖRPERMASS
+// ==================================================
+
+function updateBodyMeasurementChart(
+    property
+) {
+
+    if (dashboardHeightChart === null) {
+        return;
+    }
+
+
+    // Messungen chronologisch sortieren
+    const sortedMeasurements =
+        [...measurements].sort(
+            function (a, b) {
+
+                return new Date(a.date) -
+                    new Date(b.date);
+
+            }
+        );
+
+
+    // Nur Werte des ausgewählten Körpermaßes
+    const values =
+        sortedMeasurements
+            .filter(
+                function (measurement) {
+
+                    return (
+                        measurement[property] !== undefined &&
+                        measurement[property] !== null &&
+                        measurement[property] !== ""
+                    );
+
+                }
+            )
+            .map(
+                function (measurement) {
+
+                    return Number(
+                        measurement[property]
+                    );
+
+                }
+            );
+
+
+    createMiniChart(
+        dashboardHeightChart,
+        values
+    );
+
+}
+
+// Beim Laden zuerst Schulterhöhe anzeigen
+displayBodyMeasurement();
 
 // ==================================================
 // MINI-DIAGRAMM ERSTELLEN

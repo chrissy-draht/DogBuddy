@@ -47,12 +47,36 @@
                 Tagebuch
             </a>
 
-            <a
-                href="training.html"
-                class="active"
-            >
-                Training
-            </a>
+
+            <!-- ================================== -->
+            <!-- TRAINING - DROPDOWN -->
+            <!-- ================================== -->
+
+            <div class="nav-dropdown">
+            
+                <a
+                    href="training.html"
+                    class="active nav-dropdown-button"
+                >
+                    Training
+                </a>
+            
+                <div class="nav-dropdown-menu">
+                
+                    <a href="training.html">
+                        Training
+                    </a>
+                
+                    <a
+                        href="entdecker.html"
+                        class="active"
+                    >
+                        Entdecker-Checkliste
+                    </a>
+                
+                </div>
+            
+            </div>
 
             <a href="entwicklung.html">
                 Entwicklung
@@ -87,72 +111,78 @@
         <!-- ====================================== -->
 
         <section class="training-header">
-
+        
             <div>
-
+            
                 <p class="eyebrow">
                     TRAINING
                 </p>
-
+            
                 <h1>
-                    Majors Training
+                    <span id="page-dog-name">Major</span>s Training
                 </h1>
-
+            
                 <p>
-                    Übungen und Fortschritte im Blick behalten.
+                    Übungen, Fortschritte und neue Erfahrungen
+                    im Blick behalten.
                 </p>
-
+            
             </div>
-
-
-            <!-- POPUP ÖFFNEN -->
-
-            <button
-                type="button"
-                id="open-training-form"
-                class="gallery-add-button"
-            >
-
-                <span class="gallery-add-icon">
-                    ＋
-                </span>
-
-                Neue Übung
-
-            </button>
-
+        
         </section>
 
-
-        <!-- ====================================== -->
-        <!-- TRAININGSSTAND -->
-        <!-- ====================================== -->
-
-        <section class="training-overview">
-
-            <p class="eyebrow">
-                ÜBERSICHT
-            </p>
-
-            <h2>
-                Trainingsstand
-            </h2>
-
-
-            <div id="training-list">
-
-                <!--
-                    Hier fügt training.js
-                    automatisch die gespeicherten
-                    Übungen ein.
-                -->
-
-            </div>
-
-        </section>
-
-
-    </main>
+        
+            <!-- ====================================== -->
+            <!-- TRAININGSSTAND -->
+            <!-- ====================================== -->
+                    
+            <section class="training-overview">
+            
+                <div class="training-overview-header">
+                
+                    <div>
+                    
+                        <p class="eyebrow">
+                            ÜBERSICHT
+                        </p>
+                    
+                        <h2>
+                            Trainingsstand
+                        </h2>
+                    
+                    </div>
+                
+                
+                    <!-- POPUP ÖFFNEN -->
+                
+                    <button
+                        type="button"
+                        id="open-training-form"
+                        class="gallery-add-button"
+                    >
+                
+                        <span class="gallery-add-icon">
+                            ＋
+                        </span>
+                    
+                        Neue Übung
+                    
+                    </button>
+                
+                </div>
+            
+            
+                <div id="training-list">
+                
+                    <!--
+                        Hier fügt training.js
+                        automatisch die gespeicherten
+                        Übungen ein.
+                    -->
+                
+                </div>
+            
+            </section>
 
 
     <!-- ========================================== -->
@@ -361,6 +391,8 @@
     <!-- ========================================== -->
 
     <script src="../js/training.js"></script>
+
+    <script src="../js/scroll-top.js"></script>
 
 </body>
 

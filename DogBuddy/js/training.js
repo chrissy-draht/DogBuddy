@@ -7,6 +7,10 @@
 // ELEMENTE AUS DEM HTML HOLEN
 // ==================================================
 
+// Hundename in der Seitenüberschrift
+const pageDogName =
+    document.getElementById("page-dog-name");
+
 // Eingabefeld für den Namen der Übung
 const trainingNameInput =
     document.getElementById("training-name");
@@ -40,6 +44,22 @@ const saveTrainingButton =
 // Bereich für gespeicherte Übungen
 const trainingList =
     document.getElementById("training-list");
+
+// ==================================================
+// HUNDENAME AUS DEM PROFIL LADEN
+// ==================================================
+
+const savedDog =
+    localStorage.getItem("dogProfile");
+
+if (savedDog !== null) {
+
+    const dog =
+        JSON.parse(savedDog);
+
+    pageDogName.textContent =
+        dog.name;
+}
 
 
 // ==================================================

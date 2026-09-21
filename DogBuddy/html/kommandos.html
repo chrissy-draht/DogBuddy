@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DogBuddy - Kommandos</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ================================================== -->
+    <!-- HEADER                                             -->
+    <!-- ================================================== -->
+
+    <header class="header">
+
+        <a href="../index.html">
+
+            <img
+                src="../images/logo/dogbuddy-logo-full-blank.png"
+                alt="DogBuddy Logo"
+                class="logo"
+            >
+
+        </a>
+
+
+        <nav class="navigation">
+
+            <a href="../index.html">
+                Dashboard
+            </a>
+
+            <a href="tagebuch.html">
+                Tagebuch
+            </a>
+
+
+            <!-- ================================================== -->
+            <!-- TRAINING - DROPDOWN                                -->
+            <!-- ================================================== -->
+
+            <div class="nav-dropdown">
+
+                <!--
+                    Der Oberpunkt Training öffnet nur das Dropdown.
+                    Die alte training.html wird nicht mehr verlinkt.
+                -->
+
+                <span class="active nav-dropdown-button">
+                    Training
+                </span>
+
+
+                <div class="nav-dropdown-menu">
+
+                    <a
+                        href="kommandos.html"
+                        class="active"
+                    >
+                        Kommandos
+                    </a>
+
+                    <a href="entdecker.html">
+                        Entdecker-Checkliste
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <a href="entwicklung.html">
+                Entwicklung
+            </a>
+
+            <a href="wochenplan.html">
+                Wochenplan
+            </a>
+
+            <a href="gesundheit.html">
+                Gesundheit
+            </a>
+
+            <a href="galerie.html">
+                Galerie
+            </a>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- ================================================== -->
+    <!-- HAUPTINHALT                                        -->
+    <!-- ================================================== -->
+
+    <main class="discovery-page">
+
+
+        <!-- ================================================== -->
+        <!-- ÜBERSCHRIFT                                        -->
+        <!-- ================================================== -->
+
+        <section class="discovery-page-header">
+
+            <p class="eyebrow">
+                KOMMANDOZEIT
+            </p>
+
+            <h1>
+                🐾
+                <span id="page-dog-name">
+                    Major
+                </span>s Kommandos
+            </h1>
+
+            <p>
+                Neue Kommandos kennenlernen,
+                gemeinsam ausprobieren und
+                irgendwann ganz entspannt beherrschen.
+            </p>
+
+        </section>
+
+
+
+        <!-- ================================================== -->
+        <!-- FORTSCHRITT                                        -->
+        <!-- ================================================== -->
+
+        <section class="discovery-progress">
+
+            <p class="eyebrow">
+                FORTSCHRITT
+            </p>
+
+            <h2>
+                Majors Kommandostatus
+            </h2>
+
+
+            <div class="discovery-progress-grid">
+
+
+                <!-- KENNENGELERNT -->
+
+                <div class="discovery-progress-item">
+
+                    <strong id="progress-seen">
+                        👀 Kennengelernt: 0 %
+                    </strong>
+
+                </div>
+
+
+                <!-- SELBST ERLEBT -->
+
+                <div class="discovery-progress-item">
+
+                    <strong id="progress-experienced">
+                        🐾 Selbst erlebt: 0 %
+                    </strong>
+
+                </div>
+
+
+                <!-- ENTSPANNT DABEI -->
+
+                <div class="discovery-progress-item">
+
+                    <strong id="progress-relaxed">
+                        😌 Entspannt dabei: 0 %
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================================== -->
+        <!-- KOMMANDO-CHECKLISTE                                -->
+        <!-- ================================================== -->
+
+        <section class="discovery-checklist-section">
+
+            <div id="command-checklist">
+
+                <!--
+                    Die komplette Kommandoliste wird
+                    automatisch durch kommandos.js erstellt.
+
+                    Kategorien:
+
+                    🔴 Sicherheitskommandos
+                    🟠 Grundkommandos
+                    🟡 Praktisch im Alltag
+                    💩 Lösen
+                    🐒 Spezialkommandos & Tricks
+                -->
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ================================================== -->
+    <!-- JAVASCRIPT                                         -->
+    <!-- ================================================== -->
+
+    <!-- JavaScript für die Kommandoliste -->
+    <script src="../js/kommandos.js"></script>
+
+    <script src="../js/scroll-top.js"></script>
+
+
+</body>
+
+</html>

@@ -7,6 +7,10 @@
 // HTML-ELEMENTE
 // ==================================================
 
+// Hundename in der Seitenüberschrift
+const pageDogName =
+    document.getElementById("page-dog-name");
+
 const galleryPhotoInput =
     document.getElementById("gallery-photo");
 
@@ -83,10 +87,38 @@ const galleryLightboxDescription =
 const closeGalleryLightboxButton =
     document.getElementById("close-gallery-lightbox");
 
+const galleryLightboxPreviousButton =
+    document.getElementById("gallery-lightbox-previous");
+
+const galleryLightboxNextButton =
+    document.getElementById("gallery-lightbox-next");
+
+const galleryLightboxCounter =
+    document.getElementById("gallery-lightbox-counter");
+
+
+
+// ==================================================
+// HUNDENAME AUS DEM PROFIL LADEN
+// ==================================================
+
+const savedDog =
+    localStorage.getItem("dogProfile");
+
+if (savedDog !== null) {
+
+    const dog =
+        JSON.parse(savedDog);
+
+    pageDogName.textContent =
+        dog.name;
+}
+
 
 // ==================================================
 // VARIABLEN
 // ==================================================
+
 
 let selectedGalleryFile = null;
 
@@ -97,6 +129,14 @@ let galleryEntries = [];
 let editingGalleryEntryId = null;
 
 let galleryDatabase = null;
+
+
+// Für mehrere Bilder in einem Tagebucheintrag
+let currentLightboxMedia = [];
+
+let currentLightboxIndex = 0;
+
+let currentLightboxEntry = null;
 
 
 // ==================================================
@@ -284,7 +324,9 @@ galleryFormModal.addEventListener(
 );
 
 
-// ESC-Taste
+// ==================================================
+// TASTATUR
+// ==================================================
 
 document.addEventListener(
     "keydown",
@@ -293,23 +335,33 @@ document.addEventListener(
         if (event.key === "Escape") {
 
             if (
-                galleryFormModal.classList.contains(
-                    "show"
-                )
+                galleryFormModal.classList.contains("show")
             ) {
-
                 closeGalleryModal();
-
             }
 
             if (
-                galleryLightbox.classList.contains(
-                    "show"
-                )
+                galleryLightbox.classList.contains("show")
             ) {
-
                 closeGalleryLightbox();
+            }
 
+        }
+
+
+        // Mit Pfeiltasten durch Tagebuchfotos blättern
+
+        if (
+            galleryLightbox.classList.contains("show") &&
+            currentLightboxMedia.length > 1
+        ) {
+
+            if (event.key === "ArrowLeft") {
+                showPreviousLightboxImage();
+            }
+
+            if (event.key === "ArrowRight") {
+                showNextLightboxImage();
             }
 
         }
@@ -365,8 +417,7 @@ galleryPhotoInput.addEventListener(
             galleryFileName.textContent =
                 "Keine Datei ausgewählt";
 
-            galleryUploadPreview.innerHTML =
-                "";
+            galleryUploadPreview.innerHTML = "";
 
             return;
 
@@ -376,14 +427,8 @@ galleryPhotoInput.addEventListener(
         selectedGalleryFile =
             galleryPhotoInput.files[0];
 
-
-        // Dateiname anzeigen
-
         galleryFileName.textContent =
             selectedGalleryFile.name;
-
-
-        // Vorschau anzeigen
 
         displayUploadPreview(
             selectedGalleryFile
@@ -404,8 +449,6 @@ function displayUploadPreview(file) {
     const fileUrl =
         URL.createObjectURL(file);
 
-
-    // VIDEO
 
     if (
         file.type.startsWith("video/")
@@ -437,12 +480,7 @@ function displayUploadPreview(file) {
             video
         );
 
-    }
-
-
-    // FOTO
-
-    else {
+    } else {
 
         const image =
             document.createElement("img");
@@ -473,7 +511,6 @@ function displayUploadPreview(file) {
 
 }
 
-
 // ==================================================
 // SPEICHERN
 // ==================================================
@@ -495,9 +532,9 @@ saveGalleryPhotoButton.addEventListener(
             galleryDescriptionInput.value.trim();
 
 
-        // ------------------------------------------
-        // PRÜFEN
-        // ------------------------------------------
+        // ==================================================
+        // EINGABEN PRÜFEN
+        // ==================================================
 
         if (
             editingGalleryEntryId === null &&
@@ -535,9 +572,9 @@ saveGalleryPhotoButton.addEventListener(
         }
 
 
-        // ------------------------------------------
-        // NEUER EINTRAG
-        // ------------------------------------------
+        // ==================================================
+        // NEUER GALERIEEINTRAG
+        // ==================================================
 
         if (
             editingGalleryEntryId === null
@@ -547,8 +584,7 @@ saveGalleryPhotoButton.addEventListener(
                 Date.now();
 
             const mediaId =
-                "gallery-" +
-                entryId;
+                "gallery-" + entryId;
 
 
             try {
@@ -563,12 +599,9 @@ saveGalleryPhotoButton.addEventListener(
 
                     id: entryId,
 
-                    // Neuer Name
                     mediaId: mediaId,
 
-                    // Alter Name bleibt ebenfalls erhalten.
-                    // Dadurch bleiben ältere Teile von DogBuddy
-                    // mit der Galerie kompatibel.
+                    // Alter Name bleibt für ältere Daten erhalten
                     photoId: mediaId,
 
                     title: title,
@@ -612,9 +645,9 @@ saveGalleryPhotoButton.addEventListener(
         }
 
 
-        // ------------------------------------------
-        // EINTRAG BEARBEITEN
-        // ------------------------------------------
+        // ==================================================
+        // GALERIEEINTRAG BEARBEITEN
+        // ==================================================
 
         else {
 
@@ -646,8 +679,7 @@ saveGalleryPhotoButton.addEventListener(
                 description;
 
 
-            // Wurde beim Bearbeiten
-            // eine neue Datei ausgewählt?
+            // Wurde beim Bearbeiten eine neue Datei gewählt?
 
             if (
                 selectedGalleryFile !== null
@@ -859,7 +891,19 @@ async function displayGallery() {
                     getMediaType(
                         mediaData.file,
                         entry.mediaType
-                    )
+                    ),
+
+                // Normale Galerieeinträge haben nur ein Medium
+                mediaFiles: [
+                    {
+                        file: mediaData.file,
+                        mediaType:
+                            getMediaType(
+                                mediaData.file,
+                                entry.mediaType
+                            )
+                    }
+                ]
 
             });
 
@@ -869,7 +913,7 @@ async function displayGallery() {
 
 
     // ==================================================
-    // TAGEBUCHFOTOS LADEN
+    // TAGEBUCHEINTRÄGE MIT FOTOS LADEN
     // ==================================================
 
     const diaryMedia =
@@ -1024,15 +1068,21 @@ function getMediaType(
 // ==================================================
 // TAGEBUCHFOTOS FÜR GALERIE
 // ==================================================
+// WICHTIG:
+// Früher wurde hier für JEDES Foto eine eigene
+// Galeriekarte erzeugt.
+//
+// Jetzt wird pro TAGEBUCHEINTRAG nur noch
+// EIN Galerieobjekt erzeugt.
+// Alle zugehörigen Fotos liegen in "mediaFiles".
+// ==================================================
 
 async function getDiaryPhotosForGallery() {
 
     const result = [];
 
-
-    // Tagebucheinträge laden
-
     let diaryEntries = [];
+
 
     const savedDiaryEntries =
         localStorage.getItem(
@@ -1075,7 +1125,9 @@ async function getDiaryPhotosForGallery() {
     }
 
 
-    // Jeden Tagebucheintrag prüfen
+    // ==================================================
+    // JEDEN TAGEBUCHEINTRAG PRÜFEN
+    // ==================================================
 
     for (
         const diaryEntry of diaryEntries
@@ -1084,12 +1136,18 @@ async function getDiaryPhotosForGallery() {
         if (
             !Array.isArray(
                 diaryEntry.photos
-            )
+            ) ||
+            diaryEntry.photos.length === 0
         ) {
 
             continue;
 
         }
+
+
+        // Alle Fotos DIESES Tagebucheintrags sammeln
+
+        const mediaFiles = [];
 
 
         for (
@@ -1108,45 +1166,74 @@ async function getDiaryPhotosForGallery() {
                 photoData.file
             ) {
 
-                result.push({
+                mediaFiles.push({
 
-                    id:
-                        "diary-" +
-                        photoId,
+                    photoId: photoId,
 
-                    photoId:
-                        photoId,
+                    file: photoData.file,
 
-                    title:
-                        diaryEntry.title ||
-                        "Tagebuch",
-
-                    date:
-                        diaryEntry.date ||
-                        "",
-
-                    category:
-                        "Tagebuch",
-
-                    description:
-                        diaryEntry.highlight ||
-                        diaryEntry.note ||
-                        "",
-
-                    source:
-                        "diary",
-
-                    file:
-                        photoData.file,
-
-                    mediaType:
-                        "image"
+                    mediaType: "image"
 
                 });
 
             }
 
         }
+
+
+        // Wenn kein Foto gefunden wurde:
+        // Eintrag überspringen
+
+        if (mediaFiles.length === 0) {
+            continue;
+        }
+
+
+        // ==================================================
+        // NUR EIN OBJEKT PRO TAGEBUCHEINTRAG
+        // ==================================================
+
+        result.push({
+
+            id:
+                "diary-" +
+                (
+                    diaryEntry.id ||
+                    diaryEntry.date ||
+                    result.length
+                ),
+
+            title:
+                diaryEntry.title ||
+                "Tagebuch",
+
+            date:
+                diaryEntry.date ||
+                "",
+
+            category:
+                "Tagebuch",
+
+            description:
+                diaryEntry.highlight ||
+                diaryEntry.note ||
+                "",
+
+            source:
+                "diary",
+
+            // Erstes Foto wird Vorschaubild
+            file:
+                mediaFiles[0].file,
+
+            mediaType:
+                "image",
+
+            // Alle Fotos des Tagebucheintrags
+            mediaFiles:
+                mediaFiles
+
+        });
 
     }
 
@@ -1242,7 +1329,6 @@ function getFileFromDatabase(
 
 }
 
-
 // ==================================================
 // GALERIE-KARTE ERSTELLEN
 // ==================================================
@@ -1328,7 +1414,7 @@ function createGalleryCard(media) {
 
 
     // ==================================================
-    // BADGE FÜR VIDEO
+    // VIDEO-BADGE
     // ==================================================
 
     if (
@@ -1347,6 +1433,43 @@ function createGalleryCard(media) {
 
         mediaArea.appendChild(
             videoBadge
+        );
+
+    }
+
+
+    // ==================================================
+    // MEHRERE TAGEBUCHFOTOS: +X ANZEIGEN
+    // ==================================================
+
+    if (
+        media.source === "diary" &&
+        Array.isArray(media.mediaFiles) &&
+        media.mediaFiles.length > 1
+    ) {
+
+        const morePhotosBadge =
+            document.createElement("span");
+
+        morePhotosBadge.classList.add(
+            "gallery-more-photos"
+        );
+
+
+        // Beispiel:
+        // insgesamt 4 Bilder
+        // 1 ist sichtbar
+        // also +3
+
+        morePhotosBadge.textContent =
+            "+" +
+            (
+                media.mediaFiles.length - 1
+            );
+
+
+        mediaArea.appendChild(
+            morePhotosBadge
         );
 
     }
@@ -1521,8 +1644,7 @@ function createGalleryCard(media) {
         "pointer";
 
 
-    // URL erst freigeben,
-    // wenn das Element geladen wurde
+    // Object-URL nach dem Laden freigeben
 
     const displayedMedia =
         mediaArea.querySelector(
@@ -1815,7 +1937,6 @@ filterButtons.forEach(
     }
 );
 
-
 // ==================================================
 // LIGHTBOX ÖFFNEN
 // ==================================================
@@ -1824,20 +1945,125 @@ function openGalleryLightbox(
     media
 ) {
 
+    currentLightboxEntry =
+        media;
+
+
+    // Wenn mehrere Medien vorhanden sind,
+    // verwenden wir das komplette Array.
+
+    if (
+        Array.isArray(media.mediaFiles) &&
+        media.mediaFiles.length > 0
+    ) {
+
+        currentLightboxMedia =
+            media.mediaFiles;
+
+    } else {
+
+        currentLightboxMedia = [
+            {
+                file: media.file,
+                mediaType: media.mediaType
+            }
+        ];
+
+    }
+
+
+    currentLightboxIndex = 0;
+
+
+    // Informationen eintragen
+
+    galleryLightboxCategory.textContent =
+        getCategoryLabel(
+            media.category
+        );
+
+
+    galleryLightboxTitle.textContent =
+        media.title;
+
+
+    galleryLightboxDate.textContent =
+        formatGalleryDate(
+            media.date
+        );
+
+
+    galleryLightboxDescription.textContent =
+        media.description || "";
+
+
+    // Erstes Bild anzeigen
+
+    displayCurrentLightboxMedia();
+
+
+    galleryLightbox.classList.add(
+        "show"
+    );
+
+
+    document.body.classList.add(
+        "gallery-modal-open"
+    );
+
+}
+
+
+// ==================================================
+// AKTUELLES LIGHTBOX-BILD ANZEIGEN
+// ==================================================
+
+function displayCurrentLightboxMedia() {
+
+    // Alte Object-URL freigeben
+
+    const oldObjectUrl =
+        galleryLightboxMedia.dataset.objectUrl;
+
+
+    if (oldObjectUrl) {
+
+        URL.revokeObjectURL(
+            oldObjectUrl
+        );
+
+    }
+
+
     galleryLightboxMedia.innerHTML =
         "";
 
 
+    const currentMedia =
+        currentLightboxMedia[
+            currentLightboxIndex
+        ];
+
+
+    if (!currentMedia) {
+        return;
+    }
+
+
     const mediaUrl =
         URL.createObjectURL(
-            media.file
+            currentMedia.file
         );
+
+
+    galleryLightboxMedia.dataset.objectUrl =
+        mediaUrl;
 
 
     // VIDEO
 
     if (
-        media.mediaType === "video"
+        currentMedia.mediaType === "video"
     ) {
 
         const video =
@@ -1874,7 +2100,9 @@ function openGalleryLightbox(
             mediaUrl;
 
         image.alt =
-            media.title;
+            currentLightboxEntry
+                ? currentLightboxEntry.title
+                : "Galeriefoto";
 
         image.classList.add(
             "gallery-lightbox-file"
@@ -1887,40 +2115,142 @@ function openGalleryLightbox(
     }
 
 
-    galleryLightboxMedia.dataset.objectUrl =
-        mediaUrl;
+    // ==================================================
+    // ZÄHLER UND PFEILE
+    // ==================================================
+
+    if (
+        currentLightboxMedia.length > 1
+    ) {
+
+        galleryLightboxCounter.textContent =
+            (
+                currentLightboxIndex + 1
+            ) +
+            " / " +
+            currentLightboxMedia.length;
 
 
-    galleryLightboxCategory.textContent =
-        getCategoryLabel(
-            media.category
-        );
+        galleryLightboxCounter.hidden =
+            false;
 
+        galleryLightboxPreviousButton.hidden =
+            false;
 
-    galleryLightboxTitle.textContent =
-        media.title;
+        galleryLightboxNextButton.hidden =
+            false;
 
+    } else {
 
-    galleryLightboxDate.textContent =
-        formatGalleryDate(
-            media.date
-        );
+        galleryLightboxCounter.textContent =
+            "";
 
+        galleryLightboxCounter.hidden =
+            true;
 
-    galleryLightboxDescription.textContent =
-        media.description || "";
+        galleryLightboxPreviousButton.hidden =
+            true;
 
+        galleryLightboxNextButton.hidden =
+            true;
 
-    galleryLightbox.classList.add(
-        "show"
-    );
-
-
-    document.body.classList.add(
-        "gallery-modal-open"
-    );
+    }
 
 }
+
+
+// ==================================================
+// VORHERIGES BILD
+// ==================================================
+
+function showPreviousLightboxImage() {
+
+    if (
+        currentLightboxMedia.length <= 1
+    ) {
+        return;
+    }
+
+
+    currentLightboxIndex--;
+
+
+    // Beim ersten Bild wieder zum letzten springen
+
+    if (
+        currentLightboxIndex < 0
+    ) {
+
+        currentLightboxIndex =
+            currentLightboxMedia.length - 1;
+
+    }
+
+
+    displayCurrentLightboxMedia();
+
+}
+
+
+// ==================================================
+// NÄCHSTES BILD
+// ==================================================
+
+function showNextLightboxImage() {
+
+    if (
+        currentLightboxMedia.length <= 1
+    ) {
+        return;
+    }
+
+
+    currentLightboxIndex++;
+
+
+    // Nach dem letzten wieder zum ersten springen
+
+    if (
+        currentLightboxIndex >=
+        currentLightboxMedia.length
+    ) {
+
+        currentLightboxIndex = 0;
+
+    }
+
+
+    displayCurrentLightboxMedia();
+
+}
+
+
+// ==================================================
+// LIGHTBOX-PFEILE
+// ==================================================
+
+galleryLightboxPreviousButton.addEventListener(
+    "click",
+    function (event) {
+
+        event.stopPropagation();
+
+        showPreviousLightboxImage();
+
+    }
+);
+
+
+galleryLightboxNextButton.addEventListener(
+    "click",
+    function (event) {
+
+        event.stopPropagation();
+
+        showNextLightboxImage();
+
+    }
+);
 
 
 // ==================================================
@@ -1957,6 +2287,15 @@ function closeGalleryLightbox() {
         "gallery-modal-open"
     );
 
+
+    // Lightbox zurücksetzen
+
+    currentLightboxMedia = [];
+
+    currentLightboxIndex = 0;
+
+    currentLightboxEntry = null;
+
 }
 
 
@@ -1968,7 +2307,7 @@ closeGalleryLightboxButton.addEventListener(
 );
 
 
-// Klick auf Hintergrund
+// Klick auf dunklen Hintergrund
 
 galleryLightbox.addEventListener(
     "click",

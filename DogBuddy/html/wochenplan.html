@@ -53,9 +53,34 @@
                 Tagebuch
             </a>
 
-            <a href="training.html">
-                Training
-            </a>
+            <!-- ================================== -->
+            <!-- TRAINING - DROPDOWN                -->
+            <!-- ================================== -->
+                    
+            <div class="nav-dropdown">
+            
+                <!--
+                    Training ist nur noch der Oberpunkt.
+                    Die alte training.html wird nicht mehr verlinkt.
+                -->
+            
+                <span class="nav-dropdown-button">
+                    Training
+                </span>
+            
+                <div class="nav-dropdown-menu">
+                
+                    <a href="kommandos.html">
+                        Kommandos
+                    </a>
+                
+                    <a href="entdecker.html">
+                        Entdecker-Checkliste
+                    </a>
+                
+                </div>
+            
+            </div>
 
             <a href="entwicklung.html">
                 Entwicklung
@@ -101,12 +126,12 @@
                 </p>
 
                 <h1>
-                    Majors Woche 🐾
+                    <span id="page-dog-name">Major</span>s Woche 🐾
                 </h1>
 
                 <p>
                     Hier plane ich, was ich diese Woche
-                    mit Major üben, erleben oder erledigen möchte.
+                    mit <span id="page-dog-name-text">Major</span> üben, erleben oder erledigen möchte.
                 </p>
 
             </div>
@@ -431,6 +456,8 @@
     <!-- ========================================== -->
 
     <script src="../js/wochenplan.js"></script>
+
+    <script src="../js/scroll-top.js"></script>
 
 
 </body>

@@ -7,6 +7,10 @@
 // HTML-ELEMENTE
 // ==================================================
 
+// Hundename in der Seitenüberschrift
+const pageDogName =
+    document.getElementById("page-dog-name");
+
 const diaryDateInput =
     document.getElementById("diary-date");
 
@@ -59,6 +63,23 @@ const cancelDiaryButton =
 
 const diaryFormTitle =
     document.getElementById("diary-form-title");
+
+
+// ==================================================
+// HUNDENAME AUS DEM PROFIL LADEN
+// ==================================================
+
+const savedDog =
+    localStorage.getItem("dogProfile");
+
+if (savedDog !== null) {
+
+    const dog =
+        JSON.parse(savedDog);
+
+    pageDogName.textContent =
+        dog.name;
+}
 
 
 // ==================================================

@@ -7,6 +7,13 @@
 // HTML-ELEMENTE HOLEN
 // ==================================================
 
+// Hundename in Überschrift und Beschreibung
+const pageDogName =
+    document.getElementById("page-dog-name");
+
+const pageDogNameText =
+    document.getElementById("page-dog-name-text");
+
 const appointmentCategoryInput =
     document.getElementById("appointment-category");
 
@@ -59,6 +66,26 @@ const cancelAppointmentFormButton =
 
 const appointmentFormTitle =
     document.getElementById("appointment-form-title");
+
+
+// ==================================================
+// HUNDENAME AUS DEM PROFIL LADEN
+// ==================================================
+
+const savedDog =
+    localStorage.getItem("dogProfile");
+
+if (savedDog !== null) {
+
+    const dog =
+        JSON.parse(savedDog);
+
+    pageDogName.textContent =
+        dog.name;
+
+    pageDogNameText.textContent =
+        dog.name;
+}
 
 
 // ==================================================
@@ -1162,4 +1189,1128 @@ function setToday() {
         month +
         "-" +
         day;
+}
+
+
+// ==================================================
+// GESUNDHEIT - KALENDER
+// ==================================================
+
+
+// ==================================================
+// KALENDER - HTML-ELEMENTE
+// ==================================================
+
+const healthCalendar =
+    document.getElementById("health-calendar");
+
+const calendarTitle =
+    document.getElementById("calendar-title");
+
+const calendarPreviousButton =
+    document.getElementById("calendar-previous");
+
+const calendarNextButton =
+    document.getElementById("calendar-next");
+
+const calendarTodayButton =
+    document.getElementById("calendar-today");
+
+const calendarWeekViewButton =
+    document.getElementById("calendar-week-view");
+
+const calendarMonthViewButton =
+    document.getElementById("calendar-month-view");
+
+const calendarSelectedDate =
+    document.getElementById("calendar-selected-date");
+
+const calendarDayAppointments =
+    document.getElementById("calendar-day-appointments");
+
+
+// ==================================================
+// KALENDER - VARIABLEN
+// ==================================================
+
+let calendarCurrentDate =
+    new Date();
+
+let calendarSelectedDay =
+    new Date();
+
+let calendarView =
+    "week";
+
+calendarTodayButton.textContent =
+    "Diese Woche";
+
+// ==================================================
+// KALENDER DIREKT ANZEIGEN
+// ==================================================
+
+displayHealthCalendar();
+
+displayCalendarDayAppointments();
+
+
+// ==================================================
+// VORHERIGER ZEITRAUM
+// ==================================================
+
+calendarPreviousButton.addEventListener(
+    "click",
+    function () {
+
+        if (calendarView === "week") {
+
+            calendarCurrentDate.setDate(
+                calendarCurrentDate.getDate() - 7
+            );
+
+        } else {
+
+            calendarCurrentDate.setMonth(
+                calendarCurrentDate.getMonth() - 1
+            );
+        }
+
+
+        displayHealthCalendar();
+    }
+);
+
+
+// ==================================================
+// NÄCHSTER ZEITRAUM
+// ==================================================
+
+calendarNextButton.addEventListener(
+    "click",
+    function () {
+
+        if (calendarView === "week") {
+
+            calendarCurrentDate.setDate(
+                calendarCurrentDate.getDate() + 7
+            );
+
+        } else {
+
+            calendarCurrentDate.setMonth(
+                calendarCurrentDate.getMonth() + 1
+            );
+        }
+
+
+        displayHealthCalendar();
+    }
+);
+
+
+// ==================================================
+// HEUTE
+// ==================================================
+
+calendarTodayButton.addEventListener(
+    "click",
+    function () {
+
+        calendarCurrentDate =
+            new Date();
+
+        calendarSelectedDay =
+            new Date();
+
+
+        displayHealthCalendar();
+
+        displayCalendarDayAppointments();
+    }
+);
+
+
+// ==================================================
+// WOCHENANSICHT
+// ==================================================
+
+calendarWeekViewButton.addEventListener(
+    "click",
+    function () {
+
+        calendarView =
+            "week";
+
+        calendarTodayButton.textContent =
+            "Diese Woche";
+
+
+        calendarWeekViewButton.classList.add(
+            "active"
+        );
+
+        calendarMonthViewButton.classList.remove(
+            "active"
+        );
+
+
+        displayHealthCalendar();
+    }
+);
+
+
+// ==================================================
+// MONATSANSICHT
+// ==================================================
+
+calendarMonthViewButton.addEventListener(
+    "click",
+    function () {
+
+        calendarView =
+            "month";
+
+        calendarTodayButton.textContent =
+            "Aktueller Monat";
+
+
+        calendarMonthViewButton.classList.add(
+            "active"
+        );
+
+        calendarWeekViewButton.classList.remove(
+            "active"
+        );
+
+
+        displayHealthCalendar();
+    }
+);
+
+
+// ==================================================
+// KALENDER ANZEIGEN
+// ==================================================
+
+function displayHealthCalendar() {
+
+    healthCalendar.innerHTML =
+        "";
+
+
+    if (calendarView === "week") {
+
+        displayCalendarWeek();
+
+    } else {
+
+        displayCalendarMonth();
+    }
+}
+
+
+// ==================================================
+// WOCHENANSICHT ANZEIGEN
+// ==================================================
+
+function displayCalendarWeek() {
+
+    healthCalendar.className =
+        "health-calendar calendar-week";
+
+
+    const monday =
+        getCalendarMonday(
+            calendarCurrentDate
+        );
+
+
+    const sunday =
+        new Date(monday);
+
+    sunday.setDate(
+        monday.getDate() + 6
+    );
+
+
+    calendarTitle.textContent =
+        formatCalendarPeriod(
+            monday,
+            sunday
+        );
+
+
+    for (
+        let dayIndex = 0;
+        dayIndex < 7;
+        dayIndex++
+    ) {
+
+        const date =
+            new Date(monday);
+
+        date.setDate(
+            monday.getDate() + dayIndex
+        );
+
+
+        const day =
+            createCalendarDay(
+                date,
+                false
+            );
+
+
+        healthCalendar.appendChild(
+            day
+        );
+    }
+}
+
+
+// ==================================================
+// MONATSANSICHT ANZEIGEN
+// ==================================================
+
+function displayCalendarMonth() {
+
+    healthCalendar.className =
+        "health-calendar calendar-month";
+
+
+    const year =
+        calendarCurrentDate.getFullYear();
+
+    const month =
+        calendarCurrentDate.getMonth();
+
+
+    calendarTitle.textContent =
+        new Intl.DateTimeFormat(
+            "de-DE",
+            {
+                month: "long",
+                year: "numeric"
+            }
+        ).format(
+            calendarCurrentDate
+        );
+
+
+    // ==================================================
+    // WOCHENTAGE
+    // ==================================================
+
+    const weekdays = [
+        "Mo",
+        "Di",
+        "Mi",
+        "Do",
+        "Fr",
+        "Sa",
+        "So"
+    ];
+
+
+    weekdays.forEach(
+        function (weekday) {
+
+            const weekdayElement =
+                document.createElement("div");
+
+            weekdayElement.classList.add(
+                "calendar-weekday"
+            );
+
+            weekdayElement.textContent =
+                weekday;
+
+
+            healthCalendar.appendChild(
+                weekdayElement
+            );
+        }
+    );
+
+
+    // ==================================================
+    // ERSTER TAG IM KALENDER
+    // ==================================================
+
+    const firstMonthDay =
+        new Date(
+            year,
+            month,
+            1
+        );
+
+
+    let firstWeekday =
+        firstMonthDay.getDay();
+
+
+    if (firstWeekday === 0) {
+
+        firstWeekday =
+            7;
+    }
+
+
+    const calendarStart =
+        new Date(
+            year,
+            month,
+            1 - (firstWeekday - 1)
+        );
+
+
+    // 6 Wochen anzeigen
+    for (
+        let dayIndex = 0;
+        dayIndex < 42;
+        dayIndex++
+    ) {
+
+        const date =
+            new Date(calendarStart);
+
+        date.setDate(
+            calendarStart.getDate() +
+            dayIndex
+        );
+
+
+        const outsideMonth =
+            date.getMonth() !== month;
+
+
+        const day =
+            createCalendarDay(
+                date,
+                outsideMonth
+            );
+
+
+        healthCalendar.appendChild(
+            day
+        );
+    }
+}
+
+
+// ==================================================
+// EINEN KALENDERTAG ERSTELLEN
+// ==================================================
+
+function createCalendarDay(
+    date,
+    outsideMonth
+) {
+
+    const day =
+        document.createElement("button");
+
+    day.type =
+        "button";
+
+    day.classList.add(
+        "calendar-day"
+    );
+
+
+    if (outsideMonth === true) {
+
+        day.classList.add(
+            "calendar-day-outside"
+        );
+    }
+
+
+    // ==================================================
+    // HEUTE
+    // ==================================================
+
+    if (
+        isSameCalendarDay(
+            date,
+            new Date()
+        )
+    ) {
+
+        day.classList.add(
+            "calendar-day-today"
+        );
+    }
+
+
+    // ==================================================
+    // AUSGEWÄHLTER TAG
+    // ==================================================
+
+    if (
+        isSameCalendarDay(
+            date,
+            calendarSelectedDay
+        )
+    ) {
+
+        day.classList.add(
+            "calendar-day-selected"
+        );
+    }
+
+
+    // ==================================================
+    // WOCHENTAG
+    // ==================================================
+
+    if (calendarView === "week") {
+
+        const weekday =
+            document.createElement("span");
+
+        weekday.classList.add(
+            "calendar-day-weekday"
+        );
+
+        weekday.textContent =
+            new Intl.DateTimeFormat(
+                "de-DE",
+                {
+                    weekday: "short"
+                }
+            ).format(
+                date
+            );
+
+
+        day.appendChild(
+            weekday
+        );
+    }
+
+
+    // ==================================================
+    // TAGNUMMER
+    // ==================================================
+
+    const number =
+        document.createElement("span");
+
+    number.classList.add(
+        "calendar-day-number"
+    );
+
+    number.textContent =
+        date.getDate();
+
+
+    day.appendChild(
+        number
+    );
+
+
+    // ==================================================
+    // TERMINE DES TAGES
+    // ==================================================
+
+    const dayAppointments =
+        getCalendarAppointmentsForDate(
+            date
+        );
+
+
+    if (calendarView === "week") {
+
+        const appointmentArea =
+            document.createElement("span");
+
+        appointmentArea.classList.add(
+            "calendar-day-appointment-area"
+        );
+
+
+        dayAppointments
+            .slice(0, 3)
+            .forEach(
+                function (appointment) {
+
+                    const appointmentElement =
+                        document.createElement("span");
+
+                    appointmentElement.classList.add(
+                        "calendar-mini-appointment"
+                    );
+
+
+                    if (
+                        appointment.completed ===
+                        true
+                    ) {
+
+                        appointmentElement.classList.add(
+                            "calendar-mini-completed"
+                        );
+                    }
+
+
+                    appointmentElement.textContent =
+                        getCategoryIcon(
+                            appointment.category
+                        ) +
+                        " " +
+                        (
+                            appointment.time ||
+                            ""
+                        ) +
+                        (
+                            appointment.time
+                                ? " "
+                                : ""
+                        ) +
+                        appointment.title;
+
+
+                    appointmentArea.appendChild(
+                        appointmentElement
+                    );
+                }
+            );
+
+
+        if (dayAppointments.length > 3) {
+
+            const more =
+                document.createElement("span");
+
+            more.classList.add(
+                "calendar-more-appointments"
+            );
+
+            more.textContent =
+                "+" +
+                (
+                    dayAppointments.length -
+                    3
+                ) +
+                " weitere";
+
+
+            appointmentArea.appendChild(
+                more
+            );
+        }
+
+
+        day.appendChild(
+            appointmentArea
+        );
+
+        } else if (
+            dayAppointments.length > 0
+        ) {
+        
+            // ==================================================
+            // TERMINE IN DER MONATSANSICHT
+            // ==================================================
+        
+            const monthAppointmentArea =
+                document.createElement("span");
+        
+            monthAppointmentArea.classList.add(
+                "calendar-month-appointments"
+            );
+        
+        
+            dayAppointments.forEach(
+                function (appointment) {
+                
+                    const appointmentElement =
+                        document.createElement("span");
+                
+                    appointmentElement.classList.add(
+                        "calendar-month-appointment"
+                    );
+                
+                
+                    if (
+                        appointment.completed === true
+                    ) {
+                    
+                        appointmentElement.classList.add(
+                            "calendar-mini-completed"
+                        );
+                    }
+                
+                
+                    appointmentElement.textContent =
+                        appointment.title;
+                
+                
+                    monthAppointmentArea.appendChild(
+                        appointmentElement
+                    );
+                }
+            );
+        
+        
+            day.appendChild(
+                monthAppointmentArea
+            );
+        }
+
+
+    // ==================================================
+    // KLICK AUF TAG
+    // ==================================================
+
+    day.addEventListener(
+        "click",
+        function () {
+
+            calendarSelectedDay =
+                new Date(date);
+
+            calendarCurrentDate =
+                new Date(date);
+
+
+            displayHealthCalendar();
+
+            displayCalendarDayAppointments();
+        }
+    );
+
+
+    return day;
+}
+
+
+// ==================================================
+// TERMINE FÜR AUSGEWÄHLTEN TAG
+// ==================================================
+
+function displayCalendarDayAppointments() {
+
+    calendarDayAppointments.innerHTML =
+        "";
+
+
+    calendarSelectedDate.textContent =
+        new Intl.DateTimeFormat(
+            "de-DE",
+            {
+                weekday: "long",
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            }
+        ).format(
+            calendarSelectedDay
+        );
+
+
+    const dayAppointments =
+        getCalendarAppointmentsForDate(
+            calendarSelectedDay
+        );
+
+
+    // ==================================================
+    // KEIN TERMIN
+    // ==================================================
+
+    if (dayAppointments.length === 0) {
+
+        const emptyText =
+            document.createElement("p");
+
+        emptyText.classList.add(
+            "empty-appointments"
+        );
+
+        emptyText.textContent =
+            "Keine Termine an diesem Tag.";
+
+
+        calendarDayAppointments.appendChild(
+            emptyText
+        );
+
+
+        const addButton =
+            document.createElement("button");
+
+        addButton.type =
+            "button";
+
+        addButton.classList.add(
+            "calendar-add-appointment"
+        );
+
+        addButton.textContent =
+            "＋ Termin für diesen Tag";
+
+
+        addButton.addEventListener(
+            "click",
+            function () {
+
+                openCalendarAppointmentForm(
+                    calendarSelectedDay
+                );
+            }
+        );
+
+
+        calendarDayAppointments.appendChild(
+            addButton
+        );
+
+
+        return;
+    }
+
+
+    // ==================================================
+    // TERMINE ANZEIGEN
+    // ==================================================
+
+    dayAppointments.forEach(
+        function (appointment) {
+
+            const item =
+                document.createElement("button");
+
+            item.type =
+                "button";
+
+            item.classList.add(
+                "calendar-detail-appointment"
+            );
+
+
+            if (
+                appointment.completed === true
+            ) {
+
+                item.classList.add(
+                    "calendar-detail-completed"
+                );
+            }
+
+
+            const icon =
+                document.createElement("span");
+
+            icon.classList.add(
+                "calendar-detail-icon"
+            );
+
+            icon.textContent =
+                getCategoryIcon(
+                    appointment.category
+                );
+
+
+            const text =
+                document.createElement("span");
+
+            text.classList.add(
+                "calendar-detail-text"
+            );
+
+
+            const title =
+                document.createElement("strong");
+
+            title.textContent =
+                appointment.title;
+
+
+            const information =
+                document.createElement("small");
+
+
+            let informationText =
+                appointment.category;
+
+
+            if (
+                appointment.time !== undefined &&
+                appointment.time !== ""
+            ) {
+
+                informationText +=
+                    " · " +
+                    appointment.time +
+                    " Uhr";
+            }
+
+
+            information.textContent =
+                informationText;
+
+
+            text.appendChild(
+                title
+            );
+
+            text.appendChild(
+                information
+            );
+
+
+            item.appendChild(
+                icon
+            );
+
+            item.appendChild(
+                text
+            );
+
+
+            item.addEventListener(
+                "click",
+                function () {
+
+                    editAppointment(
+                        appointment.id
+                    );
+                }
+            );
+
+
+            calendarDayAppointments.appendChild(
+                item
+            );
+        }
+    );
+
+
+    // ==================================================
+    // WEITEREN TERMIN HINZUFÜGEN
+    // ==================================================
+
+    const addButton =
+        document.createElement("button");
+
+    addButton.type =
+        "button";
+
+    addButton.classList.add(
+        "calendar-add-appointment"
+    );
+
+    addButton.textContent =
+        "＋ Weiteren Termin hinzufügen";
+
+
+    addButton.addEventListener(
+        "click",
+        function () {
+
+            openCalendarAppointmentForm(
+                calendarSelectedDay
+            );
+        }
+    );
+
+
+    calendarDayAppointments.appendChild(
+        addButton
+    );
+}
+
+
+// ==================================================
+// NEUEN TERMIN AUS KALENDER ÖFFNEN
+// ==================================================
+
+function openCalendarAppointmentForm(
+    date
+) {
+
+    clearAppointmentForm();
+
+
+    appointmentDateInput.value =
+        getCalendarDateString(
+            date
+        );
+
+
+    appointmentFormTitle.textContent =
+        "Neuer Termin";
+
+
+    openAppointmentModal();
+
+
+    appointmentTitleInput.focus();
+}
+
+
+// ==================================================
+// TERMINE EINES DATUMS HOLEN
+// ==================================================
+
+function getCalendarAppointmentsForDate(
+    date
+) {
+
+    const dateString =
+        getCalendarDateString(
+            date
+        );
+
+
+    return appointments
+        .filter(
+            function (appointment) {
+
+                return appointment.date ===
+                    dateString;
+            }
+        )
+        .sort(
+            function (a, b) {
+
+                return getAppointmentDateTime(a) -
+                    getAppointmentDateTime(b);
+            }
+        );
+}
+
+
+// ==================================================
+// MONTAG DER WOCHE ERMITTELN
+// ==================================================
+
+function getCalendarMonday(date) {
+
+    const monday =
+        new Date(date);
+
+    const weekday =
+        monday.getDay();
+
+
+    const difference =
+        weekday === 0
+            ? -6
+            : 1 - weekday;
+
+
+    monday.setDate(
+        monday.getDate() +
+        difference
+    );
+
+
+    monday.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+
+    return monday;
+}
+
+
+// ==================================================
+// DATUM FÜR LOCALSTORAGE
+// ==================================================
+
+function getCalendarDateString(date) {
+
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    return year +
+        "-" +
+        month +
+        "-" +
+        day;
+}
+
+
+// ==================================================
+// PRÜFEN, OB ZWEI DATEN GLEICH SIND
+// ==================================================
+
+function isSameCalendarDay(
+    firstDate,
+    secondDate
+) {
+
+    return (
+        firstDate.getFullYear() ===
+            secondDate.getFullYear() &&
+
+        firstDate.getMonth() ===
+            secondDate.getMonth() &&
+
+        firstDate.getDate() ===
+            secondDate.getDate()
+    );
+}
+
+
+// ==================================================
+// ZEITRAUM DER WOCHE FORMATIEREN
+// ==================================================
+
+function formatCalendarPeriod(
+    startDate,
+    endDate
+) {
+
+    const start =
+        new Intl.DateTimeFormat(
+            "de-DE",
+            {
+                day: "2-digit",
+                month: "2-digit"
+            }
+        ).format(
+            startDate
+        );
+
+
+    const end =
+        new Intl.DateTimeFormat(
+            "de-DE",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric"
+            }
+        ).format(
+            endDate
+        );
+
+
+    return start +
+        " – " +
+        end;
 }

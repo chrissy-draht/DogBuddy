@@ -7,6 +7,15 @@
 // HTML-ELEMENTE HOLEN
 // ==================================================
 
+// Hundename in Überschrift und Beschreibung
+const pageDogName =
+    document.getElementById("page-dog-name");
+
+const pageDogNameText =
+    document.getElementById("page-dog-name-text");
+
+
+
 const weeklyCategoryInput =
     document.getElementById("weekly-category");
 
@@ -53,12 +62,45 @@ const weeklyFormTitle =
 
 
 // ==================================================
+// HUNDENAME AUS DEM PROFIL LADEN
+// ==================================================
+
+const savedDog =
+    localStorage.getItem("dogProfile");
+
+if (savedDog !== null) {
+
+    const dog =
+        JSON.parse(savedDog);
+
+    pageDogName.textContent =
+        dog.name;
+
+    pageDogNameText.textContent =
+        dog.name;
+}
+
+
+// ==================================================
 // VARIABLEN
 // ==================================================
 
 let weeklyTasks = [];
 
 let editingWeeklyTaskId = null;
+
+
+// ==================================================
+// WOCHENAUSWAHL AUS KOMMANDOS UND ENTDECKER
+// ==================================================
+
+const WEEKLY_SELECTION_STORAGE_KEY =
+    "weeklySelections";
+
+let weeklySelections = {
+    commands: [],
+    discoveries: []
+};
 
 
 // ==================================================
@@ -74,6 +116,200 @@ if (savedWeeklyTasks !== null) {
     weeklyTasks =
         JSON.parse(savedWeeklyTasks);
 }
+
+// ==================================================
+// WOCHENAUSWAHL LADEN
+// ==================================================
+
+const savedWeeklySelections =
+    localStorage.getItem(
+        WEEKLY_SELECTION_STORAGE_KEY
+    );
+
+if (savedWeeklySelections !== null) {
+
+    try {
+
+        const parsedWeeklySelections =
+            JSON.parse(
+                savedWeeklySelections
+            );
+
+        if (
+            parsedWeeklySelections &&
+            typeof parsedWeeklySelections === "object"
+        ) {
+
+            weeklySelections = {
+                commands:
+                    Array.isArray(
+                        parsedWeeklySelections.commands
+                    )
+                        ? parsedWeeklySelections.commands
+                        : [],
+
+                discoveries:
+                    Array.isArray(
+                        parsedWeeklySelections.discoveries
+                    )
+                        ? parsedWeeklySelections.discoveries
+                        : []
+            };
+        }
+
+    } catch (error) {
+
+        weeklySelections = {
+            commands: [],
+            discoveries: []
+        };
+    }
+}
+
+
+// ==================================================
+// AUSGEWÄHLTE KOMMANDOS IN DEN WOCHENPLAN ÜBERNEHMEN
+// ==================================================
+
+function syncWeeklyCommands() {
+
+    weeklySelections.commands.forEach(
+        function (command) {
+
+            // Prüfen, ob dieses Kommando bereits
+            // als OFFENE Wochenaufgabe vorhanden ist
+            const alreadyExists =
+                weeklyTasks.some(
+                    function (task) {
+
+                        return (
+                            task.source === "command" &&
+                            task.sourceId === command.id &&
+                            task.completed === false
+                        );
+                    }
+                );
+
+
+            // Nur hinzufügen, wenn es noch
+            // keine offene Wochenaufgabe gibt
+            if (alreadyExists === false) {
+
+                const newWeeklyTask = {
+
+                    id:
+                        Date.now() +
+                        Math.random(),
+
+                    category:
+                        "Kommando",
+
+                    title:
+                        command.name,
+
+                    note:
+                        command.description || "",
+
+                    completed:
+                        false,
+
+                    source:
+                        "command",
+
+                    sourceId:
+                        command.id
+                };
+
+
+                weeklyTasks.push(
+                    newWeeklyTask
+                );
+            }
+        }
+    );
+
+
+    // Neue Wochenaufgaben speichern
+    saveWeeklyTasks();
+}
+
+
+// ==================================================
+// AUSGEWÄHLTE ENTDECKER IN DEN WOCHENPLAN ÜBERNEHMEN
+// ==================================================
+
+function syncWeeklyDiscoveries() {
+
+    weeklySelections.discoveries.forEach(
+        function (discovery) {
+
+            // Prüfen, ob dieser Entdecker-Punkt bereits
+            // als OFFENE Wochenaufgabe vorhanden ist
+            const alreadyExists =
+                weeklyTasks.some(
+                    function (task) {
+
+                        return (
+                            task.source === "discovery" &&
+                            task.sourceId === discovery.id &&
+                            task.completed === false
+                        );
+                    }
+                );
+
+
+            // Nur hinzufügen, wenn noch keine
+            // offene Wochenaufgabe vorhanden ist
+            if (alreadyExists === false) {
+
+                const newWeeklyTask = {
+
+                    id:
+                        Date.now() +
+                        Math.random(),
+
+                    category:
+                        "Entdecker",
+
+                    title:
+                        discovery.name,
+
+                    note:
+                        discovery.category,
+
+                    completed:
+                        false,
+
+                    source:
+                        "discovery",
+
+                    sourceId:
+                        discovery.id
+                };
+
+
+                weeklyTasks.push(
+                    newWeeklyTask
+                );
+            }
+        }
+    );
+
+
+    // Wochenaufgaben speichern
+    saveWeeklyTasks();
+}
+
+
+// ==================================================
+// AUSWAHL IN DEN WOCHENPLAN ÜBERNEHMEN
+// ==================================================
+
+// Ausgewählte Kommandos übernehmen
+syncWeeklyCommands();
+
+// Ausgewählte Entdecker übernehmen
+syncWeeklyDiscoveries();
 
 
 // Aufgaben direkt anzeigen
@@ -420,6 +656,253 @@ function displayWeeklyTasks() {
     }
 }
 
+// ==================================================
+// KOMMANDO ALS ERLEDIGT VERARBEITEN
+// ==================================================
+
+function completeWeeklyCommand(task) {
+
+    // ==================================================
+    // KOMMANDO-FORTSCHRITT LADEN
+    // ==================================================
+
+    const savedCommandChecklist =
+        localStorage.getItem(
+            "commandChecklist"
+        );
+
+    let commandChecklist = {};
+
+    if (savedCommandChecklist !== null) {
+
+        try {
+
+            commandChecklist =
+                JSON.parse(
+                    savedCommandChecklist
+                );
+
+        } catch (error) {
+
+            commandChecklist = {};
+        }
+    }
+
+
+    // ==================================================
+    // AUSGEWÄHLTES KOMMANDO FINDEN
+    // ==================================================
+
+    const selectedCommand =
+        weeklySelections.commands.find(
+            function (command) {
+
+                return command.id ===
+                    task.sourceId;
+            }
+        );
+
+
+    if (selectedCommand !== undefined) {
+
+        // ==================================================
+        // SCHLÜSSEL WIE IN KOMMANDOS.JS ERSTELLEN
+        // ==================================================
+
+        const commandKey =
+            selectedCommand.category +
+            "|" +
+            selectedCommand.name;
+
+
+        const commandState =
+            commandChecklist[
+                commandKey
+            ];
+
+
+        // ==================================================
+        // NÄCHSTEN FORTSCHRITT SETZEN
+        // 👀 -> 🐾 -> 😌
+        // ==================================================
+
+        if (commandState !== undefined) {
+
+            if (commandState.seen !== true) {
+
+                commandState.seen = true;
+
+            } else if (
+                commandState.experienced !== true
+            ) {
+
+                commandState.experienced = true;
+
+            } else if (
+                commandState.relaxed !== true
+            ) {
+
+                commandState.relaxed = true;
+            }
+
+
+            // Fortschritt speichern
+            localStorage.setItem(
+                "commandChecklist",
+                JSON.stringify(
+                    commandChecklist
+                )
+            );
+        }
+    }
+
+
+    // ==================================================
+    // KALENDER-AUSWAHL ENTFERNEN
+    // ==================================================
+
+    weeklySelections.commands =
+        weeklySelections.commands.filter(
+            function (command) {
+
+                return command.id !==
+                    task.sourceId;
+            }
+        );
+
+
+    localStorage.setItem(
+        WEEKLY_SELECTION_STORAGE_KEY,
+        JSON.stringify(
+            weeklySelections
+        )
+    );
+}
+
+
+// ==================================================
+// ENTDECKER ALS ERLEDIGT VERARBEITEN
+// ==================================================
+
+function completeWeeklyDiscovery(task) {
+
+    // ==================================================
+    // ENTDECKER-FORTSCHRITT LADEN
+    // ==================================================
+
+    const savedDiscoveryChecklist =
+        localStorage.getItem(
+            "discoveryChecklist"
+        );
+
+    let discoveryChecklist = {};
+
+    if (savedDiscoveryChecklist !== null) {
+
+        try {
+
+            discoveryChecklist =
+                JSON.parse(
+                    savedDiscoveryChecklist
+                );
+
+        } catch (error) {
+
+            discoveryChecklist = {};
+        }
+    }
+
+
+    // ==================================================
+    // AUSGEWÄHLTEN ENTDECKER FINDEN
+    // ==================================================
+
+    const selectedDiscovery =
+        weeklySelections.discoveries.find(
+            function (discovery) {
+
+                return discovery.id ===
+                    task.sourceId;
+            }
+        );
+
+
+    if (selectedDiscovery !== undefined) {
+
+        // ==================================================
+        // SCHLÜSSEL WIE IN ENTDECKER.JS
+        // ==================================================
+
+        const discoveryKey =
+            selectedDiscovery.category +
+            "|" +
+            selectedDiscovery.name;
+
+
+        const discoveryState =
+            discoveryChecklist[
+                discoveryKey
+            ];
+
+
+        // ==================================================
+        // NÄCHSTEN FORTSCHRITT SETZEN
+        // 👀 -> 🐾 -> 😌
+        // ==================================================
+
+        if (discoveryState !== undefined) {
+
+            if (discoveryState.seen !== true) {
+
+                discoveryState.seen = true;
+
+            } else if (
+                discoveryState.experienced !== true
+            ) {
+
+                discoveryState.experienced = true;
+
+            } else if (
+                discoveryState.relaxed !== true
+            ) {
+
+                discoveryState.relaxed = true;
+            }
+
+
+            // Fortschritt speichern
+            localStorage.setItem(
+                "discoveryChecklist",
+                JSON.stringify(
+                    discoveryChecklist
+                )
+            );
+        }
+    }
+
+
+    // ==================================================
+    // KALENDER-AUSWAHL ENTFERNEN
+    // ==================================================
+
+    weeklySelections.discoveries =
+        weeklySelections.discoveries.filter(
+            function (discovery) {
+
+                return discovery.id !==
+                    task.sourceId;
+            }
+        );
+
+
+    localStorage.setItem(
+        WEEKLY_SELECTION_STORAGE_KEY,
+        JSON.stringify(
+            weeklySelections
+        )
+    );
+}
+
 
 // ==================================================
 // EINZELNE AUFGABENKARTE ERSTELLEN
@@ -602,6 +1085,56 @@ function createWeeklyTaskCard(task) {
     statusButton.addEventListener(
         "click",
         function () {
+
+            // ==================================================
+            // KOMMANDO AUS DEM KALENDER
+            // ==================================================
+
+            if (
+                task.source === "command" &&
+                task.completed === false
+            ) {
+
+                task.completed = true;
+
+                completeWeeklyCommand(
+                    task
+                );
+
+                saveWeeklyTasks();
+
+                displayWeeklyTasks();
+
+                return;
+            }
+
+
+            // ==================================================
+            // ENTDECKER AUS DEM KALENDER
+            // ==================================================
+                    
+            if (
+                task.source === "discovery" &&
+                task.completed === false
+            ) {
+            
+                task.completed = true;
+            
+                completeWeeklyDiscovery(
+                    task
+                );
+            
+                saveWeeklyTasks();
+            
+                displayWeeklyTasks();
+            
+                return;
+            }
+
+
+            // ==================================================
+            // NORMALE WOCHENAUFGABE
+            // ==================================================
 
             task.completed =
                 !task.completed;

@@ -2,6 +2,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap');
 
+
 /* ================================================== */
 /* GRUNDEINSTELLUNGEN                                 */
 /* ================================================== */
@@ -109,6 +110,78 @@ body {
     border-bottom: 2px solid #b87333;
 }
 
+/* ================================================== */
+/* NAVIGATION - DROPDOWN */
+/* ================================================== */
+
+.nav-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+
+/* ================================================== */
+/* DROPDOWN-MENÜ */
+/* ================================================== */
+
+.nav-dropdown-menu {
+    position: absolute;
+
+    top: 100%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    min-width: 220px;
+
+    padding: 8px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #eee7e1;
+    border-radius: 10px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.10);
+
+    /* Standardmäßig unsichtbar */
+    display: none;
+
+    z-index: 1000;
+}
+
+
+/* ================================================== */
+/* DROPDOWN BEIM HOVER ANZEIGEN */
+/* ================================================== */
+
+.nav-dropdown:hover .nav-dropdown-menu {
+    display: block;
+}
+
+
+/* ================================================== */
+/* LINKS IM DROPDOWN */
+/* ================================================== */
+
+.navigation .nav-dropdown-menu a {
+    display: block;
+
+    padding: 10px 14px;
+
+    border-radius: 7px;
+
+    white-space: nowrap;
+
+    text-decoration: none;
+}
+
+
+/* Hover nur innerhalb des Dropdowns */
+.navigation .nav-dropdown-menu a:hover {
+    background-color: #f8f4f0;
+}
 
 /* ================================================== */
 /* DASHBOARD                                          */
@@ -129,34 +202,44 @@ body {
 /* BEGRÜSSUNG                                         */
 /* ================================================== */
 
+/* Hauptüberschriften */
+h1 {
+    font-family: "Dancing Script", cursive;
+    font-weight: 700;
+    font-size: 60px;
+    margin-bottom: 5px;
+}
+
+/* Einheitliche Größe für alle Seiten-Hauptüberschriften */
+main h1 {
+    font-size: 60px !important;
+}
+
+/* Begrüßungsbereich auf dem Dashboard */
 .welcome {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
-
+    gap: 40px;
     margin-bottom: 40px;
 }
 
+/* Linker Bereich mit Überschrift und Text */
+.welcome > div {
+    flex: 1;
+}
+
+/* Button bleibt rechts */
+.welcome .main-button {
+    flex-shrink: 0;
+}
 
 /* Kleine Überschriften */
 .small-heading {
     color: #b87333;
-
     font-size: 12px;
-
     font-weight: bold;
-
     letter-spacing: 2px;
-
-    margin-bottom: 5px;
-}
-
-
-/* Hauptüberschrift */
-.welcome h1 {
-    font-size: 38px;
-
     margin-bottom: 5px;
 }
 
@@ -360,6 +443,151 @@ body {
 
 
 /* ================================================== */
+/* KÖRPERMASSE - WECHSELANZEIGE                       */
+/* ================================================== */
+
+.body-measurement-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.body-measurement-content {
+    flex: 1;
+}
+
+/* Pfeile links und rechts */
+.body-measurement-arrow {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background-color: #f8f4f0;
+    color: #b87333;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.body-measurement-arrow:hover {
+    background-color: #eee3d9;
+    transform: scale(1.08);
+}
+
+/* ================================================== */
+/* KÖRPERMASSE - INHALT                               */
+/* ================================================== */
+
+/* Titel, Messwert und Link stehen sauber untereinander */
+.body-measurement-content {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    min-width: 115px;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - TITEL                                */
+/* ================================================== */
+
+.body-measurement-content .card-title {
+    margin: 0 0 5px 0;
+
+    white-space: nowrap;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - MESSWERT                             */
+/* ================================================== */
+
+.body-measurement-content .card-value {
+    margin: 0 0 5px 0;
+
+    white-space: nowrap;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - LINK                                 */
+/* ================================================== */
+
+.body-measurement-link {
+    display: block;
+
+    white-space: nowrap;
+
+    font-size: 14px;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - TEXTBEREICH                          */
+/* ================================================== */
+
+/* Bereich mit Titel, Messwert und Link */
+.body-measurement-text {
+    min-width: 115px;
+
+    display: flex;
+    flex-direction: column;
+
+    /* Text linksbündig untereinander */
+    align-items: flex-start;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - TITEL                                */
+/* ================================================== */
+
+/* Zum Beispiel: Schulterhöhe oder Brustumfang */
+.body-measurement-text .card-title {
+    margin-bottom: 6px;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - MESSWERT                             */
+/* ================================================== */
+
+/* Zum Beispiel: 41 cm */
+.body-measurement-text .card-value {
+    margin-bottom: 6px;
+
+    /* Verhindert einen Umbruch zwischen Zahl und cm */
+    white-space: nowrap;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - LINK                                 */
+/* ================================================== */
+
+/* Link zur Entwicklungsseite */
+.body-measurement-text a {
+    display: inline-block;
+
+    /* "Wert eintragen" bleibt in einer Zeile */
+    white-space: nowrap;
+
+    font-size: 14px;
+}
+
+/* ================================================== */
 /* DASHBOARD KARTEN                                   */
 /* ================================================== */
 
@@ -393,6 +621,722 @@ body {
     font-size: 19px;
 
     margin-bottom: 17px;
+}
+
+
+/* Schriftart für "Willkommen bei DogBuddy" */
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap');
+
+
+/* ================================================== */
+/* GRUNDEINSTELLUNGEN                                 */
+/* ================================================== */
+
+/* Gilt für alle Elemente der Webseite */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Grunddesign der gesamten Webseite */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+
+    background-color: #f7f3ee;
+
+    color: #302a26;
+
+    line-height: 1.5;
+}
+
+
+/* ================================================== */
+/* KOPFBEREICH                                        */
+/* ================================================== */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #ffffff;
+
+    padding: 12px max(60px, calc((100% - 1100px) / 2));
+
+    border-bottom: 1px solid #e8d7d6;
+
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+
+    box-sizing: border-box;
+}
+
+
+/* Link um das Logo */
+.logo-link {
+    display: flex;
+
+    align-items: center;
+
+    text-decoration: none;
+}
+
+
+/* DogBuddy Logo */
+.logo {
+    width: 125px;
+
+    height: auto;
+
+    display: block;
+}
+
+
+/* ================================================== */
+/* NAVIGATION                                         */
+/* ================================================== */
+
+.navigation {
+    display: flex;
+
+    align-items: center;
+
+    gap: 28px;
+}
+
+
+/* Einzelne Navigationslinks */
+.navigation a {
+    color: #4a4039;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    padding: 8px 0;
+
+    transition: 0.2s;
+}
+
+
+/* Farbe beim Darüberfahren */
+.navigation a:hover {
+    color: #b87333;
+}
+
+
+/* Aktuell geöffnete Seite */
+.navigation .active {
+    color: #b87333;
+
+    border-bottom: 2px solid #b87333;
+}
+
+/* ================================================== */
+/* NAVIGATION - DROPDOWN */
+/* ================================================== */
+
+.nav-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+
+/* ================================================== */
+/* DROPDOWN-MENÜ */
+/* ================================================== */
+
+.nav-dropdown-menu {
+    position: absolute;
+
+    top: 100%;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    min-width: 220px;
+
+    padding: 8px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #eee7e1;
+    border-radius: 10px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.10);
+
+    /* Standardmäßig unsichtbar */
+    display: none;
+
+    z-index: 1000;
+}
+
+
+/* ================================================== */
+/* DROPDOWN BEIM HOVER ANZEIGEN */
+/* ================================================== */
+
+.nav-dropdown:hover .nav-dropdown-menu {
+    display: block;
+}
+
+
+/* ================================================== */
+/* LINKS IM DROPDOWN */
+/* ================================================== */
+
+.navigation .nav-dropdown-menu a {
+    display: block;
+
+    padding: 10px 14px;
+
+    border-radius: 7px;
+
+    white-space: nowrap;
+
+    text-decoration: none;
+}
+
+
+/* Hover nur innerhalb des Dropdowns */
+.navigation .nav-dropdown-menu a:hover {
+    background-color: #f8f4f0;
+}
+
+/* ================================================== */
+/* DASHBOARD                                          */
+/* ================================================== */
+
+.dashboard {
+    width: 90%;
+
+    max-width: 1250px;
+
+    margin: 0 auto;
+
+    padding: 55px 0 80px;
+}
+
+
+/* ================================================== */
+/* BEGRÜSSUNG                                         */
+/* ================================================== */
+
+/* Hauptüberschriften */
+h1 {
+    font-family: "Dancing Script", cursive;
+    font-weight: 700;
+    font-size: 60px;
+    margin-bottom: 5px;
+}
+
+/* Einheitliche Größe für alle Seiten-Hauptüberschriften */
+main h1 {
+    font-size: 60px !important;
+}
+
+/* Begrüßungsbereich auf dem Dashboard */
+.welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+/* Linker Bereich mit Überschrift und Text */
+.welcome > div {
+    flex: 1;
+}
+
+/* Button bleibt rechts */
+.welcome .main-button {
+    flex-shrink: 0;
+}
+
+/* Kleine Überschriften */
+.small-heading {
+    color: #b87333;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+
+/* Text unter der Überschrift */
+.welcome-text {
+    color: #756a62;
+
+    font-size: 17px;
+}
+
+
+/* ================================================== */
+/* HAUPTBUTTON                                        */
+/* ================================================== */
+
+.main-button {
+    display: inline-block;
+
+    background-color: #b87333;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    border: none;
+
+    padding: 13px 20px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+/* Effekt beim Darüberfahren */
+.main-button:hover {
+    background-color: #925a28;
+
+    transform: translateY(-2px);
+}
+
+
+/* ================================================== */
+/* HUNDPROFIL                                         */
+/* ================================================== */
+
+.dog-profile {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+
+    background-color: #ffffff;
+
+    padding: 30px;
+    margin-bottom: 25px;
+
+    border: 1px solid #eee5dc;
+    border-radius: 16px;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+}
+
+
+/* Profilbild-Bereich */
+
+.dog-image-area {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+}
+
+
+/* Profilbild */
+
+.dog-profile-image {
+    width: 150px;
+    height: 150px;
+    max-width: 150px;
+
+    object-fit: cover;
+    object-position: center;
+
+    border-radius: 50%;
+
+    border: 4px solid #b87333;
+
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+
+    display: block;
+    flex-shrink: 0;
+}
+
+
+/* Informationen */
+
+.dog-profile-info {
+    flex: 1;
+}
+
+
+.dog-profile-info h2 {
+    font-size: 32px;
+
+    margin-bottom: 2px;
+}
+
+
+/* Rasse */
+
+.dog-breed {
+    color: #756a62;
+
+    font-size: 16px;
+
+    margin-bottom: 22px;
+}
+
+
+/* Geschlecht, Geburtstag und Einzug */
+
+.dog-details {
+    display: flex;
+
+    gap: 50px;
+
+    margin-bottom: 22px;
+}
+
+
+.dog-detail {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.detail-label {
+    color: #9a918b;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+.detail-value {
+    color: #302a26;
+
+    font-size: 15px;
+
+    font-weight: bold;
+}
+
+
+/* Profil bearbeiten */
+
+.edit-profile-button {
+    background-color: transparent;
+
+    color: #b87333;
+
+    border: 1px solid #b87333;
+
+    padding: 9px 16px;
+
+    border-radius: 7px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.edit-profile-button:hover {
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - WECHSELANZEIGE                       */
+/* ================================================== */
+
+.body-measurement-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.body-measurement-content {
+    flex: 1;
+}
+
+/* Pfeile links und rechts */
+.body-measurement-arrow {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background-color: #f8f4f0;
+    color: #b87333;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background-color 0.2s ease,
+                transform 0.2s ease;
+}
+
+.body-measurement-arrow:hover {
+    background-color: #eee3d9;
+    transform: scale(1.08);
+}
+
+/* ================================================== */
+/* KÖRPERMASSE - INHALT                               */
+/* ================================================== */
+
+/* Titel, Messwert und Link stehen sauber untereinander */
+.body-measurement-content {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    min-width: 115px;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - TITEL                                */
+/* ================================================== */
+
+.body-measurement-content .card-title {
+    margin: 0 0 5px 0;
+
+    white-space: nowrap;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - MESSWERT                             */
+/* ================================================== */
+
+.body-measurement-content .card-value {
+    margin: 0 0 5px 0;
+
+    white-space: nowrap;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - LINK                                 */
+/* ================================================== */
+
+.body-measurement-link {
+    display: block;
+
+    white-space: nowrap;
+
+    font-size: 14px;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - TEXTBEREICH                          */
+/* ================================================== */
+
+/* Bereich mit Titel, Messwert und Link */
+.body-measurement-text {
+    min-width: 115px;
+
+    display: flex;
+    flex-direction: column;
+
+    /* Text linksbündig untereinander */
+    align-items: flex-start;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - TITEL                                */
+/* ================================================== */
+
+/* Zum Beispiel: Schulterhöhe oder Brustumfang */
+.body-measurement-text .card-title {
+    margin-bottom: 6px;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - MESSWERT                             */
+/* ================================================== */
+
+/* Zum Beispiel: 41 cm */
+.body-measurement-text .card-value {
+    margin-bottom: 6px;
+
+    /* Verhindert einen Umbruch zwischen Zahl und cm */
+    white-space: nowrap;
+}
+
+
+/* ================================================== */
+/* KÖRPERMASSE - LINK                                 */
+/* ================================================== */
+
+/* Link zur Entwicklungsseite */
+.body-measurement-text a {
+    display: inline-block;
+
+    /* "Wert eintragen" bleibt in einer Zeile */
+    white-space: nowrap;
+
+    font-size: 14px;
+}
+
+/* ================================================== */
+/* DASHBOARD KARTEN                                   */
+/* ================================================== */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+
+    margin-bottom: 35px;
+}
+
+
+/* Einzelne Karte */
+.dashboard-card {
+    background-color: #ffffff;
+
+    border: 1px solid #eee5dd;
+
+    border-radius: 14px;
+
+    padding: 24px;
+
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.04);
+}
+
+
+/* Kartenüberschrift */
+.dashboard-card h2 {
+    font-size: 19px;
+
+    margin-bottom: 17px;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - TRAININGSFORTSCHRITT                   */
+/* ================================================== */
+
+.training-progress-card {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ================================================== */
+/* TRAINING - ZWEI BEREICHE                           */
+/* ================================================== */
+
+.dashboard-training-boxes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+
+    margin-top: -15px;
+}
+
+
+/* ================================================== */
+/* TRAINING - EINZELNER KASTEN                        */
+/* ================================================== */
+
+.dashboard-training-box {
+    display: flex;
+    flex-direction: column;
+
+    padding: 16px;
+
+    background-color: #faf7f4;
+
+    border: 1px solid #eee5dd;
+    border-radius: 10px;
+}
+
+
+/* Überschrift */
+
+.dashboard-training-box h3 {
+    margin: 0 0 14px 0;
+
+    font-size: 15px;
+}
+
+
+/* ================================================== */
+/* TRAINING - FORTSCHRITTSZEILEN                      */
+/* ================================================== */
+
+.dashboard-training-box-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
+
+    min-height: 28px;
+
+    font-size: 13px;
+
+    color: #5c534d;
+}
+
+
+/* Prozentzahl */
+
+.dashboard-training-box-row strong {
+    color: #000000;
+
+    white-space: nowrap;
+}
+
+
+/* ================================================== */
+/* TRAINING - LINK                                    */
+/* ================================================== */
+
+.dashboard-training-box-link {
+    margin-top: 15px;
+
+    font-size: 13px;
 }
 
 
@@ -521,17 +1465,156 @@ body {
 /* ================================================== */
 
 .footer {
+    width: 100%;
+    box-sizing: border-box;
+
+    background-color: #302a26;
+    color: #ffffff;
+
     text-align: center;
 
-    color: #93877e;
+    padding: 22px 25px;
+
+    font-size: 14px;
+}
+
+/* ================================================== */
+/* FOOTER - GESAMTER BEREICH                          */
+/* ================================================== */
+
+/* Dunkler Bereich für Datensicherung und Footer-Text */
+.footer-area {
+    width: 100%;
+    box-sizing: border-box;
+
+    background-color: #302a26;
+
+    text-align: center;
+
+    padding: 18px 25px;
+}
+
+
+/* ================================================== */
+/* FOOTER - DATENSICHERUNG                            */
+/* ================================================== */
+
+/* Aufklappbarer Bereich der Datensicherung */
+.footer-backup {
+    margin: 0;
+}
+
+
+/* Anklickbare Überschrift */
+.footer-backup-summary {
+    display: inline-block;
+
+    color: #d9cec5;
 
     font-size: 12px;
+    font-weight: 600;
 
-    padding: 25px;
+    cursor: pointer;
 
-    border-top: 1px solid #eadfd6;
+    /* Browser-Pfeil entfernen */
+    list-style: none;
+}
 
-    background-color: #ffffff;
+
+/* Browser-Pfeil in Chrome entfernen */
+.footer-backup-summary::-webkit-details-marker {
+    display: none;
+}
+
+
+/* Farbe beim Darüberfahren */
+.footer-backup-summary:hover {
+    color: #d99a5d;
+}
+
+/* ================================================== */
+/* DATENSICHERUNG - PFEIL                             */
+/* ================================================== */
+
+/* Pfeil vor der Datensicherung */
+.footer-backup-arrow {
+    display: inline-block;
+
+    margin-right: 5px;
+
+    font-size: 16px;
+
+    transition: transform 0.2s ease;
+}
+
+
+/* Pfeil dreht sich beim Aufklappen */
+.footer-backup[open] .footer-backup-arrow {
+    transform: rotate(90deg);
+}
+
+
+/* ================================================== */
+/* BACKUP-BUTTONS                                     */
+/* ================================================== */
+
+/* Nur sichtbar, wenn Datensicherung geöffnet wurde */
+.footer-backup-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+
+/* Einzelne Backup-Buttons */
+.footer-backup-button {
+    background-color: transparent;
+
+    color: #d99a5d;
+
+    border: 1px solid #8f6c4d;
+    border-radius: 7px;
+
+    padding: 6px 11px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+/* Button beim Darüberfahren */
+.footer-backup-button:hover {
+    background-color: #b87333;
+
+    color: #ffffff;
+
+    border-color: #b87333;
+}
+
+
+/* ================================================== */
+/* FOOTER - TEXT                                      */
+/* ================================================== */
+
+/* DogBuddy-Text unter der Datensicherung */
+.footer-text {
+    margin: 12px 0 0;
+
+    color: #d9cec5;
+
+    font-size: 12px;
+    font-weight: normal;
 }
 
 /* ================================================== */
@@ -590,6 +1673,8 @@ body {
     font-weight: bold;
 
     margin: 2px 0;
+
+    white-space: nowrap;
 }
 
 
@@ -669,6 +1754,559 @@ body {
 
 
 /* ================================================== */
+/* GESUNDHEIT - KALENDER                              */
+/* ================================================== */
+
+.health-calendar-section {
+    margin-top: 40px;
+    margin-bottom: 50px;
+    padding: 28px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 18px;
+
+    box-shadow: 0 6px 20px rgba(48, 42, 38, 0.06);
+}
+
+
+/* ================================================== */
+/* KALENDER - KOPFBEREICH                             */
+/* ================================================== */
+
+.health-calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+
+.health-calendar-header h2 {
+    margin: 3px 0 0;
+}
+
+
+.calendar-view-switch {
+    display: flex;
+
+    padding: 4px;
+
+    background-color: #f3eee9;
+
+    border-radius: 10px;
+}
+
+
+.calendar-view-button {
+    padding: 8px 16px;
+
+    border: none;
+    border-radius: 7px;
+
+    background-color: transparent;
+
+    color: #6d655f;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.calendar-view-button.active {
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* KALENDER - NAVIGATION                              */
+/* ================================================== */
+
+.calendar-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 22px;
+}
+
+
+.calendar-navigation-button,
+.calendar-today-button {
+    border: 1px solid #d9d0c8;
+
+    background-color: #ffffff;
+
+    color: #403832;
+
+    font-family: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.calendar-navigation-button {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+}
+
+
+.calendar-today-button {
+    height: 38px;
+
+    padding: 0 16px;
+
+    border-radius: 9px;
+}
+
+
+.calendar-navigation-button:hover,
+.calendar-today-button:hover {
+    border-color: #b87333;
+
+    color: #b87333;
+}
+
+
+/* ================================================== */
+/* KALENDER - WOCHENANSICHT                           */
+/* ================================================== */
+
+.calendar-week {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 8px;
+}
+
+
+.calendar-week .calendar-day {
+    min-height: 150px;
+
+    padding: 12px 9px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    text-align: left;
+}
+
+
+/* ================================================== */
+/* KALENDER - TAGE                                    */
+/* ================================================== */
+
+.calendar-day {
+    position: relative;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 12px;
+
+    background-color: #ffffff;
+
+    color: #302a26;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.calendar-day:hover {
+    border-color: #b87333;
+
+    transform: translateY(-1px);
+}
+
+
+.calendar-day-weekday {
+    margin-bottom: 6px;
+
+    color: #8a817a;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+}
+
+
+.calendar-day-number {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+/* Heute */
+
+.calendar-day-today .calendar-day-number {
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+
+/* Ausgewählter Tag */
+
+.calendar-day-selected {
+    border-color: #b87333;
+
+    background-color: #fff9f4;
+}
+
+
+/* Tage außerhalb des aktuellen Monats */
+
+.calendar-day-outside {
+    opacity: 0.4;
+}
+
+
+/* ================================================== */
+/* KALENDER - TERMINE IN DER WOCHE                    */
+/* ================================================== */
+
+.calendar-day-appointment-area {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    margin-top: 10px;
+}
+
+
+.calendar-mini-appointment {
+    display: block;
+
+    padding: 5px 6px;
+
+    overflow: hidden;
+
+    border-radius: 6px;
+
+    background-color: #f3eee9;
+
+    color: #403832;
+
+    font-size: 11px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.calendar-mini-completed {
+    opacity: 0.55;
+
+    text-decoration: line-through;
+}
+
+
+.calendar-more-appointments {
+    margin-top: 2px;
+
+    color: #b87333;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* ================================================== */
+/* KALENDER - MONATSANSICHT                           */
+/* ================================================== */
+
+.calendar-month {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 6px;
+}
+
+
+.calendar-month-weekdays {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 6px;
+
+    margin-bottom: 6px;
+}
+
+
+.calendar-month-weekday {
+    padding: 6px 0;
+
+    color: #8a817a;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-align: center;
+
+    text-transform: uppercase;
+}
+
+
+.calendar-month .calendar-day {
+    min-height: 78px;
+
+    padding: 8px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+}
+
+
+/* ================================================== */
+/* MONATSKALENDER - TERMINE                           */
+/* ================================================== */
+
+.calendar-month-appointments {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    margin-top: 5px;
+}
+
+
+.calendar-month-appointment {
+    display: block;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 4px 6px;
+
+    overflow: hidden;
+
+    border-radius: 6px;
+
+    background-color: #f3eee9;
+
+    color: #6f4a2f;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    line-height: 1.3;
+
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ================================================== */
+/* KALENDER - AUSGEWÄHLTER TAG                        */
+/* ================================================== */
+
+.calendar-day-details {
+    margin-top: 25px;
+}
+
+
+.calendar-day-details-header {
+    margin-bottom: 12px;
+}
+
+
+.calendar-day-details-header h3 {
+    margin: 3px 0 0;
+
+    text-transform: capitalize;
+}
+
+
+/* ================================================== */
+/* KALENDER - TERMIN AM AUSGEWÄHLTEN TAG              */
+/* ================================================== */
+
+.calendar-detail-appointment {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 14px;
+    margin-bottom: 8px;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+
+    color: #302a26;
+
+    font-family: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+
+.calendar-detail-appointment:hover {
+    border-color: #b87333;
+
+    background-color: #fff9f4;
+}
+
+
+.calendar-detail-icon {
+    font-size: 21px;
+}
+
+
+.calendar-detail-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+
+.calendar-detail-text strong {
+    font-size: 14px;
+}
+
+
+.calendar-detail-text small {
+    color: #8a817a;
+
+    font-size: 12px;
+}
+
+
+.calendar-detail-completed {
+    opacity: 0.55;
+}
+
+
+/* ================================================== */
+/* KALENDER - TERMIN HINZUFÜGEN                       */
+/* ================================================== */
+
+.calendar-add-appointment {
+    margin-top: 10px;
+
+    padding: 9px 14px;
+
+    border: 1px solid #b87333;
+    border-radius: 8px;
+
+    background-color: transparent;
+
+    color: #b87333;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.calendar-add-appointment:hover {
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* KALENDER - RESPONSIVE                              */
+/* ================================================== */
+
+@media (max-width: 850px) {
+
+    .calendar-week {
+        grid-template-columns: 1fr;
+    }
+
+
+    .calendar-week .calendar-day {
+        min-height: auto;
+    }
+
+
+    .health-calendar-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .health-calendar-section {
+        padding: 18px;
+    }
+
+
+    .calendar-month {
+        gap: 4px;
+    }
+
+
+    .calendar-month .calendar-day {
+        min-height: 55px;
+
+        padding: 5px;
+    }
+
+
+    .calendar-day-number {
+        width: 26px;
+        height: 26px;
+
+        font-size: 13px;
+    }
+
+}
+
+
+/* ================================================== */
 /* WOCHENPLAN                                         */
 /* ================================================== */
 
@@ -723,26 +2361,62 @@ body {
 
 
 /* ================================================== */
-/* TERMIN UND TAGEBUCH                                */
+/* DASHBOARD - LETZTE TAGEBUCHEINTRÄGE                */
 /* ================================================== */
 
-.appointment,
-.diary-preview {
-    min-height: 110px;
+.dashboard-diary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
-    color: #756a62;
-
-    font-size: 14px;
+    margin-top: 18px;
 }
 
 
-/* Hervorgehobener Text */
-.appointment-title {
+/* ================================================== */
+/* DASHBOARD - EINZELNER TAGEBUCHEINTRAG              */
+/* ================================================== */
+
+.dashboard-diary-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - TAGEBUCH DATUM                         */
+/* ================================================== */
+
+.dashboard-diary-box-date {
+    color: #8a817a;
+
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.3;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - TAGEBUCH TITEL                         */
+/* ================================================== */
+
+.dashboard-diary-box-title {
     color: #302a26;
 
-    font-weight: bold;
-
-    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
 }
 
 
@@ -1121,6 +2795,263 @@ footer {
 }
 
 /* ================================================== */
+/* ENTWICKLUNG - WACHSTUM & SOLL-IST-VERGLEICH */
+/* ================================================== */
+
+
+/* ================================================== */
+/* GESAMTBEREICH */
+/* ================================================== */
+
+.growth-section {
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+
+    gap: 25px;
+
+    margin-top: 35px;
+    margin-bottom: 35px;
+
+    align-items: stretch;
+}
+
+
+/* ================================================== */
+/* KARTEN */
+/* ================================================== */
+
+.growth-chart-card,
+.growth-comparison-card {
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    padding: 30px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+
+/* ================================================== */
+/* BESCHREIBUNG DER WACHSTUMSKURVE */
+/* ================================================== */
+
+.growth-description {
+    margin-top: 8px;
+    margin-bottom: 20px;
+
+    color: #6f675f;
+
+    line-height: 1.5;
+}
+
+
+/* ================================================== */
+/* DIAGRAMM */
+/* ================================================== */
+
+#growth-chart {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    margin-top: 20px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #eee7e1;
+    border-radius: 10px;
+}
+
+/* ================================================== */
+/* AUSWAHL ENDGEWICHT */
+/* ================================================== */
+
+.growth-final-weight {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    margin-top: 18px;
+    margin-bottom: 20px;
+
+    padding: 12px 15px;
+
+    background-color: #f8f4f0;
+    border-radius: 10px;
+}
+
+
+/* BESCHRIFTUNG */
+
+.growth-final-weight label {
+    color: #5c534d;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* AUSWAHLFELD */
+
+.growth-final-weight select {
+    padding: 8px 32px 8px 12px;
+
+    border: 1px solid #d9b99c;
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #302a26;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* AUSWAHLFELD BEIM DARÜBERFAHREN */
+
+.growth-final-weight select:hover {
+    border-color: #c56f2c;
+}
+
+
+/* AUSWAHLFELD BEIM ANKLICKEN */
+
+.growth-final-weight select:focus {
+    outline: none;
+
+    border-color: #c56f2c;
+
+    box-shadow:
+        0 0 0 3px rgba(197, 111, 44, 0.12);
+}
+
+
+/* ================================================== */
+/* SOLL-IST-VERGLEICH */
+/* ================================================== */
+
+.growth-comparison-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+
+    margin-top: 25px;
+}
+
+
+/* ================================================== */
+/* EINZELNE VERGLEICHSWERTE */
+/* ================================================== */
+
+.growth-value {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    padding: 15px;
+
+    background-color: #f8f4f0;
+
+    border-radius: 10px;
+}
+
+
+/* BESCHRIFTUNG */
+
+.growth-value span {
+    color: #786f68;
+
+    font-size: 13px;
+}
+
+
+/* WERT */
+
+.growth-value strong {
+    color: #302a26;
+
+    font-size: 18px;
+}
+
+
+/* ============================================== */
+/* STATUSFELD DES SOLL-IST-VERGLEICHS */
+/* ============================================== */
+
+.growth-status {
+    margin-top: 20px;
+    padding: 15px;
+
+    border: 1px solid #e4d7cc;
+    border-radius: 10px;
+
+    background-color: #faf7f4;
+    color: #5c534d;
+
+    line-height: 1.5;
+}
+
+
+/* ============================================== */
+/* FARBEN FÜR DEN SOLL-IST-VERGLEICH */
+/* ============================================== */
+
+/* Grün: Gewicht liegt im normalen Bereich */
+.growth-status.status-good {
+    border: 2px solid #6fa765;
+    background-color: #edf6ea;
+}
+
+
+/* Orange: leichte Abweichung */
+.growth-status.status-warning {
+    border: 2px solid #d98a2b;
+    background-color: #fff1dc;
+}
+
+
+/* Rot: deutliche Abweichung */
+.growth-status.status-alert {
+    border: 2px solid #c85a54;
+    background-color: #fbe7e5;
+}
+
+
+/* ================================================== */
+/* RESPONSIVE DARSTELLUNG */
+/* ================================================== */
+
+@media (max-width: 900px) {
+
+    .growth-section {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .growth-comparison-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* ================================================== */
 /* TRAINING                                           */
 /* ================================================== */
 
@@ -1130,6 +3061,48 @@ footer {
     padding: 50px 40px 80px;
 }
 
+/* ================================================== */
+/* WACHSTUMSKURVE ANKLICKBAR */
+/* ================================================== */
+
+.growth-chart-clickable {
+    cursor: pointer;
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.growth-chart-clickable:hover {
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+}
+
+
+/* ================================================== */
+/* GROSSES WACHSTUMSKURVEN-POPUP */
+/* ================================================== */
+
+.growth-chart-modal-content.app-modal-content {
+    width: 90vw;
+    max-width: 1500px;
+    height: auto;
+}
+
+.growth-chart-modal-body {
+    padding: 25px 30px 30px;
+    overflow: hidden;
+}
+
+#growth-chart-large {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    background-color: #ffffff;
+    border: 1px solid #eee7e1;
+    border-radius: 10px;
+}
 
 /* ================================================== */
 /* TRAINING - ÜBERSCHRIFT                             */
@@ -1451,6 +3424,473 @@ footer {
     color: #ffffff;
 }
 
+/* ================================================== */
+/* ENTDECKER-SEITE */
+/* ================================================== */
+
+.discovery-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 30px 60px;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - ÜBERSCHRIFT */
+/* ================================================== */
+
+.discovery-page-header {
+    margin-bottom: 30px;
+}
+
+.discovery-page-header h1 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.discovery-page-header > p:last-child {
+    color: #786f68;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - LEGENDE */
+/* ================================================== */
+
+.discovery-legend-card {
+    margin-bottom: 25px;
+
+    padding: 20px 25px;
+
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.discovery-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.discovery-legend > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 15px;
+
+    background-color: #f8f4f0;
+    border-radius: 10px;
+}
+
+.discovery-legend strong {
+    font-size: 20px;
+}
+
+.discovery-legend span {
+    color: #5c534d;
+    font-size: 14px;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - FORTSCHRITT */
+/* ================================================== */
+
+.discovery-progress {
+    margin-bottom: 30px;
+
+    padding: 30px;
+
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.discovery-progress h2 {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.discovery-progress-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.discovery-progress-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    text-align: center;
+
+    padding: 18px;
+
+    background-color: #f8f4f0;
+
+    border-radius: 12px;
+}
+
+.discovery-progress-item span {
+    color: #786f68;
+    font-size: 14px;
+}
+
+.discovery-progress-item strong {
+    color: #302a26;
+    font-size: 24px;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - MEILENSTEIN */
+/* ================================================== */
+
+.discovery-milestone {
+    display: none;
+
+    margin-top: 20px;
+    padding: 18px 20px;
+
+    background-color: #f5eee7;
+
+    border: 1px solid #dfc9b6;
+    border-radius: 12px;
+
+    color: #5c534d;
+
+    text-align: center;
+}
+
+.discovery-milestone.show {
+    display: block;
+}
+
+.discovery-milestone-icon {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 28px;
+}
+
+.discovery-milestone strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #302a26;
+    font-size: 18px;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - KATEGORIEN */
+/* ================================================== */
+
+.discovery-category {
+    margin-bottom: 15px;
+
+    overflow: hidden;
+
+    background-color: #ffffff;
+
+    border: 1px solid #eee7e1;
+    border-radius: 16px;
+
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ================================================== */
+/* KATEGORIE - KOPF */
+/* ================================================== */
+
+.discovery-category-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    padding: 20px 25px;
+
+    border: none;
+
+    background-color: #ffffff;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    text-align: left;
+}
+
+.discovery-category-header:hover {
+    background-color: #faf7f4;
+}
+
+.discovery-category-header h2 {
+    margin: 0;
+
+    color: #302a26;
+
+    font-size: 18px;
+}
+
+
+/* ================================================== */
+/* KATEGORIE - RECHTE SEITE */
+/* ================================================== */
+
+.discovery-category-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.discovery-category-progress {
+    padding: 5px 10px;
+
+    background-color: #f8f4f0;
+
+    border-radius: 20px;
+
+    color: #786f68;
+
+    font-size: 13px;
+}
+
+.discovery-category-arrow {
+    color: #786f68;
+
+    font-size: 22px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+.discovery-category.open
+.discovery-category-arrow {
+    transform: rotate(180deg);
+}
+
+
+/* ================================================== */
+/* KATEGORIE - INHALT */
+/* ================================================== */
+
+.discovery-category-content {
+    display: none;
+
+    padding:
+        0 25px 20px;
+}
+
+.discovery-category.open
+.discovery-category-content {
+    display: block;
+}
+
+
+/* ================================================== */
+/* SPALTENÜBERSCHRIFT */
+/* ================================================== */
+
+.discovery-column-header {
+    display: grid;
+
+    grid-template-columns:
+        minmax(250px, 1fr)
+        70px
+        70px
+        70px
+        95px;
+
+    align-items: center;
+
+    padding: 12px 10px;
+
+    border-bottom:
+        1px solid #eee7e1;
+
+    text-align: center;
+}
+
+
+/* ================================================== */
+/* EINZELNER ENTDECKER-PUNKT */
+/* ================================================== */
+
+.discovery-row {
+    display: grid;
+
+    grid-template-columns:
+        minmax(250px, 1fr)
+        70px
+        70px
+        70px
+        95px;
+
+    align-items: center;
+
+    min-height: 54px;
+
+    padding: 8px 10px;
+
+    border-bottom:
+        1px solid #f0ebe7;
+}
+
+
+/* ==================================================*/
+/* KOMMANDOS - NAME UND BESCHREIBUNG */
+/* ================================================== */
+
+.command-item-text {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr);
+    column-gap: 15px;
+    align-items: start;
+    width: 100%;
+}
+
+.command-item-text .discovery-item-name {
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+.command-description {
+    display: block;
+    max-width: 520px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #5c534d;
+}
+
+/* ================================================== */
+/* ENTDECKER - CHECKBOXEN */
+/* ================================================== */
+
+.discovery-check-button {
+    width: 30px;
+    height: 30px;
+
+    margin: 0 auto;
+
+    border: 2px solid #d8c9bd;
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.discovery-check-button:hover {
+    border-color: #9d826b;
+
+    transform: scale(1.07);
+}
+
+.discovery-check-button.checked {
+    background-color: #8b7333;
+    border-color: #8b7333;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - RESPONSIVE */
+/* ================================================== */
+
+@media (max-width: 800px) {
+
+    .discovery-progress-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .discovery-column-header,
+    .discovery-row {
+        grid-template-columns:
+            minmax(150px, 1fr)
+            50px
+            50px
+            50px;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .discovery-page {
+        padding:
+            25px 15px 40px;
+    }
+
+    .discovery-category-header {
+        padding: 18px;
+    }
+
+    .discovery-category-content {
+        padding:
+            0 10px 15px;
+    }
+
+    .discovery-column-header,
+    .discovery-row {
+        grid-template-columns:
+            minmax(120px, 1fr)
+            42px
+            42px
+            42px;
+    }
+
+    .discovery-check-button {
+        width: 28px;
+        height: 28px;
+    }
+
+}
+
+/* ================================================== */
+/* TRAINING - ÜBERSICHT KOPF */
+/* ================================================== */
+
+.training-overview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.training-overview-header h2 {
+    margin-bottom: 0;
+}
+
 
 /* ================================================== */
 /* TAGEBUCH                                           */
@@ -1762,6 +4202,14 @@ footer {
     color: #302a26;
 }
 
+.diary-history-header .eyebrow {
+    margin: 0 0 10px;
+}
+
+.diary-history-header h2 {
+    margin: 0 0 25px;
+}
+
 
 /* ================================================== */
 /* TAGEBUCH - EIN EINTRAG                             */
@@ -1937,7 +4385,8 @@ footer {
 /* TAGEBUCH - ÄNDERN                                  */
 /* ================================================== */
 
-.edit-diary-button {
+.edit-diary-button,
+.edit-measurement-button {
     padding: 9px 14px;
 
     border: 1px solid #b87333;
@@ -1951,10 +4400,13 @@ footer {
     font-weight: 600;
 
     cursor: pointer;
+
+    margin-right: 8px;
 }
 
 
-.edit-diary-button:hover {
+.edit-diary-button:hover,
+.edit-measurement-button:hover {
     background-color: #b87333;
 
     color: #ffffff;
@@ -1965,7 +4417,8 @@ footer {
 /* TAGEBUCH - LÖSCHEN                                 */
 /* ================================================== */
 
-.delete-diary-button {
+.delete-diary-button,
+.delete-measurement-button {
     padding: 9px 14px;
 
     border: 1px solid #d8b8b2;
@@ -1982,7 +4435,8 @@ footer {
 }
 
 
-.delete-diary-button:hover {
+.delete-diary-button:hover,
+.delete-measurement-button:hover {
     background-color: #9b4b40;
 
     border-color: #9b4b40;
@@ -2438,6 +4892,65 @@ footer {
 
 
 /* ================================================== */
+/* DASHBOARD - NÄCHSTE TERMINE                        */
+/* ================================================== */
+
+.dashboard-appointment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-top: 18px;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - EINZELNER TERMIN                       */
+/* ================================================== */
+
+.dashboard-appointment-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    padding: 12px 14px;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - TERMIN TITEL                           */
+/* ================================================== */
+
+.dashboard-appointment-box-title {
+    color: #302a26;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - DATUM UND UHRZEIT                      */
+/* ================================================== */
+
+.dashboard-appointment-box-date {
+    color: #8a817a;
+
+    font-size: 12px;
+    font-weight: 400;
+
+    line-height: 1.3;
+}
+
+
+/* ================================================== */
 /* WOCHENPLAN                                         */
 /* ================================================== */
 
@@ -2448,6 +4961,7 @@ footer {
 
     padding: 50px 0 70px;
 }
+
 
 
 /* ================================================== */
@@ -2941,7 +5455,7 @@ footer {
 
     gap: 25px;
 
-    align-items: start;
+    align-items: stretch;
 
     margin-top: 25px;
 }
@@ -2952,6 +5466,11 @@ footer {
 /* ================================================== */
 
 .gallery-card {
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
     overflow: hidden;
 
     background-color: #ffffff;
@@ -3031,6 +5550,38 @@ footer {
 
 
 /* ================================================== */
+/* GALERIE - MEHRERE FOTOS                            */
+/* ================================================== */
+
+.gallery-more-photos {
+    position: absolute;
+
+    right: 12px;
+    bottom: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 42px;
+    height: 32px;
+
+    padding: 0 10px;
+
+    border-radius: 18px;
+
+    background-color: rgba(48, 42, 38, 0.82);
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    pointer-events: none;
+}
+
+
+/* ================================================== */
 /* GALERIE - VIDEO BADGE                              */
 /* ================================================== */
 
@@ -3065,6 +5616,8 @@ footer {
     display: flex;
 
     flex-direction: column;
+
+    flex: 1;
 
     padding: 17px 18px 18px;
 
@@ -3723,6 +6276,102 @@ footer {
     max-height: 70vh;
 
     object-fit: contain;
+}
+
+
+/* ================================================== */
+/* GALERIE - LIGHTBOX PFEILE                          */
+/* ================================================== */
+
+.gallery-lightbox-media-wrapper {
+    position: relative;
+}
+
+
+.gallery-lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: rgba(255, 255, 255, 0.95);
+
+    color: #302a26;
+
+    font-size: 34px;
+    font-weight: bold;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transform: translateY(-50%);
+
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.25);
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* Linker Pfeil */
+
+.gallery-lightbox-arrow-left {
+    left: 18px;
+}
+
+
+/* Rechter Pfeil */
+
+.gallery-lightbox-arrow-right {
+    right: 18px;
+}
+
+
+/* Pfeile beim Darüberfahren */
+
+.gallery-lightbox-arrow:hover {
+    background-color: #ffffff;
+
+    transform: translateY(-50%) scale(1.08);
+}
+
+
+/* ================================================== */
+/* GALERIE - LIGHTBOX BILDZÄHLER                      */
+/* ================================================== */
+
+.gallery-lightbox-counter {
+    position: absolute;
+
+    right: 18px;
+    bottom: 18px;
+
+    z-index: 6;
+
+    padding: 6px 11px;
+
+    border-radius: 18px;
+
+    background-color: rgba(48, 42, 38, 0.82);
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    pointer-events: none;
 }
 
 
@@ -4423,6 +7072,5855 @@ footer {
 .gallery-form-content::-webkit-scrollbar-thumb:hover,
 .gallery-lightbox-content::-webkit-scrollbar-thumb:hover {
     background-color: #b98a62;
+}
+
+
+
+/* ================================================== */
+/* DASHBOARD - TRAININGSFORTSCHRITT                   */
+/* ================================================== */
+
+.training-progress-card {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ================================================== */
+/* TRAINING - ZWEI BEREICHE                           */
+/* ================================================== */
+
+.dashboard-training-boxes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 16px;
+
+    margin-top: -15px;
+}
+
+
+/* ================================================== */
+/* TRAINING - EINZELNER KASTEN                        */
+/* ================================================== */
+
+.dashboard-training-box {
+    display: flex;
+    flex-direction: column;
+
+    padding: 16px;
+
+    background-color: #faf7f4;
+
+    border: 1px solid #eee5dd;
+    border-radius: 10px;
+}
+
+
+/* Überschrift */
+
+.dashboard-training-box h3 {
+    margin: 0 0 14px 0;
+
+    font-size: 15px;
+}
+
+
+/* ================================================== */
+/* TRAINING - FORTSCHRITTSZEILEN                      */
+/* ================================================== */
+
+.dashboard-training-box-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
+
+    min-height: 28px;
+
+    font-size: 13px;
+
+    color: #5c534d;
+}
+
+
+/* Prozentzahl */
+
+.dashboard-training-box-row strong {
+    color: #000000;
+
+    white-space: nowrap;
+}
+
+
+/* ================================================== */
+/* TRAINING - LINK                                    */
+/* ================================================== */
+
+.dashboard-training-box-link {
+    margin-top: 15px;
+
+    font-size: 13px;
+}
+
+
+/* ================================================== */
+/* KARTEN-INHALT                                      */
+/* ================================================== */
+
+.card-row {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 11px 0;
+
+    border-bottom: 1px solid #f0ebe7;
+}
+
+
+/* Letzte Zeile ohne Linie */
+.card-row:last-child {
+    border-bottom: none;
+}
+
+
+/* Linke Seite */
+.card-row-label {
+    color: #756a62;
+
+    font-size: 14px;
+}
+
+
+/* Rechte Seite */
+.card-row-value {
+    color: #403832;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-align: right;
+}
+
+
+/* ================================================== */
+/* KARTEN-LINK                                        */
+/* ================================================== */
+
+.card-link {
+    display: inline-block;
+
+    margin-top: 16px;
+
+    color: #b87333;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
+
+/* ================================================== */
+/* STATUS                                             */
+/* ================================================== */
+
+.status {
+    display: inline-block;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+/* Grün */
+.status-good {
+    background-color: #e6f2e8;
+
+    color: #4f7a56;
+}
+
+
+/* Orange */
+.status-open {
+    background-color: #f7eadb;
+
+    color: #9b6737;
+}
+
+
+/* ================================================== */
+/* BEREICHSÜBERSCHRIFT                                */
+/* ================================================== */
+
+.section-heading {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+
+.section-heading h2 {
+    font-size: 23px;
+}
+
+
+/* ================================================== */
+/* FOOTER                                             */
+/* ================================================== */
+
+.footer {
+    width: 100%;
+    box-sizing: border-box;
+
+    background-color: #302a26;
+    color: #ffffff;
+
+    text-align: center;
+
+    padding: 22px 25px;
+
+    font-size: 14px;
+}
+
+/* ================================================== */
+/* FOOTER - GESAMTER BEREICH                          */
+/* ================================================== */
+
+/* Dunkler Bereich für Datensicherung und Footer-Text */
+.footer-area {
+    width: 100%;
+    box-sizing: border-box;
+
+    background-color: #302a26;
+
+    text-align: center;
+
+    padding: 18px 25px;
+}
+
+
+/* ================================================== */
+/* FOOTER - DATENSICHERUNG                            */
+/* ================================================== */
+
+/* Aufklappbarer Bereich der Datensicherung */
+.footer-backup {
+    margin: 0;
+}
+
+
+/* Anklickbare Überschrift */
+.footer-backup-summary {
+    display: inline-block;
+
+    color: #d9cec5;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    /* Browser-Pfeil entfernen */
+    list-style: none;
+}
+
+
+/* Browser-Pfeil in Chrome entfernen */
+.footer-backup-summary::-webkit-details-marker {
+    display: none;
+}
+
+
+/* Farbe beim Darüberfahren */
+.footer-backup-summary:hover {
+    color: #d99a5d;
+}
+
+/* ================================================== */
+/* DATENSICHERUNG - PFEIL                             */
+/* ================================================== */
+
+/* Pfeil vor der Datensicherung */
+.footer-backup-arrow {
+    display: inline-block;
+
+    margin-right: 5px;
+
+    font-size: 16px;
+
+    transition: transform 0.2s ease;
+}
+
+
+/* Pfeil dreht sich beim Aufklappen */
+.footer-backup[open] .footer-backup-arrow {
+    transform: rotate(90deg);
+}
+
+
+/* ================================================== */
+/* BACKUP-BUTTONS                                     */
+/* ================================================== */
+
+/* Nur sichtbar, wenn Datensicherung geöffnet wurde */
+.footer-backup-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+
+/* Einzelne Backup-Buttons */
+.footer-backup-button {
+    background-color: transparent;
+
+    color: #d99a5d;
+
+    border: 1px solid #8f6c4d;
+    border-radius: 7px;
+
+    padding: 6px 11px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+/* Button beim Darüberfahren */
+.footer-backup-button:hover {
+    background-color: #b87333;
+
+    color: #ffffff;
+
+    border-color: #b87333;
+}
+
+
+/* ================================================== */
+/* FOOTER - TEXT                                      */
+/* ================================================== */
+
+/* DogBuddy-Text unter der Datensicherung */
+.footer-text {
+    margin: 12px 0 0;
+
+    color: #d9cec5;
+
+    font-size: 12px;
+    font-weight: normal;
+}
+
+/* ================================================== */
+/* SCHNELLÜBERSICHT                                   */
+/* ================================================== */
+
+.overview {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+
+/* Einzelne kleine Infokarte */
+.info-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    background-color: #ffffff;
+
+    padding: 22px;
+
+    border-radius: 12px;
+
+    border: 1px solid #eee5dc;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+
+/* Symbol auf der Karte */
+.card-icon {
+    font-size: 30px;
+}
+
+
+/* Überschrift der Infokarte */
+.card-title {
+    color: #756a62;
+
+    font-size: 14px;
+}
+
+
+/* Großer Wert */
+.card-value {
+    font-size: 24px;
+
+    font-weight: bold;
+
+    margin: 2px 0;
+
+    white-space: nowrap;
+}
+
+
+/* Link innerhalb der Infokarte */
+.info-card a {
+    color: #b87333;
+
+    font-size: 13px;
+
+    text-decoration: none;
+}
+
+
+/* Effekt beim Darüberfahren */
+.info-card a:hover {
+    text-decoration: underline;
+}
+
+
+/* Zusatzinformation */
+.card-info {
+    color: #9a918b;
+
+    font-size: 12px;
+}
+
+
+/* ================================================== */
+/* GROSSE DASHBOARD-KARTEN                            */
+/* ================================================== */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 25px;
+}
+
+
+/* Einzelne Dashboard-Karte */
+.dashboard-card {
+    background-color: #ffffff;
+
+    padding: 28px;
+
+    border-radius: 14px;
+
+    border: 1px solid #eee5dc;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+}
+
+
+/* Oberer Bereich einer Karte */
+.card-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    margin-bottom: 22px;
+}
+
+
+/* Überschrift innerhalb der Karte */
+.card-header h2 {
+    font-size: 21px;
+}
+
+
+/* Großes Symbol rechts */
+.big-icon {
+    font-size: 27px;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - KALENDER                              */
+/* ================================================== */
+
+.health-calendar-section {
+    margin-top: 40px;
+    margin-bottom: 50px;
+    padding: 28px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 18px;
+
+    box-shadow: 0 6px 20px rgba(48, 42, 38, 0.06);
+}
+
+
+/* ================================================== */
+/* KALENDER - KOPFBEREICH                             */
+/* ================================================== */
+
+.health-calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    margin-bottom: 20px;
+}
+
+
+.health-calendar-header h2 {
+    margin: 3px 0 0;
+}
+
+
+.calendar-view-switch {
+    display: flex;
+
+    padding: 4px;
+
+    background-color: #f3eee9;
+
+    border-radius: 10px;
+}
+
+
+.calendar-view-button {
+    padding: 8px 16px;
+
+    border: none;
+    border-radius: 7px;
+
+    background-color: transparent;
+
+    color: #6d655f;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.calendar-view-button.active {
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* KALENDER - NAVIGATION                              */
+/* ================================================== */
+
+.calendar-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 22px;
+}
+
+
+.calendar-navigation-button,
+.calendar-today-button {
+    border: 1px solid #d9d0c8;
+
+    background-color: #ffffff;
+
+    color: #403832;
+
+    font-family: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.calendar-navigation-button {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+}
+
+
+.calendar-today-button {
+    height: 38px;
+
+    padding: 0 16px;
+
+    border-radius: 9px;
+}
+
+
+.calendar-navigation-button:hover,
+.calendar-today-button:hover {
+    border-color: #b87333;
+
+    color: #b87333;
+}
+
+
+/* ================================================== */
+/* KALENDER - WOCHENANSICHT                           */
+/* ================================================== */
+
+.calendar-week {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 8px;
+}
+
+
+.calendar-week .calendar-day {
+    min-height: 150px;
+
+    padding: 12px 9px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    text-align: left;
+}
+
+
+/* ================================================== */
+/* KALENDER - TAGE                                    */
+/* ================================================== */
+
+.calendar-day {
+    position: relative;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 12px;
+
+    background-color: #ffffff;
+
+    color: #302a26;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.calendar-day:hover {
+    border-color: #b87333;
+
+    transform: translateY(-1px);
+}
+
+
+.calendar-day-weekday {
+    margin-bottom: 6px;
+
+    color: #8a817a;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-transform: uppercase;
+}
+
+
+.calendar-day-number {
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+/* Heute */
+
+.calendar-day-today .calendar-day-number {
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+
+/* Ausgewählter Tag */
+
+.calendar-day-selected {
+    border-color: #b87333;
+
+    background-color: #fff9f4;
+}
+
+
+/* Tage außerhalb des aktuellen Monats */
+
+.calendar-day-outside {
+    opacity: 0.4;
+}
+
+
+/* ================================================== */
+/* KALENDER - TERMINE IN DER WOCHE                    */
+/* ================================================== */
+
+.calendar-day-appointment-area {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    margin-top: 10px;
+}
+
+
+.calendar-mini-appointment {
+    display: block;
+
+    padding: 5px 6px;
+
+    overflow: hidden;
+
+    border-radius: 6px;
+
+    background-color: #f3eee9;
+
+    color: #403832;
+
+    font-size: 11px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.calendar-mini-completed {
+    opacity: 0.55;
+
+    text-decoration: line-through;
+}
+
+
+.calendar-more-appointments {
+    margin-top: 2px;
+
+    color: #b87333;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+
+/* ================================================== */
+/* KALENDER - MONATSANSICHT                           */
+/* ================================================== */
+
+.calendar-month {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 6px;
+}
+
+
+.calendar-month-weekdays {
+    display: grid;
+
+    grid-template-columns: repeat(7, 1fr);
+
+    gap: 6px;
+
+    margin-bottom: 6px;
+}
+
+
+.calendar-month-weekday {
+    padding: 6px 0;
+
+    color: #8a817a;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-align: center;
+
+    text-transform: uppercase;
+}
+
+
+.calendar-month .calendar-day {
+    min-height: 78px;
+
+    padding: 8px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+}
+
+
+/* ================================================== */
+/* MONATSKALENDER - TERMINE                           */
+/* ================================================== */
+
+.calendar-month-appointments {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    margin-top: 5px;
+}
+
+
+.calendar-month-appointment {
+    display: block;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 4px 6px;
+
+    overflow: hidden;
+
+    border-radius: 6px;
+
+    background-color: #f3eee9;
+
+    color: #6f4a2f;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    line-height: 1.3;
+
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* ================================================== */
+/* KALENDER - AUSGEWÄHLTER TAG                        */
+/* ================================================== */
+
+.calendar-day-details {
+    margin-top: 25px;
+}
+
+
+.calendar-day-details-header {
+    margin-bottom: 12px;
+}
+
+
+.calendar-day-details-header h3 {
+    margin: 3px 0 0;
+
+    text-transform: capitalize;
+}
+
+
+/* ================================================== */
+/* KALENDER - TERMIN AM AUSGEWÄHLTEN TAG              */
+/* ================================================== */
+
+.calendar-detail-appointment {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 12px 14px;
+    margin-bottom: 8px;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+
+    color: #302a26;
+
+    font-family: inherit;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+
+.calendar-detail-appointment:hover {
+    border-color: #b87333;
+
+    background-color: #fff9f4;
+}
+
+
+.calendar-detail-icon {
+    font-size: 21px;
+}
+
+
+.calendar-detail-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+
+.calendar-detail-text strong {
+    font-size: 14px;
+}
+
+
+.calendar-detail-text small {
+    color: #8a817a;
+
+    font-size: 12px;
+}
+
+
+.calendar-detail-completed {
+    opacity: 0.55;
+}
+
+
+/* ================================================== */
+/* KALENDER - TERMIN HINZUFÜGEN                       */
+/* ================================================== */
+
+.calendar-add-appointment {
+    margin-top: 10px;
+
+    padding: 9px 14px;
+
+    border: 1px solid #b87333;
+    border-radius: 8px;
+
+    background-color: transparent;
+
+    color: #b87333;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.calendar-add-appointment:hover {
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* KALENDER - RESPONSIVE                              */
+/* ================================================== */
+
+@media (max-width: 850px) {
+
+    .calendar-week {
+        grid-template-columns: 1fr;
+    }
+
+
+    .calendar-week .calendar-day {
+        min-height: auto;
+    }
+
+
+    .health-calendar-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .health-calendar-section {
+        padding: 18px;
+    }
+
+
+    .calendar-month {
+        gap: 4px;
+    }
+
+
+    .calendar-month .calendar-day {
+        min-height: 55px;
+
+        padding: 5px;
+    }
+
+
+    .calendar-day-number {
+        width: 26px;
+        height: 26px;
+
+        font-size: 13px;
+    }
+
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN                                         */
+/* ================================================== */
+
+.task-list {
+    list-style: none;
+
+    margin-bottom: 22px;
+}
+
+
+/* Einzelne Aufgabe */
+.task-list li {
+    padding: 9px 0;
+
+    border-bottom: 1px solid #f0ebe6;
+
+    font-size: 14px;
+}
+
+
+/* Checkbox */
+.task-list input {
+    margin-right: 9px;
+
+    accent-color: #b87333;
+}
+
+
+/* ================================================== */
+/* TRAINING                                           */
+/* ================================================== */
+
+.skill {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #f0ebe6;
+
+    font-size: 14px;
+}
+
+
+/* Sternebewertung */
+.stars {
+    color: #b87333;
+
+    letter-spacing: 2px;
+}
+
+
+/* ================================================== */
+/* TERMIN UND TAGEBUCH                                */
+/* ================================================== */
+
+.appointment,
+.diary-preview {
+    min-height: 110px;
+
+    color: #756a62;
+
+    font-size: 14px;
+}
+
+
+/* Hervorgehobener Text */
+.appointment-title {
+    color: #302a26;
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+
+/* ================================================== */
+/* LINKS IN DEN DASHBOARD-KARTEN                      */
+/* ================================================== */
+
+.card-link {
+    display: inline-block;
+
+    color: #b87333;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-top: 15px;
+}
+
+
+/* Effekt beim Darüberfahren */
+.card-link:hover {
+    text-decoration: underline;
+}
+
+
+/* ================================================== */
+/* FUSSBEREICH                                        */
+/* ================================================== */
+
+footer {
+    width: 100%;
+    box-sizing: border-box;
+
+    background-color: #302a26;
+    color: #ffffff;
+
+    text-align: center;
+
+    padding: 25px;
+
+    font-size: 14px;
+}
+
+
+/* ================================================== */
+/* PROFILFORMULAR                                     */
+/* ================================================== */
+
+/* Formular zunächst verstecken */
+.profile-form {
+    display: none;
+
+    margin-top: 25px;
+    padding-top: 25px;
+
+    border-top: 1px solid #eee5dc;
+}
+
+
+/* Einzelner Formularbereich */
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 15px;
+}
+
+
+/* Beschriftungen */
+.form-group label {
+    color: #756a62;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+
+/* Eingabefelder */
+.form-group input,
+.form-group select {
+    width: 100%;
+
+    padding: 10px;
+
+    border: 1px solid #ddd3ca;
+    border-radius: 6px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+
+/* Eingabefeld ist ausgewählt */
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+
+    border-color: #b87333;
+}
+
+
+/* Bereich für die beiden Buttons */
+.form-buttons {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+/* Speichern */
+.save-button {
+    background-color: #b87333;
+
+    color: #ffffff;
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 10px 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* Speichern - Maus darüber */
+.save-button:hover {
+    background-color: #925a28;
+}
+
+
+/* Abbrechen */
+.cancel-button {
+    background-color: transparent;
+
+    color: #756a62;
+
+    border: 1px solid #cfc5bc;
+    border-radius: 6px;
+
+    padding: 10px 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* Abbrechen - Maus darüber */
+.cancel-button:hover {
+    background-color: #f7f3ee;
+}
+
+
+/* ================================================== */
+/* ENTWICKLUNG                                        */
+/* ================================================== */
+
+.development-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 40px 80px;
+}
+
+
+/* ================================================== */
+/* ENTWICKLUNG - ÜBERSCHRIFT                          */
+/* ================================================== */
+
+.development-header {
+    margin-bottom: 35px;
+}
+
+
+.development-header .eyebrow {
+    color: #b87333;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+
+.development-header h1 {
+    font-size: 36px;
+    margin: 0 0 10px;
+    color: #302a26;
+}
+
+
+.development-header > p:last-child {
+    color: #6f665f;
+    margin: 0;
+}
+
+
+/* ================================================== */
+/* KARTE - NEUE MESSUNG                               */
+/* ================================================== */
+
+.measurement-card {
+    background-color: #ffffff;
+
+    padding: 30px;
+
+    border-radius: 16px;
+
+    margin-bottom: 30px;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+.measurement-card h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+
+    color: #302a26;
+}
+
+
+/* ================================================== */
+/* ENTWICKLUNG - FORMULAR                             */
+/* ================================================== */
+
+.measurement-form {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+
+.measurement-form .form-group {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.measurement-form label {
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #514941;
+
+    margin-bottom: 8px;
+}
+
+
+.measurement-form input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid #ddd3ca;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    color: #302a26;
+
+    background-color: #ffffff;
+}
+
+
+.measurement-form input:focus {
+    outline: none;
+
+    border-color: #b87333;
+}
+
+
+/* ================================================== */
+/* ENTWICKLUNG - SPEICHERN                            */
+/* ================================================== */
+
+.measurement-card .primary-button {
+    background-color: #b87333;
+
+    color: #ffffff;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 12px 20px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.measurement-card .primary-button:hover {
+    opacity: 0.85;
+}
+
+
+/* ================================================== */
+/* BISHERIGE MESSUNGEN                                */
+/* ================================================== */
+
+.measurement-history {
+    background-color: #ffffff;
+
+    padding: 30px;
+
+    border-radius: 16px;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+.measurement-history h2 {
+    margin-top: 0;
+
+    margin-bottom: 25px;
+
+    color: #302a26;
+}
+
+
+/* ================================================== */
+/* MESSWERT-TABELLE                                   */
+/* ================================================== */
+
+.measurement-table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+
+.measurement-table th {
+    text-align: left;
+
+    padding: 14px;
+
+    background-color: #f5eee8;
+
+    color: #302a26;
+
+    border-bottom: 2px solid #b87333;
+}
+
+
+.measurement-table td {
+    padding: 14px;
+
+    border-bottom: 1px solid #eee6df;
+
+    color: #514941;
+}
+
+
+.measurement-table tbody tr:hover {
+    background-color: #faf7f4;
+}
+
+/* ================================================== */
+/* ENTWICKLUNG - WACHSTUM & SOLL-IST-VERGLEICH */
+/* ================================================== */
+
+
+/* ================================================== */
+/* GESAMTBEREICH */
+/* ================================================== */
+
+.growth-section {
+    display: grid;
+
+    grid-template-columns: 2fr 1fr;
+
+    gap: 25px;
+
+    margin-top: 35px;
+    margin-bottom: 35px;
+
+    align-items: stretch;
+}
+
+
+/* ================================================== */
+/* KARTEN */
+/* ================================================== */
+
+.growth-chart-card,
+.growth-comparison-card {
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    padding: 30px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+
+/* ================================================== */
+/* BESCHREIBUNG DER WACHSTUMSKURVE */
+/* ================================================== */
+
+.growth-description {
+    margin-top: 8px;
+    margin-bottom: 20px;
+
+    color: #6f675f;
+
+    line-height: 1.5;
+}
+
+
+/* ================================================== */
+/* DIAGRAMM */
+/* ================================================== */
+
+#growth-chart {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    margin-top: 20px;
+
+    background-color: #ffffff;
+
+    border: 1px solid #eee7e1;
+    border-radius: 10px;
+}
+
+/* ================================================== */
+/* AUSWAHL ENDGEWICHT */
+/* ================================================== */
+
+.growth-final-weight {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    margin-top: 18px;
+    margin-bottom: 20px;
+
+    padding: 12px 15px;
+
+    background-color: #f8f4f0;
+    border-radius: 10px;
+}
+
+
+/* BESCHRIFTUNG */
+
+.growth-final-weight label {
+    color: #5c534d;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+/* AUSWAHLFELD */
+
+.growth-final-weight select {
+    padding: 8px 32px 8px 12px;
+
+    border: 1px solid #d9b99c;
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #302a26;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* AUSWAHLFELD BEIM DARÜBERFAHREN */
+
+.growth-final-weight select:hover {
+    border-color: #c56f2c;
+}
+
+
+/* AUSWAHLFELD BEIM ANKLICKEN */
+
+.growth-final-weight select:focus {
+    outline: none;
+
+    border-color: #c56f2c;
+
+    box-shadow:
+        0 0 0 3px rgba(197, 111, 44, 0.12);
+}
+
+
+/* ================================================== */
+/* SOLL-IST-VERGLEICH */
+/* ================================================== */
+
+.growth-comparison-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+
+    margin-top: 25px;
+}
+
+
+/* ================================================== */
+/* EINZELNE VERGLEICHSWERTE */
+/* ================================================== */
+
+.growth-value {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    padding: 15px;
+
+    background-color: #f8f4f0;
+
+    border-radius: 10px;
+}
+
+
+/* BESCHRIFTUNG */
+
+.growth-value span {
+    color: #786f68;
+
+    font-size: 13px;
+}
+
+
+/* WERT */
+
+.growth-value strong {
+    color: #302a26;
+
+    font-size: 18px;
+}
+
+
+/* ============================================== */
+/* STATUSFELD DES SOLL-IST-VERGLEICHS */
+/* ============================================== */
+
+.growth-status {
+    margin-top: 20px;
+    padding: 15px;
+
+    border: 1px solid #e4d7cc;
+    border-radius: 10px;
+
+    background-color: #faf7f4;
+    color: #5c534d;
+
+    line-height: 1.5;
+}
+
+
+/* ============================================== */
+/* FARBEN FÜR DEN SOLL-IST-VERGLEICH */
+/* ============================================== */
+
+/* Grün: Gewicht liegt im normalen Bereich */
+.growth-status.status-good {
+    border: 2px solid #6fa765;
+    background-color: #edf6ea;
+}
+
+
+/* Orange: leichte Abweichung */
+.growth-status.status-warning {
+    border: 2px solid #d98a2b;
+    background-color: #fff1dc;
+}
+
+
+/* Rot: deutliche Abweichung */
+.growth-status.status-alert {
+    border: 2px solid #c85a54;
+    background-color: #fbe7e5;
+}
+
+
+/* ================================================== */
+/* RESPONSIVE DARSTELLUNG */
+/* ================================================== */
+
+@media (max-width: 900px) {
+
+    .growth-section {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .growth-comparison-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* ================================================== */
+/* TRAINING                                           */
+/* ================================================== */
+
+.training-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 40px 80px;
+}
+
+/* ================================================== */
+/* WACHSTUMSKURVE ANKLICKBAR */
+/* ================================================== */
+
+.growth-chart-clickable {
+    cursor: pointer;
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+.growth-chart-clickable:hover {
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.10);
+    transform: translateY(-2px);
+}
+
+
+/* ================================================== */
+/* GROSSES WACHSTUMSKURVEN-POPUP */
+/* ================================================== */
+
+.growth-chart-modal-content.app-modal-content {
+    width: 90vw;
+    max-width: 1500px;
+    height: auto;
+}
+
+.growth-chart-modal-body {
+    padding: 25px 30px 30px;
+    overflow: hidden;
+}
+
+#growth-chart-large {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    background-color: #ffffff;
+    border: 1px solid #eee7e1;
+    border-radius: 10px;
+}
+
+/* ================================================== */
+/* TRAINING - ÜBERSCHRIFT                             */
+/* ================================================== */
+
+.training-header {
+    margin-bottom: 35px;
+}
+
+
+.training-header .eyebrow {
+    color: #b87333;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+
+.training-header h1 {
+    font-size: 36px;
+    margin: 0 0 10px;
+    color: #302a26;
+}
+
+
+.training-header > p:last-child {
+    color: #6f665f;
+    margin: 0;
+}
+
+
+/* ================================================== */
+/* TRAINING - FORMULAR KARTE                          */
+/* ================================================== */
+
+.training-form-card {
+    background-color: #ffffff;
+
+    padding: 30px;
+
+    border-radius: 16px;
+
+    margin-bottom: 30px;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+.training-form-card h2 {
+    margin-top: 0;
+
+    margin-bottom: 25px;
+
+    color: #302a26;
+}
+
+
+/* ================================================== */
+/* TRAINING - FORMULARFELDER                          */
+/* ================================================== */
+
+.training-form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    margin-bottom: 22px;
+}
+
+
+.training-form-group label {
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #514941;
+
+    margin-bottom: 8px;
+}
+
+
+.training-form-group input,
+.training-form-group textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid #ddd3ca;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    font-family: inherit;
+
+    color: #302a26;
+
+    background-color: #ffffff;
+}
+
+
+.training-form-group textarea {
+    resize: vertical;
+
+    min-height: 100px;
+}
+
+
+.training-form-group input:focus,
+.training-form-group textarea:focus {
+    outline: none;
+
+    border-color: #b87333;
+}
+
+
+/* ================================================== */
+/* TRAINING - STERNE                                  */
+/* ================================================== */
+
+.star-rating {
+    display: flex;
+
+    gap: 5px;
+
+    margin-top: 3px;
+}
+
+
+.star {
+    background: none;
+
+    border: none;
+
+    padding: 0;
+
+    font-size: 32px;
+
+    line-height: 1;
+
+    color: #b87333;
+
+    cursor: pointer;
+}
+
+
+.star:hover {
+    transform: scale(1.12);
+}
+
+
+.rating-text {
+    margin-top: 10px;
+
+    font-size: 14px;
+
+    color: #8a7d73;
+}
+
+
+/* ================================================== */
+/* TRAINING - SPEICHERN BUTTON                        */
+/* ================================================== */
+
+.training-form-card .primary-button {
+    background-color: #b87333;
+
+    color: #ffffff;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 12px 20px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.training-form-card .primary-button:hover {
+    opacity: 0.85;
+}
+
+
+/* ================================================== */
+/* TRAINING - ÜBERSICHT                               */
+/* ================================================== */
+
+.training-overview {
+    background-color: #ffffff;
+
+    padding: 30px;
+
+    border-radius: 16px;
+
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+.training-overview h2 {
+    margin-top: 0;
+
+    margin-bottom: 25px;
+
+    color: #302a26;
+}
+
+
+/* ================================================== */
+/* TRAINING - GESPEICHERTE ÜBUNG                      */
+/* ================================================== */
+
+.training-item {
+    padding: 20px;
+
+    border: 1px solid #eee6df;
+
+    border-radius: 10px;
+
+    margin-bottom: 15px;
+
+    background-color: #faf7f4;
+}
+
+
+.training-item:last-child {
+    margin-bottom: 0;
+}
+
+
+.training-item-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+.training-item h3 {
+    margin: 0;
+
+    font-size: 18px;
+
+    color: #302a26;
+}
+
+
+.training-item-stars {
+    color: #b87333;
+
+    font-size: 21px;
+
+    letter-spacing: 2px;
+}
+
+
+.training-item-note {
+    margin: 12px 0 0;
+
+    color: #6f665f;
+
+    line-height: 1.5;
+}
+
+
+/* ================================================== */
+/* TRAINING - DATUM                                   */
+/* ================================================== */
+
+.training-item-date {
+    margin: 8px 0 0;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #b87333;
+}
+
+
+/* ================================================== */
+/* TRAINING - LÖSCHEN BUTTON                          */
+/* ================================================== */
+
+.delete-training-button {
+    margin-top: 15px;
+
+    background-color: transparent;
+
+    color: #b87333;
+
+    border: 1px solid #b87333;
+
+    border-radius: 6px;
+
+    padding: 7px 12px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.delete-training-button:hover {
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+/* ================================================== */
+/* ENTDECKER-SEITE */
+/* ================================================== */
+
+.discovery-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 30px 60px;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - ÜBERSCHRIFT */
+/* ================================================== */
+
+.discovery-page-header {
+    margin-bottom: 30px;
+}
+
+.discovery-page-header h1 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.discovery-page-header > p:last-child {
+    color: #786f68;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - LEGENDE */
+/* ================================================== */
+
+.discovery-legend-card {
+    margin-bottom: 25px;
+
+    padding: 20px 25px;
+
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.discovery-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.discovery-legend > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 10px 15px;
+
+    background-color: #f8f4f0;
+    border-radius: 10px;
+}
+
+.discovery-legend strong {
+    font-size: 20px;
+}
+
+.discovery-legend span {
+    color: #5c534d;
+    font-size: 14px;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - FORTSCHRITT */
+/* ================================================== */
+
+.discovery-progress {
+    margin-bottom: 30px;
+
+    padding: 30px;
+
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.discovery-progress h2 {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.discovery-progress-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.discovery-progress-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    text-align: center;
+
+    padding: 18px;
+
+    background-color: #f8f4f0;
+
+    border-radius: 12px;
+}
+
+.discovery-progress-item span {
+    color: #786f68;
+    font-size: 14px;
+}
+
+.discovery-progress-item strong {
+    color: #302a26;
+    font-size: 24px;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - MEILENSTEIN */
+/* ================================================== */
+
+.discovery-milestone {
+    display: none;
+
+    margin-top: 20px;
+    padding: 18px 20px;
+
+    background-color: #f5eee7;
+
+    border: 1px solid #dfc9b6;
+    border-radius: 12px;
+
+    color: #5c534d;
+
+    text-align: center;
+}
+
+.discovery-milestone.show {
+    display: block;
+}
+
+.discovery-milestone-icon {
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 28px;
+}
+
+.discovery-milestone strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #302a26;
+    font-size: 18px;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - KATEGORIEN */
+/* ================================================== */
+
+.discovery-category {
+    margin-bottom: 15px;
+
+    overflow: hidden;
+
+    background-color: #ffffff;
+
+    border: 1px solid #eee7e1;
+    border-radius: 16px;
+
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+
+/* ================================================== */
+/* KATEGORIE - KOPF */
+/* ================================================== */
+
+.discovery-category-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    padding: 20px 25px;
+
+    border: none;
+
+    background-color: #ffffff;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    text-align: left;
+}
+
+.discovery-category-header:hover {
+    background-color: #faf7f4;
+}
+
+.discovery-category-header h2 {
+    margin: 0;
+
+    color: #302a26;
+
+    font-size: 18px;
+}
+
+
+/* ================================================== */
+/* KATEGORIE - RECHTE SEITE */
+/* ================================================== */
+
+.discovery-category-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.discovery-category-progress {
+    padding: 5px 10px;
+
+    background-color: #f8f4f0;
+
+    border-radius: 20px;
+
+    color: #786f68;
+
+    font-size: 13px;
+}
+
+.discovery-category-arrow {
+    color: #786f68;
+
+    font-size: 22px;
+
+    transition:
+        transform 0.2s ease;
+}
+
+.discovery-category.open
+.discovery-category-arrow {
+    transform: rotate(180deg);
+}
+
+
+/* ================================================== */
+/* KATEGORIE - INHALT */
+/* ================================================== */
+
+.discovery-category-content {
+    display: none;
+
+    padding:
+        0 25px 20px;
+}
+
+.discovery-category.open
+.discovery-category-content {
+    display: block;
+}
+
+
+/* ================================================== */
+/* SPALTENÜBERSCHRIFT */
+/* ================================================== */
+
+.discovery-column-header {
+    display: grid;
+
+    grid-template-columns:
+        minmax(250px, 1fr)
+        70px
+        70px
+        70px
+        95px;
+
+    align-items: center;
+
+    padding: 12px 10px;
+
+    border-bottom:
+        1px solid #eee7e1;
+
+    text-align: center;
+}
+
+
+/* ================================================== */
+/* EINZELNER ENTDECKER-PUNKT */
+/* ================================================== */
+
+.discovery-row {
+    display: grid;
+
+    grid-template-columns:
+        minmax(250px, 1fr)
+        70px
+        70px
+        70px
+        95px;
+
+    align-items: center;
+
+    min-height: 54px;
+
+    padding: 8px 10px;
+
+    border-bottom:
+        1px solid #f0ebe7;
+}
+
+
+/* ==================================================*/
+/* KOMMANDOS - NAME UND BESCHREIBUNG */
+/* ================================================== */
+
+.command-item-text {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr);
+    column-gap: 15px;
+    align-items: start;
+    width: 100%;
+}
+
+.command-item-text .discovery-item-name {
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+.command-description {
+    display: block;
+    max-width: 520px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #5c534d;
+}
+
+/* ================================================== */
+/* ENTDECKER - CHECKBOXEN */
+/* ================================================== */
+
+.discovery-check-button {
+    width: 30px;
+    height: 30px;
+
+    margin: 0 auto;
+
+    border: 2px solid #d8c9bd;
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.discovery-check-button:hover {
+    border-color: #9d826b;
+
+    transform: scale(1.07);
+}
+
+.discovery-check-button.checked {
+    background-color: #8b7333;
+    border-color: #8b7333;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - RESPONSIVE */
+/* ================================================== */
+
+@media (max-width: 800px) {
+
+    .discovery-progress-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .discovery-column-header,
+    .discovery-row {
+        grid-template-columns:
+            minmax(150px, 1fr)
+            50px
+            50px
+            50px;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .discovery-page {
+        padding:
+            25px 15px 40px;
+    }
+
+    .discovery-category-header {
+        padding: 18px;
+    }
+
+    .discovery-category-content {
+        padding:
+            0 10px 15px;
+    }
+
+    .discovery-column-header,
+    .discovery-row {
+        grid-template-columns:
+            minmax(120px, 1fr)
+            42px
+            42px
+            42px;
+    }
+
+    .discovery-check-button {
+        width: 28px;
+        height: 28px;
+    }
+
+}
+
+/* ================================================== */
+/* TRAINING - ÜBERSICHT KOPF */
+/* ================================================== */
+
+.training-overview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.training-overview-header h2 {
+    margin-bottom: 0;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH                                           */
+/* ================================================== */
+
+.diary-page {
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 50px 40px 80px;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - ÜBERSCHRIFT                             */
+/* ================================================== */
+
+.diary-header {
+    margin-bottom: 35px;
+}
+
+
+.diary-header .eyebrow {
+    margin-bottom: 8px;
+
+    color: #b87333;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+}
+
+
+.diary-header h1 {
+    margin: 0 0 10px;
+
+    color: #302a26;
+
+    font-size: 38px;
+}
+
+
+.diary-header > p:last-child {
+    margin: 0;
+
+    color: #746b65;
+}
+
+
+/* Überschrift und Button nebeneinander */
+
+.diary-header-with-button {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 40px;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - FORMULARFELDER                          */
+/* ================================================== */
+
+.diary-form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    margin-bottom: 22px;
+}
+
+
+.diary-form-group label {
+    margin-bottom: 8px;
+
+    color: #4c433d;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+.diary-form-group input,
+.diary-form-group textarea {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #ddd5cf;
+
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #302a26;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    box-sizing: border-box;
+}
+
+
+.diary-form-group textarea {
+    resize: vertical;
+
+    min-height: 90px;
+}
+
+
+.diary-form-group input:focus,
+.diary-form-group textarea:focus {
+    outline: none;
+
+    border-color: #b87333;
+
+    box-shadow: 0 0 0 2px rgba(184, 115, 51, 0.12);
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - FOTO-UPLOAD                             */
+/* ================================================== */
+
+.diary-photo-upload {
+    margin-bottom: 25px;
+}
+
+
+.diary-photo-upload > label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #4c433d;
+
+    font-size: 14px;
+
+    font-weight: 600;
+}
+
+
+/* Das normale Browser-Dateifeld bleibt unsichtbar */
+
+.diary-photo-upload input[type="file"] {
+    display: none;
+}
+
+
+/* Eigener Button für die Dateiauswahl */
+
+.photo-upload-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: auto;
+
+    padding: 10px 17px;
+
+    background-color: #ffffff;
+
+    color: #8a674b;
+
+    border: 1px solid #d8c5b5;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.04);
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.photo-upload-button:hover {
+    background-color: #f4ede6;
+
+    border-color: #b98a62;
+
+    transform: translateY(-1px);
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - FOTO-VORSCHAU                           */
+/* ================================================== */
+
+#photo-preview {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(150px, 1fr));
+
+    gap: 15px;
+
+    margin-top: 15px;
+}
+
+
+.photo-preview-item {
+    position: relative;
+
+    overflow: hidden;
+
+    height: 150px;
+
+    border-radius: 12px;
+
+    background-color: #f3eee9;
+}
+
+
+.photo-preview-item img {
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - FOTO AUS VORSCHAU ENTFERNEN             */
+/* ================================================== */
+
+.remove-photo-button {
+    position: absolute;
+
+    top: 8px;
+
+    right: 8px;
+
+    width: 30px;
+
+    height: 30px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background-color: rgba(255, 255, 255, 0.92);
+
+    color: #8f3f35;
+
+    font-size: 21px;
+
+    font-weight: 700;
+
+    line-height: 30px;
+
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+.remove-photo-button:hover {
+    background-color: #8f3f35;
+
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - BISHERIGE EINTRÄGE                      */
+/* ================================================== */
+
+.diary-history {
+    padding: 30px;
+
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+
+.diary-history > h2 {
+    margin-top: 0;
+
+    margin-bottom: 25px;
+
+    color: #302a26;
+}
+
+.diary-history-header .eyebrow {
+    margin: 0 0 10px;
+}
+
+.diary-history-header h2 {
+    margin: 0 0 25px;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - EIN EINTRAG                             */
+/* ================================================== */
+
+.diary-item {
+    margin-bottom: 25px;
+
+    padding: 25px;
+
+    border: 1px solid #eee7e1;
+
+    border-radius: 14px;
+
+    background-color: #faf7f4;
+}
+
+
+.diary-item:last-child {
+    margin-bottom: 0;
+}
+
+
+.diary-item-date {
+    margin: 0 0 6px;
+
+    color: #b87333;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.diary-item > h3 {
+    margin: 0 0 22px;
+
+    color: #302a26;
+
+    font-size: 23px;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - INHALT                                  */
+/* ================================================== */
+
+.diary-item-section {
+    margin-bottom: 18px;
+}
+
+
+.diary-item-section h4 {
+    margin: 0 0 5px;
+
+    color: #4c433d;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+.diary-item-section p {
+    margin: 0;
+
+    color: #625852;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    white-space: pre-line;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - FOTOS IM EINTRAG                        */
+/* ================================================== */
+
+.diary-item-photos {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(180px, 1fr));
+
+    gap: 15px;
+
+    margin-top: 22px;
+
+    margin-bottom: 22px;
+}
+
+
+.diary-photo {
+    position: relative;
+
+    overflow: hidden;
+
+    height: 190px;
+
+    border-radius: 12px;
+
+    background-color: #eee7e1;
+}
+
+
+.diary-photo img {
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+}
+
+/* ================================================== */
+/* TAGEBUCH - FOTO AUS EINTRAG LÖSCHEN               */
+/* ================================================== */
+
+.delete-photo-button {
+    position: absolute;
+
+    top: 8px;
+    right: 8px;
+
+    width: 30px;
+    height: 30px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: rgba(255, 255, 255, 0.92);
+
+    color: #8f3f35;
+
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 30px;
+
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+
+.delete-photo-button:hover {
+    background-color: #8f3f35;
+
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - BUTTONBEREICH                           */
+/* ================================================== */
+
+.diary-button-area {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - ÄNDERN                                  */
+/* ================================================== */
+
+.edit-diary-button,
+.edit-measurement-button {
+    padding: 9px 14px;
+
+    border: 1px solid #b87333;
+    border-radius: 7px;
+
+    background-color: transparent;
+
+    color: #b87333;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    margin-right: 8px;
+}
+
+
+.edit-diary-button:hover,
+.edit-measurement-button:hover {
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - LÖSCHEN                                 */
+/* ================================================== */
+
+.delete-diary-button,
+.delete-measurement-button {
+    padding: 9px 14px;
+
+    border: 1px solid #d8b8b2;
+    border-radius: 7px;
+
+    background-color: transparent;
+
+    color: #9b4b40;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.delete-diary-button:hover,
+.delete-measurement-button:hover {
+    background-color: #9b4b40;
+
+    border-color: #9b4b40;
+
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT & TERMINE                               */
+/* ================================================== */
+
+.health-page {
+    width: min(1100px, calc(100% - 40px));
+
+    margin: 0 auto;
+
+    padding: 45px 0 70px;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - ÜBERSCHRIFT                           */
+/* ================================================== */
+
+.health-header {
+    margin-bottom: 30px;
+}
+
+
+.health-header h1 {
+    margin: 5px 0 10px;
+}
+
+
+.health-header > p:last-child {
+    color: #6d655f;
+
+    max-width: 700px;
+
+    line-height: 1.6;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - TERMINFORMULAR                        */
+/* ================================================== */
+
+.health-form-card {
+    background-color: #ffffff;
+
+    border: 1px solid #e5ddd5;
+
+    border-radius: 16px;
+
+    padding: 28px;
+
+    margin-bottom: 45px;
+
+    box-shadow: 0 6px 20px rgba(48, 42, 38, 0.06);
+}
+
+
+.health-form-card h2 {
+    margin-top: 0;
+
+    margin-bottom: 25px;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - FORMULARFELDER                        */
+/* ================================================== */
+
+.health-form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-bottom: 18px;
+}
+
+
+.health-form-group label {
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #403832;
+}
+
+
+.health-form-group input,
+.health-form-group select,
+.health-form-group textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px 12px;
+
+    border: 1px solid #d9d0c8;
+
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #302a26;
+
+    font: inherit;
+}
+
+
+.health-form-group textarea {
+    resize: vertical;
+}
+
+
+.health-form-group input:focus,
+.health-form-group select:focus,
+.health-form-group textarea:focus {
+    outline: none;
+
+    border-color: #b87333;
+}
+
+
+/* Zwei Felder nebeneinander */
+
+.health-form-row {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - STATUSAUSWAHL                         */
+/* ================================================== */
+
+.appointment-status-selection {
+    display: flex;
+
+    gap: 25px;
+
+    flex-wrap: wrap;
+}
+
+
+.appointment-status-selection label {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    cursor: pointer;
+}
+
+
+.appointment-status-selection input {
+    width: auto;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - TERMINBEREICHE                        */
+/* ================================================== */
+
+.appointment-section {
+    margin-top: 40px;
+}
+
+
+.appointment-section-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+
+.appointment-section-header h2 {
+    margin: 3px 0 0;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - TERMINZÄHLER                          */
+/* ================================================== */
+
+.appointment-counter {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 38px;
+
+    height: 38px;
+
+    padding: 0 8px;
+
+    box-sizing: border-box;
+
+    border-radius: 50%;
+
+    background-color: #f3e7dc;
+
+    color: #a45f27;
+
+    font-weight: 700;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - LEERE TERMINLISTE                     */
+/* ================================================== */
+
+.empty-appointments {
+    background-color: #ffffff;
+
+    border: 1px dashed #d9d0c8;
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    color: #81766e;
+
+    text-align: center;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - EINZELNER TERMIN                      */
+/* ================================================== */
+
+.appointment-item {
+    background-color: #ffffff;
+
+    border: 1px solid #e5ddd5;
+
+    border-left: 4px solid #b87333;
+
+    border-radius: 12px;
+
+    padding: 22px;
+
+    margin-bottom: 16px;
+
+    box-shadow: 0 4px 14px rgba(48, 42, 38, 0.05);
+}
+
+
+.appointment-item-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-bottom: 15px;
+}
+
+
+.appointment-item-header h3 {
+    margin: 4px 0 0;
+
+    font-size: 19px;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - TERMIN-KATEGORIE                      */
+/* ================================================== */
+
+.appointment-category {
+    margin: 0;
+
+    color: #b87333;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - TERMIN-STATUS                         */
+/* ================================================== */
+
+.appointment-status {
+    flex-shrink: 0;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.status-open {
+    background-color: #f7eadf;
+
+    color: #a45f27;
+}
+
+
+.status-completed {
+    background-color: #ecebea;
+
+    color: #6d655f;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - TERMININFORMATIONEN                   */
+/* ================================================== */
+
+.appointment-info {
+    margin: 7px 0;
+
+    color: #514943;
+}
+
+
+.appointment-note {
+    margin: 15px 0 0;
+
+    padding: 12px 14px;
+
+    background-color: #faf7f3;
+
+    border-radius: 8px;
+
+    color: #625a54;
+
+    line-height: 1.5;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - ERLEDIGTER TERMIN                     */
+/* ================================================== */
+
+.appointment-completed {
+    opacity: 0.65;
+
+    border-left-color: #aaa29c;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - BUTTONBEREICH                         */
+/* ================================================== */
+
+.appointment-button-area {
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: 18px;
+}
+
+
+.appointment-status-button,
+.edit-appointment-button,
+.delete-appointment-button {
+    padding: 9px 13px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - STATUS-BUTTON                         */
+/* ================================================== */
+
+.appointment-status-button {
+    border: 1px solid #b87333;
+
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+
+.appointment-status-button:hover {
+    background-color: #9d5e29;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - ÄNDERN-BUTTON                         */
+/* ================================================== */
+
+.edit-appointment-button {
+    border: 1px solid #b87333;
+
+    background-color: transparent;
+
+    color: #b87333;
+}
+
+
+.edit-appointment-button:hover {
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - LÖSCHEN-BUTTON                        */
+/* ================================================== */
+
+.delete-appointment-button {
+    border: 1px solid #c8c0ba;
+
+    background-color: transparent;
+
+    color: #6d655f;
+}
+
+
+.delete-appointment-button:hover {
+    background-color: #f1efed;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - NÄCHSTE TERMINE                        */
+/* ================================================== */
+
+.dashboard-appointment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-top: 18px;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - EINZELNER TERMIN                       */
+/* ================================================== */
+
+.dashboard-appointment-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    padding: 12px 14px;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - TERMIN TITEL                           */
+/* ================================================== */
+
+.dashboard-appointment-box-title {
+    color: #302a26;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - DATUM UND UHRZEIT                      */
+/* ================================================== */
+
+.dashboard-appointment-box-date {
+    color: #8a817a;
+
+    font-size: 12px;
+    font-weight: 400;
+
+    line-height: 1.3;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN                                         */
+/* ================================================== */
+
+.weekly-page {
+    width: min(1100px, calc(100% - 40px));
+
+    margin: 0 auto;
+
+    padding: 50px 0 70px;
+}
+
+
+
+/* ================================================== */
+/* WOCHENPLAN - ÜBERSCHRIFT                           */
+/* ================================================== */
+
+.weekly-header {
+    margin-bottom: 35px;
+}
+
+
+.weekly-header h1 {
+    margin-top: 5px;
+
+    margin-bottom: 10px;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN - FORMULAR                              */
+/* ================================================== */
+
+.weekly-form-card {
+    background-color: #ffffff;
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    margin-bottom: 45px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+.weekly-form-card h2 {
+    margin-top: 0;
+
+    margin-bottom: 25px;
+}
+
+
+.weekly-form-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-bottom: 20px;
+}
+
+
+.weekly-form-group label {
+    font-weight: 600;
+}
+
+
+.weekly-form-group input,
+.weekly-form-group select,
+.weekly-form-group textarea {
+    padding: 12px 14px;
+
+    border: 1px solid #d8d1ca;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+
+    font-size: 15px;
+}
+
+
+.weekly-form-group input:focus,
+.weekly-form-group select:focus,
+.weekly-form-group textarea:focus {
+    outline: none;
+
+    border-color: #a9794f;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN - STATUSAUSWAHL                         */
+/* ================================================== */
+
+.weekly-status-selection {
+    display: flex;
+
+    gap: 25px;
+}
+
+
+.weekly-status-selection label {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    font-weight: normal;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN - AUFGABENBEREICHE                      */
+/* ================================================== */
+
+.weekly-section {
+    margin-top: 40px;
+}
+
+
+.weekly-section-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+
+.weekly-section-header h2 {
+    margin: 4px 0 0;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN - ZÄHLER                                */
+/* ================================================== */
+
+.weekly-counter {
+    min-width: 38px;
+
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background-color: #eee7df;
+
+    font-weight: bold;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN - EINZELNE AUFGABE                      */
+/* ================================================== */
+
+.weekly-task-item {
+    background-color: #ffffff;
+
+    border-radius: 15px;
+
+    padding: 22px;
+
+    margin-bottom: 15px;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+}
+
+
+.weekly-task-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
+}
+
+
+.weekly-task-header h3 {
+    margin: 5px 0 0;
+}
+
+
+.weekly-task-category {
+    margin: 0;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #8a674b;
+}
+
+
+.weekly-task-note {
+    margin-top: 15px;
+
+    margin-bottom: 0;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN - STATUS                                */
+/* ================================================== */
+
+.weekly-task-status {
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+.weekly-status-open {
+    background-color: #f4eadf;
+}
+
+
+.weekly-status-completed {
+    background-color: #e5eee4;
+}
+
+
+/* Erledigte Aufgabe etwas blasser */
+
+.weekly-task-completed {
+    opacity: 0.7;
+}
+
+
+.weekly-task-completed h3 {
+    text-decoration: line-through;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN - BUTTONS                               */
+/* ================================================== */
+
+.weekly-task-buttons {
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+.weekly-task-buttons button {
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 9px 13px;
+
+    cursor: pointer;
+
+    font-family: inherit;
+}
+
+
+.weekly-status-button {
+    background-color: #eee7df;
+}
+
+
+.weekly-edit-button {
+    background-color: #f1eee9;
+}
+
+
+.weekly-delete-button {
+    background-color: #f4e4e1;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN - LEERE LISTE                           */
+/* ================================================== */
+
+.empty-weekly {
+    color: #777;
+
+    font-style: italic;
+}
+
+
+/* ================================================== */
+/* GALERIE                                            */
+/* ================================================== */
+
+.gallery-page {
+    width: min(1200px, calc(100% - 40px));
+
+    margin: 0 auto;
+
+    padding: 50px 0 80px;
+}
+
+
+/* ================================================== */
+/* GALERIE - ÜBERSCHRIFT                              */
+/* ================================================== */
+
+.gallery-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 40px;
+
+    margin-bottom: 35px;
+}
+
+
+.gallery-header-text {
+    flex: 1;
+}
+
+
+.gallery-header .eyebrow {
+    margin: 0 0 7px;
+
+    color: #b87333;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+.gallery-header h1 {
+    margin: 0 0 10px;
+
+    color: #302a26;
+
+    font-size: 38px;
+}
+
+
+.gallery-header-text > p:last-child {
+    margin: 0;
+
+    color: #746b65;
+
+    line-height: 1.6;
+}
+
+
+/* ================================================== */
+/* GALERIE - NEUES FOTO BUTTON                        */
+/* ================================================== */
+
+.gallery-add-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 9px;
+
+    flex-shrink: 0;
+
+    padding: 11px 17px;
+
+    border: 1px solid #d8c5b5;
+
+    border-radius: 9px;
+
+    background-color: #ffffff;
+
+    color: #8a674b;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.04);
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.gallery-add-button:hover {
+    background-color: #f4ede6;
+
+    border-color: #b98a62;
+
+    transform: translateY(-1px);
+}
+
+
+.gallery-add-icon {
+    font-size: 20px;
+
+    font-weight: 400;
+
+    line-height: 1;
+}
+
+
+/* ================================================== */
+/* GALERIE - FILTER                                   */
+/* ================================================== */
+
+.gallery-filter {
+    display: grid;
+
+    grid-template-columns: repeat(8, 1fr);
+
+    gap: 10px;
+
+    width: 100%;
+
+    margin-bottom: 0;
+}
+
+
+.gallery-filter-button {
+
+    text-align: center;
+
+    padding: 9px 15px;
+
+    border: 1px solid #ded5cd;
+
+    border-radius: 20px;
+
+    background-color: #ffffff;
+
+    color: #625852;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.gallery-filter-button:hover {
+    border-color: #b87333;
+
+    color: #b87333;
+}
+
+
+.gallery-filter-button.active {
+    border-color: #b87333;
+
+    background-color: #b87333;
+
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* GALERIE - GRID                                     */
+/* ================================================== */
+
+.gallery-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 25px;
+
+    align-items: stretch;
+
+    margin-top: 25px;
+}
+
+
+/* ================================================== */
+/* GALERIE - KARTE                                    */
+/* ================================================== */
+
+.gallery-card {
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    overflow: hidden;
+
+    background-color: #ffffff;
+
+    border: 1px solid #eee5dd;
+
+    border-radius: 16px;
+
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.gallery-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.09);
+}
+
+
+/* ================================================== */
+/* GALERIE - BILDBEREICH                              */
+/* ================================================== */
+
+/*
+    WICHTIG:
+
+    gallery-card-image ist jetzt der CONTAINER.
+
+    Das eigentliche Bild oder Video befindet sich darin
+    und hat die Klasse gallery-card-media.
+*/
+
+.gallery-card-image {
+    position: relative;
+
+    width: 100%;
+
+    height: 240px;
+
+    overflow: hidden;
+
+    background-color: #f2ede8;
+
+    cursor: pointer;
+}
+
+
+/* Bild UND Video */
+
+.gallery-card-media,
+.gallery-card-image img,
+.gallery-card-image video {
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* Kleiner Zoom beim Darüberfahren */
+
+.gallery-card:hover .gallery-card-media {
+    transform: scale(1.025);
+}
+
+
+.gallery-card-media {
+    transition: transform 0.3s ease;
+}
+
+
+/* ================================================== */
+/* GALERIE - MEHRERE FOTOS                            */
+/* ================================================== */
+
+.gallery-more-photos {
+    position: absolute;
+
+    right: 12px;
+    bottom: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 42px;
+    height: 32px;
+
+    padding: 0 10px;
+
+    border-radius: 18px;
+
+    background-color: rgba(48, 42, 38, 0.82);
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    pointer-events: none;
+}
+
+
+/* ================================================== */
+/* GALERIE - VIDEO BADGE                              */
+/* ================================================== */
+
+.gallery-video-badge {
+    position: absolute;
+
+    right: 12px;
+
+    bottom: 12px;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    background-color: rgba(48, 42, 38, 0.82);
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    pointer-events: none;
+}
+
+
+/* ================================================== */
+/* GALERIE - INFORMATIONEN UNTER DEM BILD             */
+/* ================================================== */
+
+.gallery-card-info {
+    display: flex;
+
+    flex-direction: column;
+
+    flex: 1;
+
+    padding: 17px 18px 18px;
+
+    background-color: #ffffff;
+}
+
+
+/* Kategorie */
+
+.gallery-card-category {
+    margin: 0 0 7px;
+
+    color: #a96b36;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+}
+
+
+/* Titel */
+
+.gallery-card-info h3 {
+    margin: 0 0 8px;
+
+    color: #302a26;
+
+    font-size: 17px;
+
+    line-height: 1.35;
+}
+
+
+/* Datum */
+
+.gallery-card-date {
+    margin: 0;
+
+    color: #8b817a;
+
+    font-size: 13px;
+}
+
+
+/* ================================================== */
+/* GALERIE - KARTENBUTTONS                            */
+/* ================================================== */
+
+.gallery-card-buttons {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top: 15px;
+}
+
+
+/* Ändern */
+
+.gallery-edit-button {
+    padding: 8px 13px;
+
+    border: 1px solid #d8c5b5;
+
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #9a673e;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.gallery-edit-button:hover {
+    background-color: #f5eee8;
+
+    border-color: #b98a62;
+}
+
+
+/* Löschen */
+
+.gallery-delete-button {
+    padding: 8px 13px;
+
+    border: 1px solid #dfc4bf;
+
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #9b4b40;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.gallery-delete-button:hover {
+    background-color: #9b4b40;
+
+    border-color: #9b4b40;
+
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* GALERIE - LEERE GALERIE                            */
+/* ================================================== */
+
+.gallery-empty {
+    grid-column: 1 / -1;
+
+    padding: 50px 25px;
+
+    border: 1px dashed #d9d0c8;
+
+    border-radius: 14px;
+
+    background-color: #ffffff;
+
+    color: #81766e;
+
+    text-align: center;
+}
+
+
+/* ================================================== */
+/* GALERIE - POPUP                                    */
+/* ================================================== */
+
+.gallery-form-modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 30px;
+
+    background-color: rgba(39, 34, 31, 0.55);
+}
+
+
+/* Wird vom JavaScript eingeblendet */
+
+.gallery-form-modal.show {
+    display: flex;
+}
+
+
+/* Popup-Fenster */
+
+.gallery-form-content {
+    width: min(650px, 100%);
+    max-height: 90vh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.20);
+}
+
+
+/* ================================================== */
+/* GALERIE - POPUP KOPF                               */
+/* ================================================== */
+
+.gallery-form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 22px 25px;
+
+    border-bottom: 1px solid #eee7e1;
+}
+
+
+.gallery-form-header h2 {
+    margin: 4px 0 0;
+
+    color: #302a26;
+
+    font-size: 21px;
+}
+
+
+/* X oben rechts */
+
+.gallery-form-close {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 35px;
+
+    height: 35px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background-color: transparent;
+
+    color: #746b65;
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+
+.gallery-form-close:hover {
+    background-color: #f3eee9;
+
+    color: #302a26;
+}
+
+
+/* ================================================== */
+/* GALERIE - POPUP INHALT                             */
+/* ================================================== */
+
+.gallery-form-body {
+    flex: 1;
+    min-height: 0;
+
+    overflow-y: auto;
+
+    padding: 25px 25px 30px;
+}
+
+
+.gallery-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+
+/* DATUM UND KATEGORIE NEBENEINANDER */
+
+.gallery-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.gallery-form-row .gallery-form-group {
+    min-width: 0;
+}
+
+
+.gallery-form-group label {
+    color: #4c433d;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+.gallery-form-group input,
+.gallery-form-group select,
+.gallery-form-group textarea {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 11px 13px;
+
+    border: 1px solid #d9d0c8;
+
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #302a26;
+
+    font: inherit;
+}
+
+
+.gallery-form-group textarea {
+    min-height: 90px;
+
+    resize: vertical;
+}
+
+
+.gallery-form-group input:focus,
+.gallery-form-group select:focus,
+.gallery-form-group textarea:focus {
+    outline: none;
+
+    border-color: #b87333;
+
+    box-shadow: 0 0 0 2px rgba(184, 115, 51, 0.1);
+}
+
+
+/* ================================================== */
+/* GALERIE - DATEIAUSWAHL                             */
+/* ================================================== */
+
+.gallery-file-picker {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+
+/* Eigener "Datei auswählen"-Button */
+
+.gallery-file-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 10px 15px;
+
+    border: 1px solid #d8c5b5;
+
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #8a674b;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.gallery-file-button:hover {
+    background-color: #f4ede6;
+
+    border-color: #b98a62;
+}
+
+
+/* Echtes Dateifeld verstecken */
+
+.gallery-file-input {
+    display: none;
+}
+
+
+/* Dateiname */
+
+.gallery-file-name {
+    color: #81766e;
+
+    font-size: 13px;
+}
+
+
+/* ================================================== */
+/* GALERIE - UPLOAD VORSCHAU                          */
+/* ================================================== */
+
+.gallery-upload-preview {
+    display: none;
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    background-color: #f7f3ee;
+}
+
+
+.gallery-upload-preview.show {
+    display: block;
+}
+
+
+.gallery-preview-media {
+    display: block;
+
+    width: 100%;
+
+    max-height: 320px;
+
+    object-fit: contain;
+
+    border-radius: 10px;
+
+    background-color: #eee8e2;
+}
+
+
+/* ================================================== */
+/* GALERIE - POPUP BUTTONS                            */
+/* ================================================== */
+
+.gallery-form-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+    padding: 18px 25px 22px;
+
+    border-top: 1px solid #eee7e1;
+    background-color: #ffffff;
+}
+
+
+/* Abbrechen */
+
+.gallery-cancel-button {
+    padding: 10px 17px;
+
+    border: 1px solid #d8c5b5;
+
+    border-radius: 9px;
+
+    background-color: #ffffff;
+
+    color: #6f6258;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.gallery-cancel-button:hover {
+    background-color: #f7f3ee;
+}
+
+
+/* Speichern */
+
+.gallery-save-button {
+    padding: 10px 18px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background-color: #c4772b;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.gallery-save-button:hover {
+    background-color: #a96020;
+
+    transform: translateY(-1px);
+}
+
+
+/* ================================================== */
+/* GALERIE - LIGHTBOX                                 */
+/* ================================================== */
+
+.gallery-lightbox {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1100;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 30px;
+
+    background-color: rgba(28, 25, 23, 0.88);
+}
+
+
+.gallery-lightbox.show {
+    display: flex;
+}
+
+
+/* Lightbox Fenster */
+
+.gallery-lightbox-content {
+    position: relative;
+
+    width: min(900px, 100%);
+
+    max-height: 92vh;
+
+    overflow-y: auto;
+
+    border-radius: 16px;
+
+    background-color: #ffffff;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+
+/* X zum Schließen */
+
+.gallery-lightbox-close {
+    position: absolute;
+
+    top: 12px;
+
+    right: 12px;
+
+    z-index: 5;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 38px;
+
+    height: 38px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background-color: rgba(255, 255, 255, 0.92);
+
+    color: #302a26;
+
+    font-size: 27px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+.gallery-lightbox-close:hover {
+    background-color: #ffffff;
+}
+
+
+/* ================================================== */
+/* GALERIE - LIGHTBOX MEDIENBEREICH                   */
+/* ================================================== */
+
+.gallery-lightbox-media {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 100%;
+
+    min-height: 300px;
+
+    background-color: #2f2b28;
+}
+
+
+/* Das vom JS erzeugte Bild oder Video */
+
+.gallery-lightbox-file {
+    display: block;
+
+    width: 100%;
+
+    max-width: 850px;
+
+    max-height: 70vh;
+
+    object-fit: contain;
+}
+
+
+/* ================================================== */
+/* GALERIE - LIGHTBOX PFEILE                          */
+/* ================================================== */
+
+.gallery-lightbox-media-wrapper {
+    position: relative;
+}
+
+
+.gallery-lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: rgba(255, 255, 255, 0.95);
+
+    color: #302a26;
+
+    font-size: 34px;
+    font-weight: bold;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transform: translateY(-50%);
+
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.25);
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* Linker Pfeil */
+
+.gallery-lightbox-arrow-left {
+    left: 18px;
+}
+
+
+/* Rechter Pfeil */
+
+.gallery-lightbox-arrow-right {
+    right: 18px;
+}
+
+
+/* Pfeile beim Darüberfahren */
+
+.gallery-lightbox-arrow:hover {
+    background-color: #ffffff;
+
+    transform: translateY(-50%) scale(1.08);
+}
+
+
+/* ================================================== */
+/* GALERIE - LIGHTBOX BILDZÄHLER                      */
+/* ================================================== */
+
+.gallery-lightbox-counter {
+    position: absolute;
+
+    right: 18px;
+    bottom: 18px;
+
+    z-index: 6;
+
+    padding: 6px 11px;
+
+    border-radius: 18px;
+
+    background-color: rgba(48, 42, 38, 0.82);
+
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    pointer-events: none;
+}
+
+
+/* ================================================== */
+/* GALERIE - LIGHTBOX INFORMATIONEN                   */
+/* ================================================== */
+
+.gallery-lightbox-info {
+    padding: 22px 25px 25px;
+
+    background-color: #ffffff;
+}
+
+
+.gallery-lightbox-category {
+    margin: 0 0 6px;
+
+    color: #b87333;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.5px;
+}
+
+
+.gallery-lightbox-info h2 {
+    margin: 0 0 7px;
+
+    color: #302a26;
+
+    font-size: 23px;
+}
+
+
+.gallery-lightbox-date {
+    margin: 0 0 14px;
+
+    color: #8b817a;
+
+    font-size: 13px;
+}
+
+
+.gallery-lightbox-description {
+    margin: 0;
+
+    color: #625852;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    white-space: pre-line;
+}
+
+/* ================================================== */
+/* GEMEINSAME POPUPS                                  */
+/* Tagebuch, Training, Entwicklung, Gesundheit usw.   */
+/* ================================================== */
+
+.app-modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 30px;
+
+    background-color: rgba(39, 34, 31, 0.55);
+}
+
+
+/* Popup wird vom JavaScript geöffnet */
+
+.app-modal.show {
+    display: flex;
+}
+
+
+/* ================================================== */
+/* POPUP - FENSTER                                    */
+/* ================================================== */
+
+.app-modal-content {
+    width: min(650px, 100%);
+
+    max-height: 90vh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background-color: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.20);
+
+    animation: appModalOpen 0.22s ease;
+}
+
+
+/* Kleine Öffnungsanimation */
+
+@keyframes appModalOpen {
+
+    from {
+        opacity: 0;
+
+        transform: translateY(15px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* ================================================== */
+/* POPUP - KOPFBEREICH                                */
+/* ================================================== */
+
+.app-modal-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 22px 25px;
+
+    border-bottom: 1px solid #eee5dd;
+}
+
+
+.app-modal-header h2 {
+    margin: 0;
+
+    color: #302a26;
+
+    font-size: 21px;
+}
+
+
+/* ================================================== */
+/* POPUP - X ZUM SCHLIESSEN                           */
+/* ================================================== */
+
+.app-modal-close {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 35px;
+
+    height: 35px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background-color: transparent;
+
+    color: #746b65;
+
+    font-size: 25px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.app-modal-close:hover {
+    background-color: #f3eee9;
+
+    color: #302a26;
+}
+
+
+/* ================================================== */
+/* POPUP - INHALT                                     */
+/* ================================================== */
+
+.app-modal-body {
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    padding: 25px 25px 30px;
+}
+
+/* ================================================== */
+/* POPUP - BUTTONBEREICH UNTEN                        */
+/* ================================================== */
+
+.app-modal-buttons {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+
+    padding: 18px 25px 22px;
+
+    border-top: 1px solid #eee7e1;
+
+    background-color: #ffffff;
+}
+
+
+/* ================================================== */
+/* POPUP - ABBRECHEN                                  */
+/* ================================================== */
+
+.app-cancel-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 10px 17px;
+
+    border: 1px solid #d8c5b5;
+
+    border-radius: 9px;
+
+    background-color: #ffffff;
+
+    color: #6f6258;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.app-cancel-button:hover {
+    background-color: #f7f3ee;
+
+    border-color: #c5ad99;
+
+    transform: translateY(-1px);
+}
+
+
+/* ================================================== */
+/* TAGEBUCH POPUP                                     */
+/* ================================================== */
+
+/*
+    Der Button oben "Neuer Tagebucheintrag"
+    verwendet bereits gallery-add-button.
+
+    Deshalb braucht er KEINEN zweiten eigenen
+    CSS-Block mehr.
+*/
+
+
+/* ================================================== */
+/* TAGEBUCH - DATEI AUSWÄHLEN                         */
+/* ================================================== */
+
+/*
+    Falls im HTML ein eigenes Label mit
+    photo-upload-button verwendet wird,
+    sieht es genauso aus wie in der Galerie.
+*/
+
+.photo-upload-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: auto;
+
+    padding: 10px 15px;
+
+    border: 1px solid #d8c5b5;
+
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #8a674b;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.photo-upload-button:hover {
+    background-color: #f4ede6;
+
+    border-color: #b98a62;
+
+    transform: translateY(-1px);
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - NORMALES DATEIFELD                      */
+/* ================================================== */
+
+/*
+    Falls diary-photos noch als normales
+    input type="file" im HTML vorhanden ist,
+    wird der Browser-Button ebenfalls passend
+    gestaltet.
+*/
+
+#diary-photos {
+    width: 100%;
+
+    padding: 8px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #ded5cd;
+
+    border-radius: 9px;
+
+    background-color: #faf8f5;
+
+    color: #81766e;
+
+    font-family: inherit;
+
+    font-size: 13px;
+}
+
+
+#diary-photos::file-selector-button {
+    margin-right: 12px;
+
+    padding: 9px 14px;
+
+    border: 1px solid #d8c5b5;
+
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #8a674b;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+#diary-photos::file-selector-button:hover {
+    background-color: #f4ede6;
+
+    border-color: #b98a62;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - ABBRECHEN                               */
+/* ================================================== */
+
+#cancel-diary-form {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 10px 17px;
+
+    border: 1px solid #d8c5b5;
+
+    border-radius: 9px;
+
+    background-color: #ffffff;
+
+    color: #6f6258;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+#cancel-diary-form:hover {
+    background-color: #f7f3ee;
+
+    border-color: #c5ad99;
+
+    transform: translateY(-1px);
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - SPEICHERN                               */
+/* ================================================== */
+
+#save-diary {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 10px 18px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background-color: #c4772b;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: none;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+#save-diary:hover {
+    background-color: #a96020;
+
+    transform: translateY(-1px);
+}
+
+
+/* ================================================== */
+/* ALLGEMEINER PRIMÄRBUTTON                           */
+/* ================================================== */
+
+.primary-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 11px 18px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background-color: #b87333;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.primary-button:hover {
+    background-color: #995d29;
+
+    transform: translateY(-1px);
+}
+
+
+/* ================================================== */
+/* WILLKOMMEN SCHRIFT                                 */
+/* ================================================== */
+
+.welcome-script {
+    font-family: "Dancing Script", cursive;
+
+    color: #b87333;
+
+    font-size: 30px;
+
+    font-weight: 700;
+}
+
+
+/* ================================================== */
+/* MINI-DIAGRAMME AUF DEM DASHBOARD                   */
+/* Gewicht und Schulterhöhe                           */
+/* ================================================== */
+
+.info-card {
+    position: relative;
+}
+
+
+/* Bereich für das kleine Diagramm */
+
+.mini-chart {
+    width: 120px;
+    height: 65px;
+
+    margin-left: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+}
+
+
+/* Das SVG wird mit JavaScript erzeugt */
+
+.mini-chart svg {
+    width: 100%;
+    height: 100%;
+
+    overflow: visible;
+}
+
+
+/* Verlaufslinie */
+
+.mini-chart-line {
+    fill: none;
+
+    stroke: #c4772b;
+    stroke-width: 3;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+/* Kleine Punkte auf der Verlaufslinie */
+
+.mini-chart-point {
+    fill: #ffffff;
+
+    stroke: #c4772b;
+    stroke-width: 2;
+}
+
+
+/* Aktuellster Messwert */
+
+.mini-chart-current-point {
+    fill: #c4772b;
+
+    stroke: #ffffff;
+    stroke-width: 2;
+}
+
+
+/* Dezente Linie unter dem Diagramm */
+
+.mini-chart-baseline {
+    stroke: #e8d7d6;
+
+    stroke-width: 1;
+}
+
+
+/* Text unter dem Diagramm */
+
+.mini-chart-label {
+    margin-top: 3px;
+
+    color: #8a817a;
+
+    font-size: 11px;
+    text-align: center;
+}
+
+
+/* ================================================== */
+/* KLEINE HILFSKLASSEN                                */
+/* ================================================== */
+
+.hidden {
+    display: none !important;
+}
+
+
+.no-scroll {
+    overflow: hidden;
+}
+
+
+/* ================================================== */
+/* SCROLLBAR IN POPUPS                                */
+/* ================================================== */
+
+.app-modal-content::-webkit-scrollbar,
+.gallery-form-content::-webkit-scrollbar,
+.gallery-lightbox-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+
+.app-modal-content::-webkit-scrollbar-track,
+.gallery-form-content::-webkit-scrollbar-track,
+.gallery-lightbox-content::-webkit-scrollbar-track {
+    background-color: #f3eee9;
+}
+
+
+.app-modal-content::-webkit-scrollbar-thumb,
+.gallery-form-content::-webkit-scrollbar-thumb,
+.gallery-lightbox-content::-webkit-scrollbar-thumb {
+    background-color: #ccb8a7;
+
+    border-radius: 10px;
+}
+
+
+.app-modal-content::-webkit-scrollbar-thumb:hover,
+.gallery-form-content::-webkit-scrollbar-thumb:hover,
+.gallery-lightbox-content::-webkit-scrollbar-thumb:hover {
+    background-color: #b98a62;
+}
+
+
+/* ================================================== */
+/* NACH-OBEN-BUTTON                                   */
+/* ================================================== */
+
+.scroll-top-button {
+    position: fixed;
+
+    right: 24px;
+    bottom: 24px;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 50%;
+
+    background-color: #ffffff;
+    color: #b87333;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease,
+        transform 0.2s ease;
+
+    z-index: 1000;
+}
+
+
+/* ================================================== */
+/* NACH-OBEN-BUTTON - SICHTBAR                        */
+/* ================================================== */
+
+.scroll-top-button.visible {
+    opacity: 0.8;
+    visibility: visible;
+}
+
+
+/* ================================================== */
+/* NACH-OBEN-BUTTON - HOVER                           */
+/* ================================================== */
+
+.scroll-top-button:hover {
+    opacity: 1;
+    transform: translateY(-2px);
 }
 
 

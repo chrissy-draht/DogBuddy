@@ -47,9 +47,34 @@
                 Tagebuch
             </a>
 
-            <a href="training.html">
-                Training
-            </a>
+            <!-- ================================== -->
+            <!-- TRAINING - DROPDOWN                -->
+            <!-- ================================== -->
+
+            <div class="nav-dropdown">
+            
+                <!--
+                    Training ist nur noch der Oberpunkt.
+                    Die alte training.html wird nicht mehr verlinkt.
+                -->
+            
+                <span class="nav-dropdown-button">
+                    Training
+                </span>
+            
+                <div class="nav-dropdown-menu">
+                
+                    <a href="kommandos.html">
+                        Kommandos
+                    </a>
+                
+                    <a href="entdecker.html">
+                        Entdecker-Checkliste
+                    </a>
+                
+                </div>
+            
+            </div>
 
             <a
                 href="entwicklung.html"
@@ -95,7 +120,7 @@
                 </p>
 
                 <h1>
-                    Majors Entwicklung
+                    <span id="page-dog-name">Major</span>s Entwicklung
                 </h1>
 
                 <p>
@@ -123,76 +148,361 @@
 
         </section>
 
-
         <!-- ====================================== -->
-        <!-- BISHERIGE MESSUNGEN -->
+        <!-- WACHSTUM & SOLL-IST-VERGLEICH -->
         <!-- ====================================== -->
 
-        <section class="measurement-history">
+        <section class="growth-section">
+        
+        
+            <!-- ================================== -->
+            <!-- WACHSTUMSKURVE -->
+            <!-- ================================== -->
+        
+            <div class="growth-chart-card">
+            
+            
+                <!-- KLEINE ÜBERSCHRIFT -->
+            
+                <p class="eyebrow">
+                    WACHSTUMSKURVE
+                </p>
+            
+            
+                <!-- ÜBERSCHRIFT -->
+            
+                <h2>
+                    Wachstum bei
+                    <span id="growth-heading-weight">22</span>
+                    kg Endgewicht
+                </h2>
+            
+            
+                <!-- BESCHREIBUNG -->
+            
+                <p class="growth-description">
+                    Richtwerte für die Gewichtsentwicklung
+                    mit einem Endgewicht von
+                    <span id="growth-description-weight">22</span> kg.
+                </p>
+            
+            
+                <!-- ================================== -->
+                <!-- DIAGRAMM -->
+                <!-- ================================== -->
+            
+                <!--
+                    In dieses Canvas zeichnet JavaScript
+                    später automatisch die Wachstumskurve,
+                    den Toleranzbereich und Majors Messwerte.
+                -->
+            
+                <canvas
+                    id="growth-chart"
+                    class="growth-chart-clickable"
+                    width="800"
+                    height="450"
+                    title="Klicken zum Vergrößern"
+                >
+                </canvas>
+            
+            </div>
+        
+        
+            <!-- ================================== -->
+            <!-- SOLL-IST-VERGLEICH -->
+            <!-- ================================== -->
+        
+            <div class="growth-comparison-card">
+            
+            
+                <!-- KLEINE ÜBERSCHRIFT -->
+            
+                <p class="eyebrow">
+                    SOLL-IST-VERGLEICH
+                </p>
+            
+            
+                <!-- ÜBERSCHRIFT -->
+            
+                <h2>
+                    Aktueller Stand
+                </h2>
 
-            <p class="eyebrow">
-                VERLAUF
-            </p>
+            <!-- ================================== -->
+            <!-- ERWARTETES ENDGEWICHT -->
+            <!-- ================================== -->
 
-            <h2>
-                Bisherige Messungen
-            </h2>
+            <div class="growth-final-weight">
+            
+                <label for="growth-final-weight">
+                    Erwartetes Endgewicht
+                </label>
+            
+                <select id="growth-final-weight">
 
-
-            <table class="measurement-table">
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            Datum
-                        </th>
-
-                        <th>
-                            Gewicht
-                        </th>
-
-                        <th>
-                            Schulterhöhe
-                        </th>
-
-                        <th>
-                            Aktion
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody id="measurement-list">
-
-                    <!--
-                        Hier fügt entwicklung.js
-                        automatisch die gespeicherten
-                        Messungen ein.
-                    -->
-
-                </tbody>
-
-            </table>
-
+                    <option value="20">
+                        20 kg
+                    </option>
+                
+                    <option value="21">
+                        21 kg
+                    </option>
+                
+                    <option value="22" selected>
+                        22 kg
+                    </option>
+                
+                    <option value="23">
+                        23 kg
+                    </option>
+                
+                    <option value="24">
+                        24 kg
+                    </option>
+                
+                </select>
+            
+            </div>
+            
+            
+                <!-- ================================== -->
+                <!-- VERGLEICHSWERTE -->
+                <!-- ================================== -->
+            
+                <div class="growth-comparison-grid">
+                
+                
+                    <!-- ALTER -->
+                
+                    <div class="growth-value">
+                    
+                        <span>
+                            Alter
+                        </span>
+                    
+                        <strong id="growth-current-age">
+                            –
+                        </strong>
+                    
+                    </div>
+                
+                
+                    <!-- IST-GEWICHT -->
+                
+                    <div class="growth-value">
+                    
+                        <span>
+                            Ist-Gewicht
+                        </span>
+                    
+                        <strong id="growth-current-weight">
+                            –
+                        </strong>
+                    
+                    </div>
+                
+                
+                    <!-- SOLL-GEWICHT -->
+                
+                    <div class="growth-value">
+                    
+                        <span>
+                            Soll-Gewicht
+                        </span>
+                    
+                        <strong id="growth-target-weight">
+                            –
+                        </strong>
+                    
+                    </div>
+                
+                
+                    <!-- ABWEICHUNG -->
+                
+                    <div class="growth-value">
+                    
+                        <span>
+                            Abweichung
+                        </span>
+                    
+                        <strong id="growth-difference">
+                            –
+                        </strong>
+                    
+                    </div>
+                
+                </div>
+            
+            
+                <!-- ================================== -->
+                <!-- BEWERTUNG DES GEWICHTS -->
+                <!-- ================================== -->
+            
+                <!--
+                    JavaScript zeigt hier später an,
+                    ob das Gewicht innerhalb,
+                    unterhalb oder oberhalb
+                    des Richtbereichs liegt.
+                -->
+            
+                <div
+                    id="growth-status"
+                    class="growth-status"
+                >
+                    Noch keine Berechnung möglich.
+                </div>
+            
+            
+            </div>
+        
         </section>
 
-    </main>
 
+                <!-- ====================================== -->
+                <!-- BISHERIGE MESSUNGEN -->
+                <!-- ====================================== -->
 
-    <!-- ========================================== -->
-    <!-- POPUP - NEUE MESSUNG -->
-    <!-- ========================================== -->
+                <section class="measurement-history">
+                
+                    <p class="eyebrow">
+                        VERLAUF
+                    </p>
+                
+                    <h2>
+                        Bisherige Messungen
+                    </h2>
+                
+                
+                    <table class="measurement-table">
+                    
+                        <thead>
+                        
+                            <tr>
+                            
+                                <th>
+                                    Datum
+                                </th>
+                            
+                                <th>
+                                    Gewicht
+                                </th>
+                            
+                                <th>
+                                    Schulterhöhe
+                                </th>
+                            
+                                <th>
+                                    Brustumfang
+                                </th>
+                            
+                                <th>
+                                    Halsumfang
+                                </th>
+                            
+                                <th>
+                                    Rückenlänge
+                                </th>
+                            
+                                <th>
+                                    Aktion
+                                </th>
+                            
+                            </tr>
+                        
+                        </thead>
+                    
+                    
+                        <tbody id="measurement-list">
+                        
+                            <!--
+                                Hier fügt entwicklung.js
+                                automatisch die gespeicherten
+                                Messungen ein.
+                            -->
+                        
+                        </tbody>
+                    
+                    </table>
+                
+                </section>
+            
+            </main>
+        
+            <!-- ========================================== -->
+            <!-- POPUP - WACHSTUMSKURVE -->
+            <!-- ========================================== -->
 
-    <div
-        id="measurement-form-modal"
-        class="app-modal"
-    >
+            <div
+                id="growth-chart-modal"
+                class="app-modal growth-chart-modal"
+            >
 
-        <div class="app-modal-content">
+                <div class="app-modal-content growth-chart-modal-content">
+                
+                    <!-- ================================== -->
+                    <!-- POPUP KOPF -->
+                    <!-- ================================== -->
+                
+                    <div class="app-modal-header">
+                    
+                        <div>
+                        
+                            <p class="eyebrow">
+                                WACHSTUMSKURVE
+                            </p>
+                        
+                            <h2>
+                                Wachstum bei
+                                <span id="growth-modal-weight">22</span>
+                                kg Endgewicht
+                            </h2>
+                        
+                        </div>
+                    
+                    
+                        <!-- POPUP SCHLIESSEN -->
+                    
+                        <button
+                            type="button"
+                            id="close-growth-chart"
+                            class="app-modal-close"
+                            aria-label="Wachstumskurve schließen"
+                        >
+                            ×
+                        </button>
+                    
+                    </div>
+                
+                
+                    <!-- ================================== -->
+                    <!-- GROSSE WACHSTUMSKURVE -->
+                    <!-- ================================== -->
+                
+                    <div class="growth-chart-modal-body">
+                    
+                        <canvas
+                            id="growth-chart-large"
+                            width="1200"
+                            height="650"
+                        ></canvas>
+                    
+                    </div>
+                
+                </div>
+            
+            </div>
+        
+            <!-- ========================================== -->
+            <!-- POPUP - NEUE MESSUNG -->
+            <!-- ========================================== -->
+        
+            <div
+                id="measurement-form-modal"
+                class="app-modal"
+            >
+        
+                <div class="app-modal-content">
 
 
             <!-- ================================== -->
@@ -258,7 +568,7 @@
                     </label>
 
                     <input
-                        type="number"
+                        type="text"
                         id="measurement-weight"
                         step="0.1"
                         min="0"
@@ -283,10 +593,67 @@
                         min="0"
                         placeholder="z. B. 35"
                     >
+                    
+                </div>
+
+                    <!-- BRUSTUMFANG -->
+
+                    <div class="form-group">
+                    
+                        <label for="measurement-chest">
+                            Brustumfang in cm
+                        </label>
+                    
+                        <input
+                            type="number"
+                            id="measurement-chest"
+                            step="0.1"
+                            min="0"
+                            placeholder="z. B. 42"
+                        >
+                    
+                    </div>
+
+
+                    <!-- HALSUMFANG -->
+
+                    <div class="form-group">
+                    
+                        <label for="measurement-neck">
+                            Halsumfang in cm
+                        </label>
+                    
+                        <input
+                            type="number"
+                            id="measurement-neck"
+                            step="0.1"
+                            min="0"
+                            placeholder="z. B. 28"
+                        >
 
                 </div>
 
-            </div>
+
+                    <!-- RÜCKENLÄNGE -->
+
+                    <div class="form-group">
+                    
+                        <label for="measurement-back">
+                            Rückenlänge in cm
+                        </label>
+                    
+                        <input
+                            type="number"
+                            id="measurement-back"
+                            step="0.1"
+                            min="0"
+                            placeholder="z. B. 35"
+                        >
+                    
+                        </div>
+
+                    </div>
+                                
 
 
             <!-- ================================== -->
@@ -329,6 +696,8 @@
     <!-- ========================================== -->
 
     <script src="../js/entwicklung.js"></script>
+
+    <script src="../js/scroll-top.js"></script>
 
 </body>
 

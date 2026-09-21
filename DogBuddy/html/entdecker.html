@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>DogBuddy - Entdecker-Checkliste</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/styles.css"
+    >
+</head>
+
+
+<body>
+
+    <!-- ========================================== -->
+    <!-- HEADER -->
+    <!-- ========================================== -->
+
+    <header class="header">
+
+        <a href="../index.html">
+
+            <img
+                src="../images/logo/dogbuddy-logo-full-blank.png"
+                alt="DogBuddy Logo"
+                class="logo"
+            >
+
+        </a>
+
+
+        <nav class="navigation">
+
+            <a href="../index.html">
+                Dashboard
+            </a>
+
+            <a href="tagebuch.html">
+                Tagebuch
+            </a>
+
+
+            <!-- ================================== -->
+            <!-- TRAINING - DROPDOWN                -->
+            <!-- ================================== -->
+                    
+            <div class="nav-dropdown">
+            
+                <!--
+                    Training ist nur noch der Oberpunkt.
+                    Die alte training.html wird nicht mehr verlinkt.
+                -->
+            
+                <span class="nav-dropdown-button">
+                    Training
+                </span>
+            
+                <div class="nav-dropdown-menu">
+                
+                    <a href="kommandos.html">
+                        Kommandos
+                    </a>
+                
+                    <a href="entdecker.html">
+                        Entdecker-Checkliste
+                    </a>
+                
+                </div>
+            
+            </div>
+
+
+            <a href="entwicklung.html">
+                Entwicklung
+            </a>
+
+            <a href="wochenplan.html">
+                Wochenplan
+            </a>
+
+            <a href="gesundheit.html">
+                Gesundheit
+            </a>
+
+            <a href="galerie.html">
+                Galerie
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ========================================== -->
+    <!-- HAUPTINHALT -->
+    <!-- ========================================== -->
+
+    <main class="discovery-page">
+
+
+        <!-- ====================================== -->
+        <!-- ÜBERSCHRIFT -->
+        <!-- ====================================== -->
+
+        <section class="discovery-page-header">
+
+            <p class="eyebrow">
+                ENTDECKERZEIT
+            </p>
+
+            <h1>
+                🐾
+                <span id="page-dog-name">
+                    Major
+                </span>s große Entdecker-Checkliste
+            </h1>
+
+            <p>
+                Neue Situationen kennenlernen,
+                selbst erleben und irgendwann
+                ganz entspannt meistern.
+            </p>
+
+        </section>
+
+
+        <!-- ====================================== -->
+        <!-- FORTSCHRITT -->
+        <!-- ====================================== -->
+
+        <section class="discovery-progress">
+
+            <p class="eyebrow">
+                FORTSCHRITT
+            </p>
+
+            <h2>
+                Majors Entdeckerstatus
+            </h2>
+
+
+            <div class="discovery-progress-grid">
+
+                <div class="discovery-progress-item">
+
+                    <strong id="progress-seen">
+                        0 %
+                    </strong>
+
+                </div>
+
+
+                <div class="discovery-progress-item">
+
+                    <strong id="progress-experienced">
+                        0 %
+                    </strong>
+
+                </div>
+
+
+                <div class="discovery-progress-item">
+
+                    <strong id="progress-relaxed">
+                        0 %
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ====================================== -->
+        <!-- ENTDECKER-CHECKLISTE -->
+        <!-- ====================================== -->
+
+        <section class="discovery-checklist-section">
+
+            <div id="discovery-checklist">
+
+                <!--
+                    Die komplette Checkliste
+                    wird später automatisch
+                    durch entdecker.js erstellt.
+                -->
+
+            </div>
+
+        </section>
+
+
+        </main>
+
+
+        <!-- ========================================== -->
+        <!-- POPUP - ENTDECKER ERFOLG -->
+        <!-- ========================================== -->
+        
+        <div
+            id="discovery-achievement-modal"
+            class="app-modal"
+        >
+        
+            <div class="app-modal-content discovery-achievement-content">
+            
+                <div class="discovery-achievement-body">
+                
+                
+                    <!-- ERFOLGS-ICON -->
+                
+                    <div
+                        id="achievement-icon"
+                        class="discovery-achievement-icon"
+                    >
+                        🐾
+                    </div>
+                
+                
+                    <!-- KLEINE ÜBERSCHRIFT -->
+                
+                    <p class="eyebrow">
+                        ENTDECKER-ERFOLG
+                    </p>
+                
+                
+                    <!-- ERFOLGS-TITEL -->
+                
+                    <h2 id="achievement-title">
+                        Du bist ein echter Entdecker!
+                    </h2>
+                
+                
+                    <!-- ERFOLGS-TEXT -->
+                
+                    <p
+                        id="achievement-text"
+                        class="discovery-achievement-text"
+                    ></p>
+                
+                
+                    <!-- PROZENT -->
+                
+                    <div
+                        id="achievement-percent"
+                        class="discovery-achievement-percent"
+                    >
+                        25 %
+                    </div>
+                
+                
+                    <!-- POPUP SCHLIESSEN -->
+                
+                    <button
+                        type="button"
+                        id="close-achievement-modal"
+                        class="primary-button"
+                    >
+                        Weiter entdecken
+                    </button>
+                
+                
+                </div>
+            
+            </div>
+        
+        </div>
+    
+    
+        <!-- ========================================== -->
+        <!-- JAVASCRIPT -->
+        <!-- ========================================== -->
+    
+        <script src="../js/entdecker.js"></script>
+
+        <script src="../js/scroll-top.js"></script>
+    
+    </body>
+    
+    </html>
