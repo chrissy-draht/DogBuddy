@@ -1213,246 +1213,763 @@ function getDashboardAppointmentIcon(
 // WOCHENPLAN AUF DEM DASHBOARD
 // ==================================================
 
-
 // Bereich auf dem Dashboard holen
 const dashboardWeeklyList =
-    document.getElementById("dashboard-weekly-list");
+    document.getElementById(
+        "dashboard-weekly-list"
+    );
 
 
-// Gespeicherte Wochenaufgaben aus localStorage holen
-const dashboardWeeklyTasks =
-    localStorage.getItem("weeklyTasks");
+// ==================================================
+// WOCHENPLAN AUF DEM DASHBOARD ANZEIGEN
+// ==================================================
+
+function displayDashboardWeeklyTasks() {
+
+    if (dashboardWeeklyList === null) {
+        return;
+    }
 
 
-// Nur ausführen, wenn wir uns auf dem Dashboard befinden
-if (dashboardWeeklyList !== null) {
+    // Alte Anzeige leeren
+    dashboardWeeklyList.innerHTML = "";
 
 
     // ==================================================
-    // PRÜFEN, OB AUFGABEN GESPEICHERT SIND
+    // WOCHENAUFGABEN LADEN
     // ==================================================
 
-    if (dashboardWeeklyTasks !== null) {
+    const savedWeeklyTasks =
+        localStorage.getItem(
+            "weeklyTasks"
+        );
 
 
-        // JSON-Text wieder in ein Array umwandeln
-        const weeklyTasks =
-            JSON.parse(dashboardWeeklyTasks);
+    if (savedWeeklyTasks === null) {
+
+        showDashboardWeeklyEmpty(
+            "Noch keine Aufgaben für diese Woche geplant."
+        );
+
+        return;
+    }
 
 
-        // ==================================================
-        // NUR OFFENE AUFGABEN
-        // ==================================================
+    let weeklyTasks = [];
 
-        const openWeeklyTasks =
-            weeklyTasks.filter(
-                function (task) {
+    try {
 
-                    return task.completed === false;
+        weeklyTasks =
+            JSON.parse(
+                savedWeeklyTasks
+            );
+
+    } catch (error) {
+
+        weeklyTasks = [];
+
+    }
+
+
+    // ==================================================
+    // NUR OFFENE AUFGABEN
+    // ==================================================
+
+    const openWeeklyTasks =
+        weeklyTasks.filter(
+            function (task) {
+
+                return task.completed !== true;
+
+            }
+        );
+
+
+    // ==================================================
+    // KEINE OFFENEN AUFGABEN
+    // ==================================================
+
+    if (openWeeklyTasks.length === 0) {
+
+        showDashboardWeeklyEmpty(
+            "Alle Aufgaben für diese Woche sind erledigt. 🎉"
+        );
+
+        return;
+    }
+
+
+    // ==================================================
+    // MAXIMAL 3 AUFGABEN ANZEIGEN
+    // ==================================================
+
+    const tasksToShow =
+        openWeeklyTasks.slice(
+            0,
+            3
+        );
+
+
+    tasksToShow.forEach(
+        function (task) {
+
+            // ==================================================
+            // KASTEN FÜR EINE AUFGABE
+            // ==================================================
+
+            const taskBox =
+                document.createElement(
+                    "div"
+                );
+
+            taskBox.classList.add(
+                "dashboard-weekly-box"
+            );
+
+
+            // ==================================================
+            // LINKER BEREICH
+            // ==================================================
+
+            const taskContent =
+                document.createElement(
+                    "div"
+                );
+
+            taskContent.classList.add(
+                "dashboard-weekly-box-content"
+            );
+
+
+            // ==================================================
+            // ICON
+            // ==================================================
+
+            const taskIcon =
+                document.createElement(
+                    "span"
+                );
+
+            taskIcon.classList.add(
+                "dashboard-weekly-box-icon"
+            );
+
+            taskIcon.textContent =
+                getDashboardWeeklyIcon(
+                    task.category
+                );
+
+
+            // ==================================================
+            // TITEL
+            // ==================================================
+
+            const taskTitle =
+                document.createElement(
+                    "span"
+                );
+
+            taskTitle.classList.add(
+                "dashboard-weekly-box-title"
+            );
+
+            taskTitle.textContent =
+                task.title;
+
+
+            taskContent.appendChild(
+                taskIcon
+            );
+
+            taskContent.appendChild(
+                taskTitle
+            );
+
+
+            // ==================================================
+            // CHECKBOX
+            // ==================================================
+
+            const taskCheckbox =
+                document.createElement(
+                    "input"
+                );
+
+            taskCheckbox.type =
+                "checkbox";
+
+            taskCheckbox.classList.add(
+                "dashboard-weekly-checkbox"
+            );
+
+            taskCheckbox.setAttribute(
+                "aria-label",
+                task.title + " erledigen"
+            );
+
+
+            // ==================================================
+            // AUFGABE ERLEDIGEN
+            // ==================================================
+
+            taskCheckbox.addEventListener(
+                "change",
+                function () {
+
+                    if (
+                        taskCheckbox.checked === false
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    completeDashboardWeeklyTask(
+                        task.id
+                    );
 
                 }
             );
 
 
-        // ==================================================
-        // ALTE ANZEIGE LÖSCHEN
-        // ==================================================
+            // ==================================================
+            // KASTEN ZUSAMMENBAUEN
+            // ==================================================
 
-        dashboardWeeklyList.innerHTML = "";
-
-
-        // ==================================================
-        // KEINE OFFENEN AUFGABEN
-        // ==================================================
-
-        if (openWeeklyTasks.length === 0) {
-
-            const emptyText =
-                document.createElement("p");
-
-            emptyText.classList.add(
-                "empty-info"
+            taskBox.appendChild(
+                taskContent
             );
 
-            emptyText.textContent =
-                "Alle Aufgaben für diese Woche sind erledigt. 🎉";
+            taskBox.appendChild(
+                taskCheckbox
+            );
 
             dashboardWeeklyList.appendChild(
-                emptyText
+                taskBox
             );
 
         }
+    );
 
 
-        // ==================================================
-        // OFFENE AUFGABEN ANZEIGEN
-        // ==================================================
+    // ==================================================
+    // WEITERE AUFGABEN
+    // ==================================================
 
-        else {
+    if (openWeeklyTasks.length > 3) {
 
-
-            // Liste erstellen
-            const taskList =
-                document.createElement("ul");
-
-            taskList.classList.add(
-                "task-list"
+        const moreTasks =
+            document.createElement(
+                "p"
             );
 
+        moreTasks.classList.add(
+            "dashboard-more-tasks"
+        );
 
-            // Maximal 4 Aufgaben auf dem Dashboard anzeigen
-            const tasksToShow =
-                openWeeklyTasks.slice(0, 4);
+        const remainingNumber =
+            openWeeklyTasks.length - 3;
 
+        moreTasks.textContent =
+            "+ " +
+            remainingNumber +
+            " weitere Aufgaben";
 
-            tasksToShow.forEach(
-                function (task) {
+        dashboardWeeklyList.appendChild(
+            moreTasks
+        );
 
+    }
 
-                    // Listeneintrag erstellen
-                    const listItem =
-                        document.createElement("li");
-
-
-                    // Checkbox erstellen
-                    const checkbox =
-                        document.createElement("input");
-
-                    checkbox.type =
-                        "checkbox";
+}
 
 
-                    // ==================================================
-                    // AUFGABE DIREKT AUF DASHBOARD ABHAKEN
-                    // ==================================================
+// ==================================================
+// LEEREN WOCHENPLAN ANZEIGEN
+// ==================================================
 
-                    checkbox.addEventListener(
-                        "change",
-                        function () {
+function showDashboardWeeklyEmpty(
+    text
+) {
 
+    const emptyText =
+        document.createElement(
+            "p"
+        );
 
-                            // Aufgabe als erledigt markieren
-                            task.completed = true;
+    emptyText.classList.add(
+        "empty-info"
+    );
 
+    emptyText.textContent =
+        text;
 
-                            // Änderungen im localStorage speichern
-                            localStorage.setItem(
-                                "weeklyTasks",
-                                JSON.stringify(weeklyTasks)
-                            );
+    dashboardWeeklyList.appendChild(
+        emptyText
+    );
 
-
-                            // Aufgabe optisch entfernen
-                            listItem.remove();
-
-
-                            // Prüfen, ob jetzt noch offene
-                            // Aufgaben sichtbar sind
-                            const remainingTasks =
-                                taskList.querySelectorAll("li");
+}
 
 
-                            if (remainingTasks.length === 0) {
+// ==================================================
+// AUFGABE AUF DEM DASHBOARD ERLEDIGEN
+// ==================================================
 
-                                dashboardWeeklyList.innerHTML =
-                                    "";
+function completeDashboardWeeklyTask(
+    taskId
+) {
 
-
-                                const finishedText =
-                                    document.createElement("p");
-
-                                finishedText.classList.add(
-                                    "empty-info"
-                                );
-
-                                finishedText.textContent =
-                                    "Alle Aufgaben für diese Woche sind erledigt. 🎉";
+    const savedWeeklyTasks =
+        localStorage.getItem(
+            "weeklyTasks"
+        );
 
 
-                                dashboardWeeklyList.appendChild(
-                                    finishedText
-                                );
-
-                            }
-
-                        }
-                    );
+    if (savedWeeklyTasks === null) {
+        return;
+    }
 
 
-                    // ==================================================
-                    // TEXT DER AUFGABE
-                    // ==================================================
+    let weeklyTasks = [];
 
-                    const taskText =
-                        document.createElement("span");
+    try {
 
-
-                    taskText.textContent =
-                        getDashboardWeeklyIcon(
-                            task.category
-                        ) +
-                        " " +
-                        task.title;
-
-
-                    // Checkbox und Text einfügen
-                    listItem.appendChild(
-                        checkbox
-                    );
-
-                    listItem.appendChild(
-                        taskText
-                    );
-
-
-                    // Aufgabe in Liste einfügen
-                    taskList.appendChild(
-                        listItem
-                    );
-
-                }
+        weeklyTasks =
+            JSON.parse(
+                savedWeeklyTasks
             );
 
+    } catch (error) {
 
-            // Liste auf Dashboard anzeigen
-            dashboardWeeklyList.appendChild(
-                taskList
+        return;
+
+    }
+
+
+    // ==================================================
+    // AUFGABE FINDEN
+    // ==================================================
+
+    const task =
+        weeklyTasks.find(
+            function (weeklyTask) {
+
+                return weeklyTask.id ===
+                    taskId;
+
+            }
+        );
+
+
+    if (task === undefined) {
+        return;
+    }
+
+
+    // ==================================================
+    // AUFGABE ALS ERLEDIGT MARKIEREN
+    // ==================================================
+
+    task.completed = true;
+
+
+    // ==================================================
+    // KOMMANDO VERARBEITEN
+    // ==================================================
+
+    if (task.source === "command") {
+
+        completeDashboardCommand(
+            task
+        );
+
+    }
+
+
+    // ==================================================
+    // ENTDECKER VERARBEITEN
+    // ==================================================
+
+    if (task.source === "discovery") {
+
+        completeDashboardDiscovery(
+            task
+        );
+
+    }
+
+
+    // ==================================================
+    // WOCHENAUFGABEN SPEICHERN
+    // ==================================================
+
+    localStorage.setItem(
+        "weeklyTasks",
+        JSON.stringify(
+            weeklyTasks
+        )
+    );
+
+
+    // ==================================================
+    // DASHBOARD NEU ANZEIGEN
+    // ==================================================
+
+    displayDashboardWeeklyTasks();
+
+}
+
+
+// ==================================================
+// KOMMANDO ALS ERLEDIGT VERARBEITEN
+// ==================================================
+
+function completeDashboardCommand(
+    task
+) {
+
+    const weeklySelections =
+        getDashboardWeeklySelections();
+
+
+    // ==================================================
+    // AUSGEWÄHLTES KOMMANDO FINDEN
+    // ==================================================
+
+    const selectedCommand =
+        weeklySelections.commands.find(
+            function (command) {
+
+                return command.id ===
+                    task.sourceId;
+
+            }
+        );
+
+
+    if (selectedCommand !== undefined) {
+
+        const savedCommandChecklist =
+            localStorage.getItem(
+                "commandChecklist"
             );
 
-
-            // ==================================================
-            // HINWEIS BEI MEHR ALS 4 AUFGABEN
-            // ==================================================
-
-            if (openWeeklyTasks.length > 4) {
-
-                const moreTasks =
-                    document.createElement("p");
-
-                moreTasks.classList.add(
-                    "dashboard-more-tasks"
-                );
+        let commandChecklist = {};
 
 
-                const remainingNumber =
-                    openWeeklyTasks.length - 4;
+        if (savedCommandChecklist !== null) {
 
+            try {
 
-                moreTasks.textContent =
-                    "+ " +
-                    remainingNumber +
-                    " weitere Aufgaben";
+                commandChecklist =
+                    JSON.parse(
+                        savedCommandChecklist
+                    );
 
+            } catch (error) {
 
-                dashboardWeeklyList.appendChild(
-                    moreTasks
-                );
+                commandChecklist = {};
 
             }
 
         }
 
+
+        // ==================================================
+        // SCHLÜSSEL WIE IN KOMMANDOS.JS
+        // ==================================================
+
+        const commandKey =
+            selectedCommand.category +
+            "|" +
+            selectedCommand.name;
+
+
+        const commandState =
+            commandChecklist[
+                commandKey
+            ];
+
+
+        // ==================================================
+        // NÄCHSTEN FORTSCHRITT SETZEN
+        // 👀 -> 🐾 -> 😌
+        // ==================================================
+
+        if (commandState !== undefined) {
+
+            if (commandState.seen !== true) {
+
+                commandState.seen = true;
+
+            } else if (
+                commandState.experienced !== true
+            ) {
+
+                commandState.experienced = true;
+
+            } else if (
+                commandState.relaxed !== true
+            ) {
+
+                commandState.relaxed = true;
+
+            }
+
+
+            localStorage.setItem(
+                "commandChecklist",
+                JSON.stringify(
+                    commandChecklist
+                )
+            );
+
+        }
+
     }
+
+
+    // ==================================================
+    // WOCHENAUSWAHL ENTFERNEN
+    // ==================================================
+
+    weeklySelections.commands =
+        weeklySelections.commands.filter(
+            function (command) {
+
+                return command.id !==
+                    task.sourceId;
+
+            }
+        );
+
+
+    saveDashboardWeeklySelections(
+        weeklySelections
+    );
+
+}
+
+
+// ==================================================
+// ENTDECKER ALS ERLEDIGT VERARBEITEN
+// ==================================================
+
+function completeDashboardDiscovery(
+    task
+) {
+
+    const weeklySelections =
+        getDashboardWeeklySelections();
+
+
+    // ==================================================
+    // AUSGEWÄHLTEN ENTDECKER FINDEN
+    // ==================================================
+
+    const selectedDiscovery =
+        weeklySelections.discoveries.find(
+            function (discovery) {
+
+                return discovery.id ===
+                    task.sourceId;
+
+            }
+        );
+
+
+    if (selectedDiscovery !== undefined) {
+
+        const savedDiscoveryChecklist =
+            localStorage.getItem(
+                "discoveryChecklist"
+            );
+
+        let discoveryChecklist = {};
+
+
+        if (
+            savedDiscoveryChecklist !== null
+        ) {
+
+            try {
+
+                discoveryChecklist =
+                    JSON.parse(
+                        savedDiscoveryChecklist
+                    );
+
+            } catch (error) {
+
+                discoveryChecklist = {};
+
+            }
+
+        }
+
+
+        // ==================================================
+        // SCHLÜSSEL WIE IN ENTDECKER.JS
+        // ==================================================
+
+        const discoveryKey =
+            selectedDiscovery.category +
+            "|" +
+            selectedDiscovery.name;
+
+
+        const discoveryState =
+            discoveryChecklist[
+                discoveryKey
+            ];
+
+
+        // ==================================================
+        // NÄCHSTEN FORTSCHRITT SETZEN
+        // 👀 -> 🐾 -> 😌
+        // ==================================================
+
+        if (discoveryState !== undefined) {
+
+            if (
+                discoveryState.seen !== true
+            ) {
+
+                discoveryState.seen = true;
+
+            } else if (
+                discoveryState.experienced !== true
+            ) {
+
+                discoveryState.experienced = true;
+
+            } else if (
+                discoveryState.relaxed !== true
+            ) {
+
+                discoveryState.relaxed = true;
+
+            }
+
+
+            localStorage.setItem(
+                "discoveryChecklist",
+                JSON.stringify(
+                    discoveryChecklist
+                )
+            );
+
+        }
+
+    }
+
+
+    // ==================================================
+    // WOCHENAUSWAHL ENTFERNEN
+    // ==================================================
+
+    weeklySelections.discoveries =
+        weeklySelections.discoveries.filter(
+            function (discovery) {
+
+                return discovery.id !==
+                    task.sourceId;
+
+            }
+        );
+
+
+    saveDashboardWeeklySelections(
+        weeklySelections
+    );
+
+}
+
+
+// ==================================================
+// WOCHENAUSWAHL LADEN
+// ==================================================
+
+function getDashboardWeeklySelections() {
+
+    const savedWeeklySelections =
+        localStorage.getItem(
+            "weeklySelections"
+        );
+
+
+    const weeklySelections = {
+        commands: [],
+        discoveries: []
+    };
+
+
+    if (savedWeeklySelections === null) {
+
+        return weeklySelections;
+
+    }
+
+
+    try {
+
+        const parsedSelections =
+            JSON.parse(
+                savedWeeklySelections
+            );
+
+
+        if (
+            Array.isArray(
+                parsedSelections.commands
+            )
+        ) {
+
+            weeklySelections.commands =
+                parsedSelections.commands;
+
+        }
+
+
+        if (
+            Array.isArray(
+                parsedSelections.discoveries
+            )
+        ) {
+
+            weeklySelections.discoveries =
+                parsedSelections.discoveries;
+
+        }
+
+
+    } catch (error) {
+
+        return weeklySelections;
+
+    }
+
+
+    return weeklySelections;
+
+}
+
+
+// ==================================================
+// WOCHENAUSWAHL SPEICHERN
+// ==================================================
+
+function saveDashboardWeeklySelections(
+    weeklySelections
+) {
+
+    localStorage.setItem(
+        "weeklySelections",
+        JSON.stringify(
+            weeklySelections
+        )
+    );
 
 }
 
@@ -1461,25 +1978,36 @@ if (dashboardWeeklyList !== null) {
 // ICON FÜR WOCHENPLAN-KATEGORIE
 // ==================================================
 
-function getDashboardWeeklyIcon(category) {
+function getDashboardWeeklyIcon(
+    category
+) {
 
-    if (category === "Training") {
+    if (
+        category === "Training" ||
+        category === "Kommando"
+    ) {
 
         return "⭐";
 
     }
 
-    if (category === "Sozialisierung") {
 
-        return "🐕";
+    if (
+        category === "Sozialisierung" ||
+        category === "Entdecker"
+    ) {
+
+        return "📌";
 
     }
+
 
     if (category === "Ausflug") {
 
         return "🌲";
 
     }
+
 
     if (category === "Pflege") {
 
@@ -1491,6 +2019,14 @@ function getDashboardWeeklyIcon(category) {
     return "📌";
 
 }
+
+
+// ==================================================
+// WOCHENPLAN BEIM LADEN ANZEIGEN
+// ==================================================
+
+displayDashboardWeeklyTasks();
+
 
 // ==================================================
 // MINI-DIAGRAMME FÜR GEWICHT UND SCHULTERHÖHE

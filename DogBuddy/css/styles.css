@@ -2307,33 +2307,78 @@ main h1 {
 
 
 /* ================================================== */
-/* WOCHENPLAN                                         */
+/* DASHBOARD - WOCHENPLAN                             */
 /* ================================================== */
 
 .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
     list-style: none;
 
-    margin-bottom: 22px;
+    margin: 18px 0 12px;
+    padding: 0;
 }
 
 
-/* Einzelne Aufgabe */
-.task-list li {
-    padding: 9px 0;
+/* ================================================== */
+/* DASHBOARD - EINZELNE WOCHENAUFGABE                 */
+/* ================================================== */
 
-    border-bottom: 1px solid #f0ebe6;
+.task-list li {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+
+    color: #302a26;
 
     font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
 }
 
 
-/* Checkbox */
+/* ================================================== */
+/* DASHBOARD - WOCHENPLAN CHECKBOX                    */
+/* ================================================== */
+
 .task-list input {
-    margin-right: 9px;
+    width: 16px;
+    height: 16px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+
+    cursor: pointer;
 
     accent-color: #b87333;
 }
 
+
+/* ================================================== */
+/* DASHBOARD - WEITERE AUFGABEN                       */
+/* ================================================== */
+
+.dashboard-more-tasks {
+    margin: 4px 0 0;
+
+    color: #302a26;
+
+    font-size: 14px;
+    line-height: 1.3;
+}
 
 /* ================================================== */
 /* TRAINING                                           */
@@ -8132,33 +8177,7 @@ footer {
 }
 
 
-/* ================================================== */
-/* WOCHENPLAN                                         */
-/* ================================================== */
 
-.task-list {
-    list-style: none;
-
-    margin-bottom: 22px;
-}
-
-
-/* Einzelne Aufgabe */
-.task-list li {
-    padding: 9px 0;
-
-    border-bottom: 1px solid #f0ebe6;
-
-    font-size: 14px;
-}
-
-
-/* Checkbox */
-.task-list input {
-    margin-right: 9px;
-
-    accent-color: #b87333;
-}
 
 
 /* ================================================== */
@@ -10734,6 +10753,112 @@ footer {
     color: #8a817a;
 
     font-size: 12px;
+    font-weight: 400;
+
+    line-height: 1.3;
+}
+
+/* ================================================== */
+/* DASHBOARD - WOCHENPLAN LISTE                       */
+/* ================================================== */
+
+#dashboard-weekly-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-top: 18px;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - EINZELNE WOCHENAUFGABE                 */
+/* ================================================== */
+
+.dashboard-weekly-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - INHALT DER WOCHENAUFGABE               */
+/* ================================================== */
+
+.dashboard-weekly-box-content {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    min-width: 0;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - WOCHENAUFGABE ICON                     */
+/* ================================================== */
+
+.dashboard-weekly-box-icon {
+    flex-shrink: 0;
+
+    font-size: 14px;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - WOCHENAUFGABE TITEL                    */
+/* ================================================== */
+
+.dashboard-weekly-box-title {
+    color: #302a26;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - WOCHENAUFGABE CHECKBOX                 */
+/* ================================================== */
+
+.dashboard-weekly-checkbox {
+    width: 16px;
+    height: 16px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+
+    cursor: pointer;
+
+    accent-color: #b87333;
+}
+
+
+/* ================================================== */
+/* DASHBOARD - WEITERE WOCHENAUFGABEN                 */
+/* ================================================== */
+
+.dashboard-more-tasks {
+    margin: 4px 0 0;
+
+    color: #302a26;
+
+    font-size: 14px;
     font-weight: 400;
 
     line-height: 1.3;
