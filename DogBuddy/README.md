@@ -36,24 +36,58 @@ im Browser.
 Zum aktuellen Funktionsumfang gehören unter anderem:
 
 - dynamisches Dashboard
-- Hundprofil
+- bearbeitbares Hundprofil
 - automatische Altersberechnung
 - Entwicklungsdaten wie Gewicht und Schulterhöhe
 - Tagebuch mit mehreren Fotos
 - Galerie
 - Gesundheitsbereich mit Terminverwaltung
 - Wochen- und Monatskalender
-- Anzeige kommender Termine auf dem Dashboard
+- Anzeige der nächsten drei Termine auf dem Dashboard
 - Wochenplan
+- Anzeige der nächsten drei offenen Wochenaufgaben auf dem Dashboard
+- direktes Abschließen von Wochenaufgaben auf dem Dashboard
 - Kommandos mit mehreren Fortschrittsstufen
 - Entdecker-Checkliste
 - Verbindung von Kommandos und Entdecker-Checkliste mit dem Wochenplan
+- automatische Fortschrittsübernahme beim Abschließen geplanter Aufgaben
+- zentral erzeugter Header
+- zentral erzeugter Footer
+- responsive Navigation mit Hamburger-Menü
+- Dark Mode
+- Speicherung des gewählten Farbschemas
 - Backup-Funktion
 - seitenübergreifender Nach-oben-Button
 
 Die Daten werden in der aktuellen Version lokal gespeichert. Strukturierte
 Daten liegen hauptsächlich in `localStorage`, während größere Bilddateien
 über `IndexedDB` gespeichert werden.
+
+Ein weiterer Entwicklungsschritt bestand darin, wiederkehrende Bestandteile
+der Benutzeroberfläche zu zentralisieren.
+
+Dazu gehören inzwischen:
+
+```text
+header.js
+    ↓
+Header + Navigation + Dark-Mode-Schalter + Hamburger-Menü
+
+footer.js
+    ↓
+Footer + Bereich für die Datensicherung
+
+dark-mode.js
+    ↓
+Hell-/Dunkelmodus + Speicherung der Auswahl
+
+scroll-top.js
+    ↓
+seitenübergreifender Nach-oben-Button
+```
+
+Dadurch müssen wiederkehrende Bestandteile nicht mehr auf jeder HTML-Seite
+einzeln gepflegt werden.
 
 Der aktuelle Stand soll bewusst als eigenständige **DogBuddy Version 1**
 erhalten und als Portfolio-Projekt auf GitHub gesichert werden.
@@ -77,7 +111,7 @@ Geplant sind unter anderem:
 - zentraler Speicher für Fotos und weitere Medien
 - Synchronisierung zwischen mehreren Geräten
 - HTTPS
-- Responsive Design
+- weitere Optimierung für Smartphone und Tablet
 - Progressive Web App (PWA)
 
 Für Hosting, Benutzerverwaltung, Datenbank und Medienspeicherung soll geprüft
@@ -226,8 +260,8 @@ DogBuddy/
 │   └── styles.css
 │
 ├── html/
-│   ├── entwicklung.html
 │   ├── entdecker.html
+│   ├── entwicklung.html
 │   ├── galerie.html
 │   ├── gesundheit.html
 │   ├── kommandos.html
@@ -237,6 +271,7 @@ DogBuddy/
 │
 ├── images/
 │   ├── demo/
+│   │   └── Wachstumskurve.png
 │   ├── logo/
 │   └── profile/
 │       └── major-profil.png
@@ -244,11 +279,14 @@ DogBuddy/
 ├── js/
 │   ├── app.js
 │   ├── backup.js
+│   ├── dark-mode.js
 │   ├── database.js
-│   ├── entwicklung.js
 │   ├── entdecker.js
+│   ├── entwicklung.js
+│   ├── footer.js
 │   ├── galerie.js
 │   ├── gesundheit.js
+│   ├── header.js
 │   ├── kommandos.js
 │   ├── scroll-top.js
 │   ├── tagebuch.js
@@ -257,6 +295,22 @@ DogBuddy/
 │
 ├── index.html
 └── README.md
+```
+
+Die Dateien `training.html` und `training.js` stammen aus dem ursprünglichen
+Trainingsbereich.
+
+Sie bleiben erhalten, um die Entwicklung des Projekts nachvollziehbar zu
+machen, sind aber nicht mehr über die aktuelle Navigation erreichbar.
+
+Der heutige Trainingsbereich besteht hauptsächlich aus:
+
+```text
+Training
+│
+├── Kommandos
+│
+└── Entdecker-Checkliste
 ```
 
 ## Warum habe ich Ordner angelegt?
@@ -447,6 +501,319 @@ Für Kartenlayouts verwende ich unter anderem **CSS Grid**.
 
 Für die Ausrichtung einzelner Elemente verwende ich **Flexbox**.
 
+## Weiterentwicklung der Benutzeroberfläche
+
+Mit wachsendem Projektumfang wurden wiederkehrende Bestandteile der
+Benutzeroberfläche zunehmend zentralisiert.
+
+Ursprünglich waren Header und Footer direkt in den einzelnen HTML-Seiten
+vorhanden.
+
+Dadurch hätte eine Änderung beispielsweise an der Navigation auf mehreren
+Seiten einzeln durchgeführt werden müssen.
+
+Deshalb wurden diese Bestandteile später ausgelagert.
+
+### Zentraler Header
+
+Der Header wird heute über:
+
+👉 [`js/header.js`](js/header.js)
+
+erzeugt.
+
+Die Datei erstellt unter anderem:
+
+- DogBuddy-Logo
+- Hauptnavigation
+- Trainings-Untermenü
+- Dark-Mode-Schalter
+- Hamburger-Menü für kleinere Bildschirmbreiten
+
+Das Grundprinzip lautet:
+
+```text
+header.js
+   ↓
+Header erzeugen
+   ↓
+Navigation erzeugen
+   ↓
+aktuelle Seite erkennen
+   ↓
+passenden Menüpunkt markieren
+```
+
+Der Trainingsbereich besitzt dabei ein Untermenü:
+
+```text
+Training
+│
+├── Kommandos
+└── Entdecker-Checkliste
+```
+
+### Responsive Navigation
+
+Für kleinere Bildschirmbreiten wird die normale Desktop-Navigation
+ausgeblendet.
+
+Stattdessen erscheinen weiterhin das Logo und der Dark-Mode-Schalter sowie
+ein Hamburger-Menü:
+
+```text
+Desktop
+
+Logo     Dashboard | Tagebuch | Training | Entwicklung | ...     🌙
+
+
+Tablet / kleineres Fenster
+
+Logo                                                   🌙  ☰
+```
+
+Über `☰` kann die Navigation geöffnet und wieder geschlossen werden.
+
+Damit wurde bereits ein erster Teil des Responsive Designs umgesetzt.
+
+### Zentraler Footer
+
+Auch der Footer wird inzwischen zentral erzeugt.
+
+Die dafür zuständige Datei ist:
+
+👉 [`js/footer.js`](js/footer.js)
+
+Dadurch muss der Footer nicht mehr auf jeder HTML-Seite separat vorhanden
+sein.
+
+Der Footer enthält neben dem DogBuddy-Abschlussbereich auch den Zugang zur
+Datensicherung.
+
+```text
+footer.js
+    ↓
+Footer erzeugen
+    ↓
+DogBuddy – Gemeinsam wachsen
+    ↓
+Datensicherung
+```
+
+### Dark Mode
+
+DogBuddy besitzt inzwischen zusätzlich einen Dark Mode.
+
+Die Logik befindet sich in:
+
+👉 [`js/dark-mode.js`](js/dark-mode.js)
+
+Der Benutzer kann über den Schalter im Header zwischen heller und dunkler
+Darstellung wechseln.
+
+```text
+🌙
+↓
+Dark Mode aktivieren
+↓
+body erhält Klasse "dark-mode"
+↓
+CSS verwendet dunkle Darstellung
+```
+
+Beim erneuten Umschalten wird wieder die helle Darstellung aktiviert:
+
+```text
+☀️
+↓
+Light Mode
+```
+
+Die gewählte Darstellung wird im Browser gespeichert.
+
+Dafür wird der Schlüssel:
+
+```text
+dogBuddyTheme
+```
+
+verwendet.
+
+Dadurch bleibt die Auswahl auch nach einem Neuladen oder Seitenwechsel
+erhalten.
+
+### Nach-oben-Button
+
+Für längere DogBuddy-Seiten wurde zusätzlich ein seitenübergreifender
+Nach-oben-Button umgesetzt.
+
+Die Logik befindet sich zentral in:
+
+👉 [`js/scroll-top.js`](js/scroll-top.js)
+
+Nach dem Scrollen erscheint ein Button, über den direkt zum Seitenanfang
+zurückgesprungen werden kann.
+
+Da dieselbe JavaScript-Datei auf mehreren Seiten eingebunden wird, musste
+diese Funktion nur einmal programmiert werden.
+
+
+## Weiterentwicklung der Benutzeroberfläche
+
+Mit wachsendem Projektumfang wurden wiederkehrende Bestandteile der
+Benutzeroberfläche zunehmend zentralisiert.
+
+Ursprünglich waren Header und Footer direkt in den einzelnen HTML-Seiten
+vorhanden.
+
+Dadurch hätte eine Änderung beispielsweise an der Navigation auf mehreren
+Seiten einzeln durchgeführt werden müssen.
+
+Deshalb wurden diese Bestandteile später ausgelagert.
+
+### Zentraler Header
+
+Der Header wird heute über:
+
+👉 [`js/header.js`](js/header.js)
+
+erzeugt.
+
+Die Datei erstellt unter anderem:
+
+- DogBuddy-Logo
+- Hauptnavigation
+- Trainings-Untermenü
+- Dark-Mode-Schalter
+- Hamburger-Menü für kleinere Bildschirmbreiten
+
+Das Grundprinzip lautet:
+
+```text
+header.js
+   ↓
+Header erzeugen
+   ↓
+Navigation erzeugen
+   ↓
+aktuelle Seite erkennen
+   ↓
+passenden Menüpunkt markieren
+```
+
+Der Trainingsbereich besitzt dabei ein Untermenü:
+
+```text
+Training
+│
+├── Kommandos
+└── Entdecker-Checkliste
+```
+
+### Responsive Navigation
+
+Für kleinere Bildschirmbreiten wird die normale Desktop-Navigation
+ausgeblendet.
+
+Stattdessen erscheinen weiterhin das Logo und der Dark-Mode-Schalter sowie
+ein Hamburger-Menü:
+
+```text
+Desktop
+
+Logo     Dashboard | Tagebuch | Training | Entwicklung | ...     🌙
+
+
+Tablet / kleineres Fenster
+
+Logo                                                   🌙  ☰
+```
+
+Über `☰` kann die Navigation geöffnet und wieder geschlossen werden.
+
+Damit wurde bereits ein erster Teil des Responsive Designs umgesetzt.
+
+### Zentraler Footer
+
+Auch der Footer wird inzwischen zentral erzeugt.
+
+Die dafür zuständige Datei ist:
+
+👉 [`js/footer.js`](js/footer.js)
+
+Dadurch muss der Footer nicht mehr auf jeder HTML-Seite separat vorhanden
+sein.
+
+Der Footer enthält neben dem DogBuddy-Abschlussbereich auch den Zugang zur
+Datensicherung.
+
+```text
+footer.js
+    ↓
+Footer erzeugen
+    ↓
+DogBuddy – Gemeinsam wachsen
+    ↓
+Datensicherung
+```
+
+### Dark Mode
+
+DogBuddy besitzt inzwischen zusätzlich einen Dark Mode.
+
+Die Logik befindet sich in:
+
+👉 [`js/dark-mode.js`](js/dark-mode.js)
+
+Der Benutzer kann über den Schalter im Header zwischen heller und dunkler
+Darstellung wechseln.
+
+```text
+🌙
+↓
+Dark Mode aktivieren
+↓
+body erhält Klasse "dark-mode"
+↓
+CSS verwendet dunkle Darstellung
+```
+
+Beim erneuten Umschalten wird wieder die helle Darstellung aktiviert:
+
+```text
+☀️
+↓
+Light Mode
+```
+
+Die gewählte Darstellung wird im Browser gespeichert.
+
+Dafür wird der Schlüssel:
+
+```text
+dogBuddyTheme
+```
+
+verwendet.
+
+Dadurch bleibt die Auswahl auch nach einem Neuladen oder Seitenwechsel
+erhalten.
+
+### Nach-oben-Button
+
+Für längere DogBuddy-Seiten wurde zusätzlich ein seitenübergreifender
+Nach-oben-Button umgesetzt.
+
+Die Logik befindet sich zentral in:
+
+👉 [`js/scroll-top.js`](js/scroll-top.js)
+
+Nach dem Scrollen erscheint ein Button, über den direkt zum Seitenanfang
+zurückgesprungen werden kann.
+
+Da dieselbe JavaScript-Datei auf mehreren Seiten eingebunden wird, musste
+diese Funktion nur einmal programmiert werden.
+
 ---
 
 # 6. Dashboard – von statisch zu dynamisch
@@ -519,6 +886,40 @@ Das Profilbild liegt unter:
 Die Profildaten können bearbeitet werden.
 
 Dadurch müssen Stammdaten nicht direkt im HTML-Code geändert werden.
+
+---
+
+## Überarbeitung der Profilanzeige
+
+Die Profilkarte auf dem Dashboard wurde im weiteren Projektverlauf auch
+optisch überarbeitet.
+
+Neben dem Profilbild werden die wichtigsten Stammdaten übersichtlich
+zusammengefasst.
+
+Dazu gehören:
+
+```text
+Major
+
+Nova Scotia Duck Tolling Retriever
+
+
+GESCHLECHT        GEBOREN          BEI MIR SEIT
+♂ Rüde            21.06.2026       22.08.2026
+```
+
+Die drei Stammdaten werden innerhalb der Profilkarte nebeneinander
+dargestellt und optisch voneinander getrennt.
+
+Dadurch bleiben Name und Rasse im Mittelpunkt der Profilkarte, während
+weitere Informationen schnell erfasst werden können.
+
+Der Button **„Profil bearbeiten“** bleibt direkt beim eigentlichen
+Hundprofil erreichbar.
+
+Die Darstellung wurde dabei bewusst so aufgebaut, dass die Informationen
+nicht in vielen einzelnen Karten verschachtelt werden müssen.
 
 ---
 
@@ -1637,13 +2038,66 @@ Bereits erledigte Wochenaufgaben bleiben dabei im Verlauf erhalten.
 Zusätzlich werden die aktuellen Wochenaufgaben auf dem Dashboard
 zusammengefasst.
 
-Dort werden maximal vier Aufgaben direkt angezeigt.
+Dort werden maximal **drei offene Aufgaben** direkt angezeigt.
 
-Sind weitere Aufgaben vorhanden, erscheint zusätzlich ein Hinweis wie:
+Jede Aufgabe wird als eigener kompakter Bereich dargestellt und besitzt
+direkt auf dem Dashboard eine Checkbox.
+
+Sind mehr als drei offene Aufgaben vorhanden, erscheint zusätzlich ein
+Hinweis wie:
 
 ```text
 + 2 weitere Aufgaben
 ```
+
+Dadurch bleibt die Dashboard-Karte kompakt, obwohl im Wochenplan mehr
+Aufgaben vorhanden sein können.
+
+## Wochenaufgaben direkt auf dem Dashboard abschließen
+
+Eine Wochenaufgabe muss nicht mehr zwingend zuerst im eigentlichen
+Wochenplan geöffnet werden.
+
+Sie kann auch direkt auf dem Dashboard als erledigt markiert werden.
+
+Bei einer selbst erstellten Wochenaufgabe passiert:
+
+```text
+Checkbox anklicken
+        ↓
+Aufgabe als erledigt speichern
+        ↓
+Dashboard aktualisieren
+        ↓
+nächste offene Aufgabe rückt nach
+```
+
+Bei einer Aufgabe aus **Kommandos** oder der **Entdecker-Checkliste**
+passieren zusätzliche Schritte.
+
+```text
+Aufgabe auf Dashboard erledigen
+        ↓
+weeklyTasks aktualisieren
+        ↓
+nächste fehlende Fortschrittsstufe setzen
+        ↓
+👀 → 🐾 → 😌
+        ↓
+📅-Wochenauswahl entfernen
+        ↓
+Dashboard neu aufbauen
+```
+
+Dadurch verhält sich das Abschließen einer Aufgabe auf dem Dashboard
+genauso wie das Abschließen im eigentlichen Wochenplan.
+
+Die verschiedenen Bereiche bleiben miteinander synchronisiert.
+
+Eine bereits erledigte Aufgabe bleibt im Verlauf des Wochenplans erhalten.
+
+Das zugehörige Kommando bzw. die Erfahrung kann später erneut für eine
+andere Woche ausgewählt werden.
 
 ---
 
@@ -2315,12 +2769,20 @@ Die Anwendung läuft vollständig im Browser und verwendet derzeit
 
 - Grundstruktur des Projekts
 - Navigation zwischen den verschiedenen Bereichen
+- zentral erzeugter Header über `header.js`
+- zentral erzeugter Footer über `footer.js`
+- responsive Navigation
+- Hamburger-Menü für kleinere Bildschirmbreiten
+- Trainings-Untermenü
+- Dark Mode
+- Speicherung des gewählten Themes
 - einheitliches Design
 - Dashboard
 - Hundprofil
+- überarbeitete Profilanzeige
 - Profilbearbeitung
 - automatische Altersberechnung
-- seitenübergreifender Nach-oben-Button
+- seitenübergreifender Nach-oben-Button über `scroll-top.js`
 
 ### Entwicklung
 
@@ -2375,7 +2837,12 @@ Die Anwendung läuft vollständig im Browser und verwendet derzeit
 - Verbindung mit Kommandos
 - Verbindung mit der Entdecker-Checkliste
 - aktuelle Wochenaufgaben auf dem Dashboard anzeigen
-- bei mehr als vier Aufgaben die Anzahl weiterer Aufgaben anzeigen
+- maximal drei offene Aufgaben direkt auf dem Dashboard darstellen
+- Anzahl weiterer Aufgaben anzeigen
+- Wochenaufgaben direkt auf dem Dashboard abschließen
+- automatische Aktualisierung der nächsten Fortschrittsstufe
+- automatische Freigabe der 📅-Wochenauswahl
+- nächste offene Aufgabe automatisch nachrücken lassen
 
 ### Kommandos
 
@@ -2411,6 +2878,8 @@ Die Anwendung läuft vollständig im Browser und verwendet derzeit
 - Trennung größerer Bilddaten von normalen Textdaten
 - eigene `database.js`
 - Backup-Funktion über `backup.js`
+- zentraler Zugriff auf die Datensicherung über den Footer
+- Speicherung der Dark-Mode-Auswahl über `dogBuddyTheme`
 
 ### Entwicklung und Versionsverwaltung
 
@@ -2431,8 +2900,12 @@ als **DogBuddy Version 2** entwickelt werden.
 
 Geplant bzw. zu prüfen sind insbesondere:
 
-- Responsive Design
-- bessere Nutzung auf Smartphone und Tablet
+- vorhandenes Responsive Design weiter ausbauen
+- Dashboard für kleinere Bildschirmgrößen optimieren
+- Profilbereich responsiv optimieren
+- Tabellen für Smartphone und Tablet optimieren
+- Formulare und Popups für kleinere Displays optimieren
+- Touch-Bedienung weiter verbessern
 - öffentliche Frontpage
 - Registrierung
 - Login und Logout
@@ -2590,29 +3063,39 @@ umfangreiche DogBuddy-Anwendung
 
 ## 28.1 Responsive Design für Smartphone und Tablet
 
-Aktuell wurde DogBuddy hauptsächlich für die Verwendung auf einem Desktop-PC entwickelt.
+DogBuddy wurde ursprünglich hauptsächlich für die Verwendung auf einem
+Desktop-PC entwickelt.
 
-Ein wichtiger nächster Schritt wäre deshalb ein vollständig responsives Design.
+Während der Entwicklung wurde jedoch bereits mit der Anpassung an kleinere
+Bildschirmbreiten begonnen.
 
-Dabei soll sich die Benutzeroberfläche automatisch an unterschiedliche Bildschirmgrößen anpassen.
+Ein erster wichtiger Schritt ist bereits umgesetzt:
 
-Beispielsweise:
+- Desktop-Navigation für große Bildschirme
+- Hamburger-Menü für kleinere Bildschirmbreiten
+- ausklappbare mobile Navigation
+- Dark-Mode-Schalter bleibt unabhängig von der Navigation erreichbar
+
+Das Grundprinzip lautet:
 
 ```text
 Desktop
    ↓
-große Karten nebeneinander
+vollständige Navigation
 
-Tablet
-   ↓
-weniger Spalten
 
-Smartphone
+kleinere Bildschirmbreite
    ↓
-Elemente untereinander
+Logo + Dark Mode + ☰
+   ↓
+Navigation bei Bedarf öffnen
 ```
 
-Dafür könnten CSS Media Queries eingesetzt werden.
+Damit ist Responsive Design inzwischen nicht mehr ausschließlich eine
+geplante Erweiterung.
+
+Weitere Bereiche müssen jedoch noch vollständig für unterschiedliche
+Bildschirmgrößen optimiert werden.
 
 Besonders angepasst werden müssten:
 
@@ -2632,26 +3115,59 @@ Auf einem Smartphone müsste außerdem darauf geachtet werden, dass Buttons und 
 
 ---
 
-## 28.2 Mobile Navigation
+## 28.2 Mobile bzw. responsive Navigation
 
-Die aktuelle Navigation ist für einen großen Bildschirm ausgelegt.
+Die Navigation wurde inzwischen für kleinere Bildschirmbreiten angepasst.
 
-Auf einem Smartphone könnte sie beispielsweise durch ein sogenanntes Hamburger-Menü ersetzt werden.
+Auf einem großen Desktop-Bildschirm wird weiterhin die vollständige
+Navigation dargestellt.
 
 ```text
-Desktop:
-
-Dashboard | Tagebuch | Training | Entwicklung | ...
-
-
-Smartphone:
-
-☰ DogBuddy
+Logo     Dashboard | Tagebuch | Training | Entwicklung | ...     🌙
 ```
 
-Beim Antippen könnte sich anschließend ein Menü mit den einzelnen Bereichen öffnen.
+Wird das Browserfenster kleiner, wird die normale Navigation ausgeblendet.
 
-Dadurch würde auch auf kleinen Displays genügend Platz für den eigentlichen Inhalt bleiben.
+Stattdessen erscheint:
+
+```text
+Logo                                                   🌙  ☰
+```
+
+Der Dark-Mode-Schalter bleibt dadurch jederzeit direkt erreichbar.
+
+Über das Hamburger-Symbol `☰` kann die Navigation geöffnet werden.
+
+Die Menüpunkte werden anschließend untereinander dargestellt.
+
+```text
+☰
+│
+├── Dashboard
+├── Tagebuch
+├── Training
+│   ├── Kommandos
+│   └── Entdecker-Checkliste
+├── Entwicklung
+├── Wochenplan
+├── Gesundheit
+└── Galerie
+```
+
+Die Logik für den Header und das Öffnen bzw. Schließen der Navigation
+befindet sich zentral in:
+
+👉 [`js/header.js`](js/header.js)
+
+Die Darstellung für unterschiedliche Bildschirmgrößen wird über Media
+Queries in:
+
+👉 [`css/styles.css`](css/styles.css)
+
+gesteuert.
+
+Damit muss für die responsive Navigation kein separater Header in jeder
+HTML-Datei gepflegt werden.
 
 ---
 
@@ -3838,16 +4354,48 @@ Die eigentliche Verwaltung der Termine bleibt im Gesundheitsbereich.
 
 Auch die aktuellen Wochenaufgaben werden auf dem Dashboard zusammengefasst.
 
-Dabei werden maximal vier Aufgaben direkt angezeigt.
+Dabei werden maximal **drei offene Aufgaben** direkt angezeigt.
 
-Sind mehr Aufgaben vorhanden, erscheint zusätzlich ein Hinweis wie:
+Jede Aufgabe besitzt auf dem Dashboard eine eigene Checkbox.
+
+Dadurch kann eine Aufgabe direkt von der Startseite aus abgeschlossen
+werden.
+
+Sind mehr als drei offene Aufgaben vorhanden, erscheint zusätzlich ein
+Hinweis wie:
 
 ```text
 + 2 weitere Aufgaben
 ```
 
-Die eigentliche Bearbeitung und das Abschließen der Aufgaben erfolgt weiterhin
-im Wochenplan.
+Nach dem Abschließen einer Aufgabe wird die Dashboard-Anzeige neu aufgebaut.
+
+Dadurch rückt automatisch die nächste noch offene Aufgabe nach.
+
+Bei Aufgaben aus den Bereichen **Kommandos** und **Entdecker-Checkliste**
+wird zusätzlich der jeweilige Fortschritt aktualisiert.
+
+```text
+Dashboard
+    ↓
+Aufgabe erledigen
+    ↓
+weeklyTasks
+    ↓
+┌────────────────────┐
+↓                    ↓
+Kommando          Entdecker
+↓                    ↓
+nächste Fortschrittsstufe
+↓
+👀 → 🐾 → 😌
+```
+
+Anschließend wird auch die 📅-Auswahl des ursprünglichen Eintrags wieder
+freigegeben.
+
+Die ausführliche Verwaltung und der Verlauf aller Wochenaufgaben bleiben
+weiterhin im Wochenplan verfügbar.
 
 ## Tagebuch auf dem Dashboard
 
@@ -4146,9 +4694,12 @@ Gerade für die Nutzung auf einem Smartphone und über mobile Daten wäre dies w
 # 51. Wiederverwendbare Komponenten und weitere Code-Strukturierung
 
 Mit zunehmendem Projektumfang wurde die JavaScript-Struktur von DogBuddy
-bereits schrittweise auf mehrere Dateien aufgeteilt.
+schrittweise auf mehrere Dateien aufgeteilt.
 
 Die einzelnen Bereiche besitzen weitgehend eigene JavaScript-Dateien.
+
+Zusätzlich wurden inzwischen mehrere Funktionen ausgelagert, die von vielen
+oder allen Seiten gemeinsam verwendet werden.
 
 Die aktuelle Struktur umfasst unter anderem:
 
@@ -4156,11 +4707,14 @@ Die aktuelle Struktur umfasst unter anderem:
 js/
 ├── app.js
 ├── backup.js
+├── dark-mode.js
 ├── database.js
 ├── entdecker.js
 ├── entwicklung.js
+├── footer.js
 ├── galerie.js
 ├── gesundheit.js
+├── header.js
 ├── kommandos.js
 ├── scroll-top.js
 ├── tagebuch.js
@@ -4171,37 +4725,160 @@ js/
 Dadurch befindet sich nicht die gesamte Programmlogik in einer einzigen
 JavaScript-Datei.
 
-Stattdessen können die verschiedenen Bereiche von DogBuddy getrennt
-weiterentwickelt und übersichtlicher verwaltet werden.
+Stattdessen können die verschiedenen Bereiche getrennt weiterentwickelt
+werden.
 
-## Bereits gemeinsam verwendete Funktionen
+---
 
-Ein Beispiel für eine bereichsübergreifende Funktion ist der
-**Nach-oben-Button**.
+## Zentrale Komponenten
 
-Die Funktion befindet sich zentral in:
+Während der Weiterentwicklung wurde deutlich, dass bestimmte Funktionen auf
+vielen Seiten identisch benötigt werden.
+
+Würden diese Bestandteile direkt in jeder HTML-Datei stehen, müssten
+Änderungen mehrfach durchgeführt werden.
+
+Deshalb wurden mehrere zentrale JavaScript-Dateien eingeführt.
+
+### header.js
+
+👉 [`js/header.js`](js/header.js)
+
+`header.js` erzeugt den gemeinsamen Header.
+
+Dazu gehören:
+
+- Logo
+- Navigation
+- Trainings-Untermenü
+- Markierung des aktuellen Bereichs
+- Dark-Mode-Schalter
+- Hamburger-Menü
+- responsive Navigation
+
+```text
+                header.js
+                    ↓
+     ┌──────────────┼──────────────┐
+     ↓              ↓              ↓
+  Seite 1        Seite 2        Seite 3
+```
+
+Eine Änderung am zentralen Header muss dadurch nicht mehr in jeder
+HTML-Datei einzeln vorgenommen werden.
+
+### footer.js
+
+👉 [`js/footer.js`](js/footer.js)
+
+Auch der Footer wird zentral erzeugt.
+
+Er enthält den gemeinsamen DogBuddy-Abschlussbereich sowie den Zugang zur
+Datensicherung.
+
+```text
+                footer.js
+                    ↓
+     ┌──────────────┼──────────────┐
+     ↓              ↓              ↓
+  Seite 1        Seite 2        Seite 3
+```
+
+Dadurch bleibt der Footer auf den verschiedenen Seiten einheitlich.
+
+### dark-mode.js
+
+👉 [`js/dark-mode.js`](js/dark-mode.js)
+
+Diese Datei steuert den Hell-/Dunkelmodus.
+
+Beim Umschalten wird die Klasse:
+
+```text
+dark-mode
+```
+
+am `body` gesetzt bzw. entfernt.
+
+Das CSS kann dadurch gezielt andere Farben verwenden.
+
+Die Auswahl wird zusätzlich unter:
+
+```text
+dogBuddyTheme
+```
+
+gespeichert.
+
+Dadurch bleibt das ausgewählte Theme nach einem Seitenwechsel oder
+Neuladen erhalten.
+
+### scroll-top.js
 
 👉 [`js/scroll-top.js`](js/scroll-top.js)
 
-Die Datei kann auf verschiedenen HTML-Seiten eingebunden werden, ohne dass
-die gleiche JavaScript-Logik auf jeder Seite erneut geschrieben werden muss.
+Der seitenübergreifende Nach-oben-Button befindet sich ebenfalls in einer
+zentralen Datei.
 
-Das Grundprinzip lautet:
+Die Funktion kann dadurch auf verschiedenen HTML-Seiten eingebunden werden,
+ohne dieselbe Logik mehrfach zu programmieren.
+
+### backup.js
+
+👉 [`js/backup.js`](js/backup.js)
+
+Die Datensicherung besitzt ebenfalls eine eigene JavaScript-Datei.
+
+Der Zugriff darauf befindet sich im zentral erzeugten Footer.
+
+Dadurch sind Darstellung des Footers und eigentliche Backup-Logik
+voneinander getrennt.
+
+---
+
+## Entwicklung der Struktur
+
+Die Code-Struktur hat sich damit von:
 
 ```text
-scroll-top.js
-      ↓
-┌─────────────┬─────────────┬─────────────┐
-↓             ↓             ↓
-Seite 1     Seite 2       Seite 3
+viele Bestandteile direkt in jeder HTML-Seite
 ```
 
-Dadurch kann dieselbe Funktion von mehreren Bereichen verwendet werden.
+weiterentwickelt zu:
+
+```text
+HTML-Seiten
+    ↓
+seitenbezogene JavaScript-Dateien
+    +
+gemeinsame JavaScript-Komponenten
+```
+
+Vereinfacht:
+
+```text
+                    DogBuddy
+                       │
+          ┌────────────┴────────────┐
+          ↓                         ↓
+   Seitenspezifisch              Gemeinsam
+          │                         │
+   app.js                        header.js
+   tagebuch.js                   footer.js
+   gesundheit.js                 dark-mode.js
+   kommandos.js                  scroll-top.js
+   entdecker.js                  backup.js
+   ...
+```
+
+Diese Trennung reduziert doppelten Code und erleichtert spätere Änderungen.
+
+---
 
 ## Weitere mögliche Strukturierung
 
-Mit wachsendem Projektumfang könnten später noch weitere gemeinsam verwendete
-Funktionen aus den einzelnen Dateien ausgelagert werden.
+Mit wachsendem Projektumfang könnten später noch weitere gemeinsam
+verwendete Funktionen ausgelagert werden.
 
 Denkbar wären beispielsweise zentrale Funktionen für:
 
@@ -4213,22 +4890,12 @@ Denkbar wären beispielsweise zentrale Funktionen für:
 - gemeinsame Speicherfunktionen
 - Datei- und Bildverarbeitung
 
-Eine spätere Struktur könnte beispielsweise so aussehen:
+Eine spätere Struktur könnte beispielsweise zusätzlich enthalten:
 
 ```text
 js/
-├── app.js
-├── backup.js
-├── database.js
-├── entdecker.js
-├── entwicklung.js
-├── galerie.js
-├── gesundheit.js
-├── kommandos.js
-├── scroll-top.js
-├── tagebuch.js
-├── training.js
-├── wochenplan.js
+│
+├── vorhandene Dateien
 │
 └── gemeinsame Funktionen
     ├── utils.js
@@ -4236,12 +4903,13 @@ js/
     └── modal.js
 ```
 
-Diese zusätzlichen Dateien existieren aktuell noch nicht, zeigen aber eine
-mögliche spätere Weiterentwicklung der Code-Struktur.
+Diese zusätzlichen Dateien existieren aktuell noch nicht.
+
+Sie zeigen lediglich eine mögliche spätere Weiterentwicklung.
 
 ## Ziel der weiteren Strukturierung
 
-Gemeinsam verwendete Funktionen sollten langfristig möglichst nur einmal
+Gemeinsam verwendete Funktionen sollen langfristig möglichst nur einmal
 programmiert werden.
 
 Statt:
@@ -4252,7 +4920,7 @@ gleiche Funktion in Datei B
 gleiche Funktion in Datei C
 ```
 
-wäre das Ziel:
+ist das Ziel:
 
 ```text
 zentrale Funktion
@@ -4260,16 +4928,16 @@ zentrale Funktion
 von mehreren Bereichen verwenden
 ```
 
-Dadurch könnte:
+Dadurch kann:
 
 - doppelter Code reduziert werden,
 - die Wartbarkeit verbessert werden,
 - die Fehlersuche einfacher werden,
 - das Projekt übersichtlicher bleiben,
-- eine spätere Erweiterung von DogBuddy erleichtert werden.
+- eine spätere Erweiterung erleichtert werden.
 
-Die bereits vorhandene Aufteilung der einzelnen DogBuddy-Bereiche bildet
-dafür eine gute Grundlage.
+Mit `header.js`, `footer.js`, `dark-mode.js` und `scroll-top.js` wurde dieses
+Prinzip inzwischen bereits praktisch im Projekt umgesetzt.
 
 ---
 

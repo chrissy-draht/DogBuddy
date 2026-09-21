@@ -33,7 +33,7 @@ body {
 
 .header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 
     background-color: #ffffff;
@@ -78,8 +78,9 @@ body {
     align-items: center;
 
     gap: 28px;
-}
 
+    margin-left: 200px;
+}
 
 /* Einzelne Navigationslinks */
 .navigation a {
@@ -182,6 +183,184 @@ body {
 .navigation .nav-dropdown-menu a:hover {
     background-color: #f8f4f0;
 }
+
+
+/* ================================================== */
+/* HEADER - AKTIONEN                                  */
+/* ================================================== */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-left: auto;
+}
+
+
+/* ================================================== */
+/* HEADER - TABLET MENÜ BUTTON                        */
+/* ================================================== */
+
+.mobile-menu-toggle {
+    display: none;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 9px;
+
+    border: 1px solid #d9c8b8;
+    border-radius: 9px;
+
+    background-color: #ffffff;
+
+    cursor: pointer;
+}
+
+
+/* ================================================== */
+/* HEADER - DREI MENÜSTRICHE                          */
+/* ================================================== */
+
+.mobile-menu-toggle span {
+    display: block;
+
+    width: 22px;
+    height: 2px;
+
+    margin: 4px auto;
+
+    border-radius: 2px;
+
+    background-color: #302a26;
+}
+
+
+/* ================================================== */
+/* TABLET NAVIGATION                                  */
+/* ================================================== */
+
+@media (max-width: 1100px) {
+
+    .header {
+        position: relative;
+
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+
+    /* Normale Navigation zunächst verstecken */
+    .navigation {
+        display: none;
+
+        position: absolute;
+
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin-left: 0;
+
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 0;
+
+        padding: 15px 30px;
+
+        background-color: #ffffff;
+
+        border-bottom: 1px solid #e8d7d6;
+
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+
+        z-index: 1000;
+    }
+
+
+    /* Navigation nach Klick auf die drei Striche */
+    .navigation.mobile-open {
+        display: flex;
+    }
+
+
+    /* Drei Striche anzeigen */
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+
+    /* Links im aufgeklappten Menü */
+    .navigation > a,
+    .nav-dropdown-button {
+        width: 100%;
+
+        padding: 11px 0;
+    }
+
+
+    /* Training-Bereich */
+    .nav-dropdown {
+        display: block;
+
+        width: 100%;
+    }
+
+
+    /* Training-Untermenü auf Tablet direkt anzeigen */
+    .nav-dropdown-menu {
+        position: static;
+
+        display: block;
+
+        transform: none;
+
+        min-width: 0;
+
+        margin: 0 0 5px 15px;
+        padding: 0;
+
+        background-color: transparent;
+
+        border: none;
+        box-shadow: none;
+    }
+
+
+    .navigation .nav-dropdown-menu a {
+        padding: 8px 12px;
+
+        font-size: 14px;
+    }
+}
+
+
+/* ================================================== */
+/* DARK MODE - TABLET NAVIGATION                      */
+/* ================================================== */
+
+body.dark-mode .mobile-menu-toggle {
+    background-color: #342e29;
+    border-color: #5a4d43;
+}
+
+
+body.dark-mode .mobile-menu-toggle span {
+    background-color: #f2e9e2;
+}
+
+
+@media (max-width: 1100px) {
+
+    body.dark-mode .navigation {
+        background-color: #27231f;
+
+        border-color: #403832;
+    }
+
+}
+
 
 /* ================================================== */
 /* DASHBOARD                                          */
@@ -346,6 +525,7 @@ main h1 {
 /* Informationen */
 
 .dog-profile-info {
+    position: relative;
     flex: 1;
 }
 
@@ -368,30 +548,59 @@ main h1 {
 }
 
 
-/* Geschlecht, Geburtstag und Einzug */
+/* ================================================== */
+/* HUNDPROFIL - PROFILDATEN                           */
+/* ================================================== */
 
 .dog-details {
+    position: absolute;
+
+    top: 55px;
+    left: 420px;
+
     display: flex;
+    align-items: center;
+    gap: 0;
 
-    gap: 50px;
+    margin: 0;
+    padding: 0;
 
-    margin-bottom: 22px;
+    background-color: transparent;
+
+    border: none;
 }
 
+
+
+/* ================================================== */
+/* HUNDPROFIL - EINZELNE PROFILANGABE                 */
+/* ================================================== */
 
 .dog-detail {
     display: flex;
-
     flex-direction: column;
+    align-items: center;
 
-    gap: 3px;
+    gap: 7px;
+
+    min-width: 175px;
+
+    padding: 5px 28px;
 }
 
+
+/* ================================================== */
+/* HUNDPROFIL - TRENNLINIEN                           */
+/* ================================================== */
+
+.dog-detail + .dog-detail {
+    border-left: 1px solid #e5ddd5;
+}
 
 .detail-label {
     color: #9a918b;
 
-    font-size: 11px;
+    font-size: 13px;
 
     font-weight: bold;
 
@@ -432,6 +641,7 @@ main h1 {
     cursor: pointer;
 
     transition: 0.2s;
+
 }
 
 
@@ -835,24 +1045,6 @@ main h1 {
 
 
 /* ================================================== */
-/* FOOTER                                             */
-/* ================================================== */
-
-.footer {
-    width: 100%;
-    box-sizing: border-box;
-
-    background-color: #302a26;
-    color: #ffffff;
-
-    text-align: center;
-
-    padding: 22px 25px;
-
-    font-size: 14px;
-}
-
-/* ================================================== */
 /* FOOTER - GESAMTER BEREICH                          */
 /* ================================================== */
 
@@ -886,7 +1078,9 @@ main h1 {
     color: #d9cec5;
 
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 400;
+
+    opacity: 0.7;
 
     cursor: pointer;
 
@@ -981,14 +1175,20 @@ main h1 {
 /* FOOTER - TEXT                                      */
 /* ================================================== */
 
-/* DogBuddy-Text unter der Datensicherung */
+/* DogBuddy-Text über der Datensicherung */
 .footer-text {
-    margin: 12px 0 0;
+    display: block;
+
+    margin: 0 0 8px;
 
     color: #d9cec5;
 
-    font-size: 12px;
-    font-weight: normal;
+    font-size: 16px;
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    opacity: 1;
 }
 
 /* ================================================== */
@@ -1865,25 +2065,6 @@ main h1 {
 
 
 /* ================================================== */
-/* FUSSBEREICH                                        */
-/* ================================================== */
-
-footer {
-    width: 100%;
-    box-sizing: border-box;
-
-    background-color: #302a26;
-    color: #ffffff;
-
-    text-align: center;
-
-    padding: 25px;
-
-    font-size: 14px;
-}
-
-
-/* ================================================== */
 /* PROFILFORMULAR                                     */
 /* ================================================== */
 
@@ -2014,29 +2195,46 @@ footer {
 /* ================================================== */
 
 .development-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 40px;
+
     margin-bottom: 35px;
 }
 
 
-.development-header .eyebrow {
-    color: #b87333;
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
+/* ================================================== */
+/* ENTWICKLUNG - ÜBERSCHRIFT TEXT                     */
+/* ================================================== */
+
+.development-header > div {
+    flex: 1;
 }
 
 
-.development-header h1 {
-    font-size: 36px;
-    margin: 0 0 10px;
-    color: #302a26;
+/* ================================================== */
+/* ENTWICKLUNG - HINZUFÜGEN BUTTON                    */
+/* ================================================== */
+
+.development-header .gallery-add-button {
+    flex-shrink: 0;
+
+    background-color: #c9782c;
+    color: #ffffff;
+
+    border: 1px solid #c9782c;
 }
 
 
-.development-header > p:last-child {
-    color: #6f665f;
-    margin: 0;
+/* ================================================== */
+/* ENTWICKLUNG - HINZUFÜGEN BUTTON HOVER              */
+/* ================================================== */
+
+.development-header .gallery-add-button:hover {
+    background-color: #b86b26;
+    border-color: #b86b26;
 }
 
 
@@ -3376,6 +3574,30 @@ footer {
 
 
 /* ================================================== */
+/* TAGEBUCH - HINZUFÜGEN BUTTON                      */
+/* ================================================== */
+
+.diary-header-with-button .gallery-add-button {
+    flex-shrink: 0;
+
+    background-color: #c9782c;
+    color: #ffffff;
+
+    border: 1px solid #c9782c;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - HINZUFÜGEN BUTTON HOVER                */
+/* ================================================== */
+
+.diary-header-with-button .gallery-add-button:hover {
+    background-color: #b86b26;
+    border-color: #b86b26;
+}
+
+
+/* ================================================== */
 /* TAGEBUCH - FORMULARFELDER                          */
 /* ================================================== */
 
@@ -3882,21 +4104,46 @@ footer {
 /* ================================================== */
 
 .health-header {
-    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 40px;
+
+    margin-bottom: 35px;
 }
 
 
-.health-header h1 {
-    margin: 5px 0 10px;
+/* ================================================== */
+/* GESUNDHEIT - ÜBERSCHRIFT TEXT                      */
+/* ================================================== */
+
+.health-header > div {
+    flex: 1;
 }
 
 
-.health-header > p:last-child {
-    color: #6d655f;
+/* ================================================== */
+/* GESUNDHEIT - HINZUFÜGEN BUTTON                     */
+/* ================================================== */
 
-    max-width: 700px;
+.health-header .gallery-add-button {
+    flex-shrink: 0;
 
-    line-height: 1.6;
+    background-color: #c9782c;
+    color: #ffffff;
+
+    border: 1px solid #c9782c;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT - HINZUFÜGEN BUTTON HOVER               */
+/* ================================================== */
+
+.health-header .gallery-add-button:hover {
+    background-color: #b86b26;
+    border-color: #b86b26;
 }
 
 
@@ -4388,14 +4635,46 @@ footer {
 /* ================================================== */
 
 .weekly-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 40px;
+
     margin-bottom: 35px;
 }
 
 
-.weekly-header h1 {
-    margin-top: 5px;
+/* ================================================== */
+/* WOCHENPLAN - ÜBERSCHRIFT TEXT                      */
+/* ================================================== */
 
-    margin-bottom: 10px;
+.weekly-header > div {
+    flex: 1;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN - HINZUFÜGEN BUTTON                     */
+/* ================================================== */
+
+.weekly-header .gallery-add-button {
+    flex-shrink: 0;
+
+    background-color: #c9782c;
+    color: #ffffff;
+
+    border: 1px solid #c9782c;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN - HINZUFÜGEN BUTTON HOVER               */
+/* ================================================== */
+
+.weekly-header .gallery-add-button:hover {
+    background-color: #b86b26;
+    border-color: #b86b26;
 }
 
 
@@ -4758,13 +5037,13 @@ footer {
 
     padding: 11px 17px;
 
-    border: 1px solid #d8c5b5;
+    border: 1px solid #c9782c;
 
     border-radius: 9px;
 
-    background-color: #ffffff;
+    background-color: #c9782c;
 
-    color: #8a674b;
+    color: #ffffff;
 
     font-family: inherit;
 
@@ -4783,21 +5062,18 @@ footer {
 }
 
 
-.gallery-add-button:hover {
-    background-color: #f4ede6;
+/* ================================================== */
+/* GALERIE - NEUES FOTO BUTTON HOVER                  */
+/* ================================================== */
 
-    border-color: #b98a62;
+.gallery-add-button:hover {
+    background-color: #b86b26;
+
+    border-color: #b86b26;
+
+    color: #ffffff;
 
     transform: translateY(-1px);
-}
-
-
-.gallery-add-icon {
-    font-size: 20px;
-
-    font-weight: 400;
-
-    line-height: 1;
 }
 
 
@@ -6739,6 +7015,1155 @@ footer {
 .scroll-top-button:hover {
     opacity: 1;
     transform: translateY(-2px);
+}
+
+
+/* ================================================== */
+/* DARK MODE - UMSCHALTER                             */
+/* ================================================== */
+
+.dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    margin-left: 12px;
+    padding: 0;
+
+    border: 1px solid #d9c8b8;
+    border-radius: 50%;
+
+    background-color: #ffffff;
+    color: #302a26;
+
+    font-size: 20px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.dark-mode-toggle:hover {
+    background-color: #f5eee8;
+    border-color: #b87333;
+
+    transform: scale(1.06);
+}
+
+
+/* ================================================== */
+/* DARK MODE - GRUNDDESIGN                            */
+/* ================================================== */
+
+body.dark-mode {
+    background-color: #1c1917;
+    color: #e9e1db;
+}
+
+
+/* ================================================== */
+/* DARK MODE - HEADER                                 */
+/* ================================================== */
+
+body.dark-mode .header {
+    background-color: #27231f;
+    border-color: #403832;
+}
+
+body.dark-mode .navigation a,
+body.dark-mode .navigation span {
+    color: #eee6e0;
+}
+
+body.dark-mode .navigation a:hover,
+body.dark-mode .navigation a.active {
+    color: #d68a4b;
+}
+
+body.dark-mode .nav-dropdown-menu {
+    background-color: #302b27;
+    border-color: #4c433c;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .navigation .nav-dropdown-menu a {
+    color: #e5ddd7;
+}
+
+body.dark-mode .navigation .nav-dropdown-menu a:hover {
+    background-color: #3a332e;
+    color: #d68a4b;
+}
+
+
+/* ================================================== */
+/* DARK MODE - UMSCHALTER AKTIV                       */
+/* ================================================== */
+
+body.dark-mode .dark-mode-toggle {
+    background-color: #342e29;
+    border-color: #5a4d43;
+    color: #f2e9e2;
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    background-color: #403832;
+    border-color: #d68a4b;
+}
+
+
+/* ================================================== */
+/* DARK MODE - ALLGEMEINE TEXTE                       */
+/* ================================================== */
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+    color: #f2ebe6;
+}
+
+body.dark-mode p {
+    color: #c9beb6;
+}
+
+body.dark-mode .eyebrow,
+body.dark-mode .small-heading {
+    color: #d68a4b;
+}
+
+body.dark-mode .section-heading h2 {
+    color: #f2ebe6;
+}
+
+
+/* ================================================== */
+/* DARK MODE - DASHBOARD PROFIL                       */
+/* ================================================== */
+
+body.dark-mode .dog-profile {
+    background-color: #292521;
+    border-color: #d68a4b;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.20);
+}
+
+body.dark-mode .dog-profile-info h2 {
+    color: #f2ebe6;
+}
+
+body.dark-mode .detail-label {
+    color: #a99d94;
+}
+
+body.dark-mode .detail-value {
+    color: #f0e8e2;
+}
+
+body.dark-mode .edit-profile-button {
+    background-color: transparent;
+    color: #d68a4b;
+    border-color: #d68a4b;
+}
+
+body.dark-mode .edit-profile-button:hover {
+    background-color: #b87333;
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* DARK MODE - DASHBOARD INFOKARTEN                   */
+/* ================================================== */
+
+body.dark-mode .info-card {
+    background-color: #292521;
+    border-color: #d68a4b;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.18);
+}
+
+body.dark-mode .card-title {
+    color: #b8aca3;
+}
+
+body.dark-mode .card-row-label {
+    color: #b8aca3;
+}
+
+body.dark-mode .card-row-value {
+    color: #f2ebe6;
+}
+
+body.dark-mode .card-info {
+    color: #9f938a;
+}
+
+body.dark-mode .body-measurement-arrow {
+    background-color: #37312c;
+    color: #d68a4b;
+}
+
+body.dark-mode .body-measurement-arrow:hover {
+    background-color: #463d36;
+}
+
+
+/* ================================================== */
+/* DARK MODE - DASHBOARD HAUPTKARTEN                  */
+/* ================================================== */
+
+body.dark-mode .dashboard-card {
+    background-color: #292521;
+    border-color: #d68a4b;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.20);
+}
+
+
+/* ================================================== */
+/* DARK MODE - DASHBOARD TRAINING                     */
+/* ================================================== */
+
+body.dark-mode .dashboard-training-box {
+    background-color: #332e29;
+    border-color: #4b423b;
+}
+
+body.dark-mode .dashboard-training-box-row {
+    color: #c9beb6;
+}
+
+body.dark-mode .dashboard-training-box-row strong {
+    color: #f2ebe6;
+}
+
+
+/* ================================================== */
+/* DARK MODE - DASHBOARD TERMINE                      */
+/* ================================================== */
+
+body.dark-mode .dashboard-appointment-box {
+    background-color: #332e29;
+    border-color: #4b423b;
+}
+
+body.dark-mode .dashboard-appointment-box-title {
+    color: #f2ebe6;
+}
+
+body.dark-mode .dashboard-appointment-box-date {
+    color: #afa39a;
+}
+
+
+/* ================================================== */
+/* DARK MODE - DASHBOARD WOCHENPLAN                   */
+/* ================================================== */
+
+body.dark-mode .dashboard-weekly-box,
+body.dark-mode .task-list li {
+    background-color: #332e29;
+    border-color: #4b423b;
+}
+
+body.dark-mode .dashboard-weekly-box-title,
+body.dark-mode .dashboard-more-tasks {
+    color: #f2ebe6;
+}
+
+
+/* ================================================== */
+/* DARK MODE - DASHBOARD TAGEBUCH                     */
+/* ================================================== */
+
+body.dark-mode .dashboard-diary-box {
+    background-color: #332e29;
+    border-color: #4b423b;
+}
+
+body.dark-mode .dashboard-diary-box-date {
+    color: #afa39a;
+}
+
+body.dark-mode .dashboard-diary-box-title {
+    color: #f2ebe6;
+}
+
+body.dark-mode .appointment,
+body.dark-mode .diary-preview {
+    color: #c9beb6;
+}
+
+body.dark-mode .appointment-title {
+    color: #f2ebe6;
+}
+
+
+/* ================================================== */
+/* DARK MODE - ENTWICKLUNG                            */
+/* ================================================== */
+
+body.dark-mode .measurement-card,
+body.dark-mode .measurement-history,
+body.dark-mode .growth-chart-card,
+body.dark-mode .growth-comparison-card {
+    background-color: #292521;
+    border-color: #443c36;
+    color: #e9e1db;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.20);
+}
+
+body.dark-mode .measurement-card h2,
+body.dark-mode .measurement-history h2 {
+    color: #f2ebe6;
+}
+
+body.dark-mode .measurement-form label {
+    color: #c9beb6;
+}
+
+body.dark-mode .measurement-form input {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #f2ebe6;
+}
+
+body.dark-mode .growth-final-weight,
+body.dark-mode .growth-value {
+    background-color: #37312c;
+    color: #e9e1db;
+}
+
+body.dark-mode .growth-final-weight select {
+    background-color: #403832;
+    border-color: #5b5047;
+    color: #ffffff;
+}
+
+body.dark-mode .growth-status {
+    background-color: #37312c;
+    color: #ddd3cc;
+}
+
+body.dark-mode .growth-status.status-warning {
+    background-color: #4b3826;
+    border-color: #b87333;
+    color: #f0d2b6;
+}
+
+body.dark-mode .growth-status.status-alert {
+    background-color: #4b2d2a;
+    color: #efc2bc;
+}
+
+
+/* ================================================== */
+/* DARK MODE - WACHSTUMSDIAGRAMM                      */
+/* ================================================== */
+
+body.dark-mode #growth-chart,
+body.dark-mode #growth-chart-large {
+    background-color: #f7f3ee;
+}
+
+/*
+    Das Diagramm bleibt absichtlich hell.
+    Die Linien und Beschriftungen werden per JavaScript gezeichnet
+    und sind auf einem hellen Hintergrund besser lesbar.
+*/
+
+
+/* ================================================== */
+/* DARK MODE - ENTWICKLUNG TABELLE                    */
+/* ================================================== */
+
+body.dark-mode .measurement-table {
+    color: #e9e1db;
+}
+
+body.dark-mode .measurement-table th {
+    background-color: #37312c;
+    color: #f2ebe6;
+    border-color: #b87333;
+}
+
+body.dark-mode .measurement-table td {
+    color: #d5cbc4;
+    border-color: #4b423b;
+}
+
+body.dark-mode .measurement-table tbody tr:hover {
+    background-color: #332e29;
+}
+
+
+/* ================================================== */
+/* DARK MODE - WOCHENPLAN                             */
+/* ================================================== */
+
+body.dark-mode .weekly-form-card,
+body.dark-mode .weekly-task-item {
+    background-color: #292521;
+    border-color: #443c36;
+    color: #e9e1db;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.18);
+}
+
+body.dark-mode .weekly-form-card h2,
+body.dark-mode .weekly-task-header h3 {
+    color: #f2ebe6;
+}
+
+body.dark-mode .weekly-task-category,
+body.dark-mode .weekly-task-note {
+    color: #b8aca3;
+}
+
+body.dark-mode .weekly-status-open {
+    background-color: #493829;
+    color: #e2b487;
+}
+
+body.dark-mode .weekly-status-completed {
+    background-color: #294035;
+    color: #b8d8c7;
+}
+
+body.dark-mode .weekly-edit-button {
+    background-color: #37312c;
+    border-color: #50463e;
+    color: #e9e1db;
+}
+
+body.dark-mode .weekly-delete-button {
+    background-color: #472f2d;
+    border-color: #62413d;
+    color: #efc1bb;
+}
+
+body.dark-mode .weekly-task-buttons button:hover {
+    filter: brightness(1.12);
+}
+
+
+/* ================================================== */
+/* DARK MODE - WOCHENPLAN FORMULAR                    */
+/* ================================================== */
+
+body.dark-mode .weekly-form-group label {
+    color: #c9beb6;
+}
+
+body.dark-mode .weekly-form-group input,
+body.dark-mode .weekly-form-group select,
+body.dark-mode .weekly-form-group textarea {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #f2ebe6;
+}
+
+
+/* ================================================== */
+/* DARK MODE - GESUNDHEIT KALENDER                    */
+/* ================================================== */
+
+body.dark-mode .health-calendar-section {
+    background-color: #292521;
+    border-color: #443c36;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.20);
+}
+
+body.dark-mode .calendar-view-switch {
+    background-color: #37312c;
+}
+
+body.dark-mode .calendar-view-button {
+    color: #c9beb6;
+}
+
+body.dark-mode .calendar-view-button.active {
+    background-color: #b87333;
+    color: #ffffff;
+}
+
+body.dark-mode .calendar-navigation-button,
+body.dark-mode .calendar-today-button {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #e9e1db;
+}
+
+
+/* ================================================== */
+/* DARK MODE - KALENDERTAGE                           */
+/* ================================================== */
+
+body.dark-mode .calendar-day {
+    background-color: #332e29;
+    border-color: #4b423b;
+    color: #f2ebe6;
+}
+
+body.dark-mode .calendar-day:hover {
+    background-color: #3c3530;
+    border-color: #b87333;
+}
+
+body.dark-mode .calendar-day-selected {
+    background-color: #443528;
+    border-color: #d68a4b;
+}
+
+body.dark-mode .calendar-day-weekday,
+body.dark-mode .calendar-month-weekday {
+    color: #a99d94;
+}
+
+body.dark-mode .calendar-mini-appointment,
+body.dark-mode .calendar-month-appointment {
+    background-color: #463d36;
+    color: #f0d7c1;
+}
+
+body.dark-mode .calendar-detail-appointment {
+    background-color: #332e29;
+    border-color: #4b423b;
+    color: #f2ebe6;
+}
+
+body.dark-mode .calendar-detail-appointment:hover {
+    background-color: #3c3530;
+    border-color: #b87333;
+}
+
+body.dark-mode .calendar-detail-text small {
+    color: #a99d94;
+}
+
+body.dark-mode .calendar-add-appointment {
+    border-color: #d68a4b;
+    color: #d68a4b;
+}
+
+
+/* ================================================== */
+/* DARK MODE - GESUNDHEIT TERMINE                     */
+/* ================================================== */
+
+body.dark-mode .health-form-card,
+body.dark-mode .appointment-item,
+body.dark-mode .empty-appointments {
+    background-color: #292521;
+    border-color: #443c36;
+    color: #e9e1db;
+}
+
+body.dark-mode .appointment-item-header h3,
+body.dark-mode .appointment-section-header h2 {
+    color: #f2ebe6;
+}
+
+body.dark-mode .appointment-note {
+    background-color: #37312c;
+    color: #c9beb6;
+}
+
+body.dark-mode .appointment-counter {
+    background-color: #443528;
+    color: #e0a36f;
+}
+
+body.dark-mode .status-open {
+    background-color: #493829;
+    color: #e2b487;
+}
+
+body.dark-mode .status-completed {
+    background-color: #294035;
+    color: #b8d8c7;
+}
+
+
+/* ================================================== */
+/* DARK MODE - GESUNDHEIT FORMULAR                    */
+/* ================================================== */
+
+body.dark-mode .health-form-group label {
+    color: #c9beb6;
+}
+
+body.dark-mode .health-form-group input,
+body.dark-mode .health-form-group select,
+body.dark-mode .health-form-group textarea {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #f2ebe6;
+}
+
+
+/* ================================================== */
+/* DARK MODE - KOMMANDOS UND ENTDECKER                */
+/* ================================================== */
+
+body.dark-mode .discovery-legend-card,
+body.dark-mode .discovery-progress,
+body.dark-mode .discovery-category {
+    background-color: #292521;
+    border-color: #443c36;
+    color: #e9e1db;
+}
+
+body.dark-mode .discovery-legend > div,
+body.dark-mode .discovery-progress-item {
+    background-color: #37312c;
+    color: #e9e1db;
+}
+
+body.dark-mode .discovery-progress-item span {
+    color: #b8aca3;
+}
+
+body.dark-mode .discovery-progress-item strong {
+    color: #f2ebe6;
+}
+
+body.dark-mode .discovery-category-header {
+    background-color: #292521;
+    color: #f2ebe6;
+}
+
+body.dark-mode .discovery-category-header:hover {
+    background-color: #332e29;
+}
+
+body.dark-mode .discovery-category-header h2 {
+    color: #f2ebe6;
+}
+
+body.dark-mode .discovery-category-progress {
+    background-color: #3c3530;
+    color: #c9beb6;
+}
+
+body.dark-mode .discovery-category-content {
+    background-color: #292521;
+    border-color: #443c36;
+}
+
+body.dark-mode .discovery-column-header,
+body.dark-mode .discovery-row {
+    border-color: #443c36;
+    color: #d8cec7;
+}
+
+body.dark-mode .discovery-row:hover {
+    background-color: #332e29;
+}
+
+body.dark-mode .discovery-check-button {
+    background-color: #342f2a;
+    border-color: #5a5048;
+    color: #c9beb6;
+}
+
+body.dark-mode .discovery-check-button:hover {
+    border-color: #d68a4b;
+}
+
+body.dark-mode .discovery-check-button.checked {
+    background-color: #b87333;
+    border-color: #b87333;
+    color: #ffffff;
+}
+
+body.dark-mode .command-description {
+    color: #b8aca3;
+}
+
+
+/* ================================================== */
+/* DARK MODE - ENTDECKER MEILENSTEIN                  */
+/* ================================================== */
+
+body.dark-mode .discovery-milestone {
+    background-color: #37312c;
+    border-color: #55483e;
+    color: #e9e1db;
+}
+
+
+/* ================================================== */
+/* DARK MODE - TAGEBUCH                               */
+/* ================================================== */
+
+body.dark-mode .diary-history {
+    background-color: #292521;
+    border-color: #443c36;
+    color: #e9e1db;
+}
+
+body.dark-mode .diary-item {
+    background-color: #332e29;
+    border-color: #4b423b;
+}
+
+body.dark-mode .diary-item-date {
+    color: #a99d94;
+}
+
+body.dark-mode .diary-item > h3,
+body.dark-mode .diary-item-section h4 {
+    color: #f2ebe6;
+}
+
+body.dark-mode .diary-item-section p {
+    color: #c9beb6;
+}
+
+
+/* ================================================== */
+/* DARK MODE - TAGEBUCH FORMULAR                      */
+/* ================================================== */
+
+body.dark-mode .diary-form-group label {
+    color: #c9beb6;
+}
+
+body.dark-mode .diary-form-group input,
+body.dark-mode .diary-form-group textarea {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #f2ebe6;
+}
+
+body.dark-mode .photo-preview-item {
+    background-color: #37312c;
+}
+
+
+/* ================================================== */
+/* DARK MODE - GALERIE FILTER                         */
+/* ================================================== */
+
+body.dark-mode .gallery-filter-button {
+    background-color: #292521;
+    border-color: #4b423b;
+    color: #ddd3cc;
+}
+
+body.dark-mode .gallery-filter-button:hover {
+    background-color: #37312c;
+    border-color: #b87333;
+}
+
+body.dark-mode .gallery-filter-button.active {
+    background-color: #b87333;
+    border-color: #b87333;
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* DARK MODE - GALERIE KARTEN                         */
+/* ================================================== */
+
+body.dark-mode .gallery-card {
+    background-color: #292521;
+    border-color: #443c36;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.22);
+}
+
+body.dark-mode .gallery-card-image {
+    background-color: #211e1b;
+}
+
+body.dark-mode .gallery-card-info {
+    background-color: #292521;
+    color: #e9e1db;
+}
+
+body.dark-mode .gallery-card-info h3 {
+    color: #f2ebe6;
+}
+
+body.dark-mode .gallery-empty {
+    background-color: #292521;
+    border-color: #443c36;
+    color: #c9beb6;
+}
+
+body.dark-mode .gallery-edit-button,
+body.dark-mode .gallery-delete-button {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #e9e1db;
+}
+
+
+/* ================================================== */
+/* DARK MODE - GALERIE POPUP                          */
+/* ================================================== */
+
+body.dark-mode .gallery-form-content,
+body.dark-mode .gallery-form-buttons {
+    background-color: #292521;
+    border-color: #443c36;
+    color: #e9e1db;
+}
+
+body.dark-mode .gallery-form-header h2 {
+    color: #f2ebe6;
+}
+
+body.dark-mode .gallery-form-group label {
+    color: #c9beb6;
+}
+
+body.dark-mode .gallery-form-group input,
+body.dark-mode .gallery-form-group select,
+body.dark-mode .gallery-form-group textarea {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #f2ebe6;
+}
+
+body.dark-mode .gallery-file-button,
+body.dark-mode .gallery-cancel-button {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #e9e1db;
+}
+
+body.dark-mode .gallery-upload-preview {
+    background-color: #37312c;
+}
+
+
+/* ================================================== */
+/* DARK MODE - GALERIE LIGHTBOX                       */
+/* ================================================== */
+
+body.dark-mode .gallery-lightbox-content,
+body.dark-mode .gallery-lightbox-info {
+    background-color: #292521;
+    color: #e9e1db;
+}
+
+body.dark-mode .gallery-lightbox-info h2 {
+    color: #f2ebe6;
+}
+
+body.dark-mode .gallery-lightbox-date {
+    color: #a99d94;
+}
+
+body.dark-mode .gallery-lightbox-description {
+    color: #c9beb6;
+}
+
+
+/* ================================================== */
+/* DARK MODE - ALLGEMEINE POPUPS                      */
+/* ================================================== */
+
+body.dark-mode .app-modal-content,
+body.dark-mode .app-modal-buttons {
+    background-color: #292521;
+    border-color: #443c36;
+    color: #e9e1db;
+}
+
+body.dark-mode .app-modal-header h2 {
+    color: #f2ebe6;
+}
+
+body.dark-mode .app-cancel-button,
+body.dark-mode .photo-upload-button,
+body.dark-mode #cancel-diary-form {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #e9e1db;
+}
+
+
+/* ================================================== */
+/* DARK MODE - DATEIUPLOAD                            */
+/* ================================================== */
+
+body.dark-mode #diary-photos {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #c9beb6;
+}
+
+body.dark-mode #diary-photos::file-selector-button {
+    background-color: #403832;
+    border-color: #5a5048;
+    color: #e9e1db;
+}
+
+
+/* ================================================== */
+/* DARK MODE - FORMULARE ALLGEMEIN                    */
+/* ================================================== */
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+    color-scheme: dark;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+    color: #93877e;
+}
+
+
+/* ================================================== */
+/* DARK MODE - LINKS                                  */
+/* ================================================== */
+
+body.dark-mode .card-link {
+    color: #d68a4b;
+}
+
+
+/* ================================================== */
+/* DARK MODE - NACH-OBEN-BUTTON                       */
+/* ================================================== */
+
+body.dark-mode .scroll-top-button {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #d68a4b;
+}
+
+
+/* ================================================== */
+/* DARK MODE - SCROLLBARS                             */
+/* ================================================== */
+
+body.dark-mode .app-modal-content::-webkit-scrollbar-track,
+body.dark-mode .gallery-form-content::-webkit-scrollbar-track,
+body.dark-mode .gallery-lightbox-content::-webkit-scrollbar-track {
+    background-color: #292521;
+}
+
+body.dark-mode .app-modal-content::-webkit-scrollbar-thumb,
+body.dark-mode .gallery-form-content::-webkit-scrollbar-thumb,
+body.dark-mode .gallery-lightbox-content::-webkit-scrollbar-thumb {
+    background-color: #5a5048;
+}
+
+
+/* ================================================== */
+/* DARK MODE - GOLDENE HAUPTBOXEN                     */
+/* ================================================== */
+
+/* ================================================== */
+/* DASHBOARD                                          */
+/* ================================================== */
+
+body.dark-mode .dog-profile,
+body.dark-mode .info-card,
+body.dark-mode .dashboard-card {
+
+
+    border: 1px solid #d68a4b;
+}
+
+
+/* ================================================== */
+/* KOMMANDOS UND ENTDECKER                            */
+/* ================================================== */
+
+/* Große Fortschritt-Box */
+body.dark-mode .discovery-progress {
+
+
+    border: 1px solid #d68a4b;
+}
+
+/* Große Kategorien */
+body.dark-mode .discovery-category {
+
+
+    border: 1px solid #d68a4b;
+}
+
+
+/* ================================================== */
+/* ENTWICKLUNG                                        */
+/* ================================================== */
+
+/* Wachstumskurve */
+body.dark-mode .growth-chart-card {
+
+
+    border: 1px solid #d68a4b;
+}
+
+/* Aktueller Stand */
+body.dark-mode .growth-comparison-card {
+
+
+    border: 1px solid #d68a4b;
+}
+
+/* Bisherige Messungen */
+body.dark-mode .measurement-history {
+
+
+    border: 1px solid #d68a4b;
+}
+
+/* Messungsformular */
+body.dark-mode .measurement-card {
+
+
+    border: 1px solid #d68a4b;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN                                         */
+/* ================================================== */
+
+/* Einzelne große Aufgaben */
+body.dark-mode .weekly-task-item {
+
+
+    border: 1px solid #d68a4b;
+}
+
+/* Formular Neue Aufgabe */
+body.dark-mode .weekly-form-card {
+
+
+    border: 1px solid #d68a4b;
+}
+
+
+/* ================================================== */
+/* GESUNDHEIT                                         */
+/* ================================================== */
+
+/* Großer Kalender */
+body.dark-mode .health-calendar-section {
+
+
+    border: 1px solid #d68a4b;
+}
+
+/* Große Termin-Karten */
+body.dark-mode .appointment-item {
+
+
+    border: 1px solid #d68a4b;
+}
+
+/* Terminformular */
+body.dark-mode .health-form-card {
+
+
+    border: 1px solid #d68a4b;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH                                           */
+/* ================================================== */
+
+/* Gesamter Tagebuchbereich */
+body.dark-mode .diary-history {
+
+
+    border: 1px solid #d68a4b;
+}
+
+/* Einzelne große Tagebucheinträge */
+body.dark-mode .diary-item {
+
+
+    border: 1px solid #d68a4b;
+}
+
+
+/* ================================================== */
+/* GALERIE                                            */
+/* ================================================== */
+
+/* Große Bildkarten */
+body.dark-mode .gallery-card {
+
+
+    border: 1px solid #d68a4b;
+}
+
+
+/* ================================================== */
+/* DARK MODE - ENTWICKLUNG TEXTFARBEN                 */
+/* ================================================== */
+
+/* Beschriftungen bei Aktueller Stand */
+body.dark-mode .growth-value-label {
+    color: #c9beb6;
+}
+
+/* Werte bei Aktueller Stand */
+body.dark-mode .growth-value strong {
+    color: #f2ebe6;
+}
+
+/* Erwartetes Endgewicht */
+body.dark-mode .growth-final-weight label {
+    color: #c9beb6;
+}
+
+/* Hinweis unter den Werten */
+body.dark-mode .growth-status {
+    color: #f2ebe6;
+}
+
+/* Tabellenüberschriften */
+body.dark-mode .measurement-table th {
+    color: #f2ebe6;
+}
+
+/* Tabellenwerte */
+body.dark-mode .measurement-table td {
+    color: #d8cec7;
+}
+
+
+/* ================================================== */
+/* DARK MODE - HINZUFÜGEN BUTTONS                     */
+/* ================================================== */
+
+body.dark-mode .gallery-add-button {
+    background-color: #c9782c;
+    border-color: #c9782c;
+    color: #ffffff;
+}
+
+
+/* ================================================== */
+/* DARK MODE - HINZUFÜGEN BUTTONS HOVER               */
+/* ================================================== */
+
+body.dark-mode .gallery-add-button:hover {
+    background-color: #d68a4b;
+    border-color: #d68a4b;
+    color: #ffffff;
 }
 
 

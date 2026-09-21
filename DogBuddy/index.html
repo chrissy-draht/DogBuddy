@@ -24,83 +24,6 @@
 
 
     <!-- ================================================== -->
-    <!-- KOPFBEREICH                                        -->
-    <!-- ================================================== -->
-
-    <header class="header">
-
-
-        <!-- Logo -->
-        <a href="index.html" class="logo-link">
-
-            <img
-                src="images/logo/dogbuddy-logo-full-blank.png"
-                alt="DogBuddy Logo"
-                class="logo"
-            >
-
-        </a>
-
-
-        <!-- Navigation -->
-        <nav class="navigation">
-
-            <a href="index.html" class="active">
-                Dashboard
-            </a>
-
-            <a href="html/tagebuch.html">
-                Tagebuch
-            </a>
-
-
-            <!-- ================================== -->
-            <!-- TRAINING - DROPDOWN                -->
-            <!-- ================================== -->
-                    
-            <div class="nav-dropdown">
-            
-                <span class="nav-dropdown-button">
-                    Training
-                </span>
-            
-                <div class="nav-dropdown-menu">
-                
-                    <a href="html/kommandos.html">
-                        Kommandos
-                    </a>
-                
-                    <a href="html/entdecker.html">
-                        Entdecker-Checkliste
-                    </a>
-                
-                </div>
-            
-            </div>
-
-            <a href="html/entwicklung.html">
-                Entwicklung
-            </a>
-
-            <a href="html/wochenplan.html">
-                Wochenplan
-            </a>
-
-            <a href="html/gesundheit.html">
-                Gesundheit
-            </a>
-
-            <a href="html/galerie.html">
-                Galerie
-            </a>
-
-        </nav>
-
-    </header>
-
-
-
-    <!-- ================================================== -->
     <!-- HAUPTBEREICH                                       -->
     <!-- ================================================== -->
 
@@ -822,7 +745,16 @@
     <!-- DATENSICHERUNG - AUFKLAPPBAR                       -->
     <!-- ================================================== -->
 
+
     <div class="footer-area">
+
+            <!-- ====================================== -->
+            <!-- DOGBUDDY FOOTER-TEXT                   -->
+            <!-- ====================================== -->
+
+            <p class="footer-text">
+                DogBuddy 🐾 Gemeinsam wachsen 🐾
+            </p>
 
         <details class="footer-backup">
 
@@ -868,25 +800,30 @@
 
         </details>
 
-
-        <!-- Immer sichtbarer Footer-Text -->
-        <p class="footer-text">
-            DogBuddy 🐾 Gemeinsam wachsen 🐾
-        </p>
-
     </div>
 
 
-    <!-- ================================================== -->
-    <!-- JAVASCRIPT                                         -->
-    <!-- ================================================== -->
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT                                 -->
+    <!-- ========================================== -->
 
+    <!-- Dashboard -->
     <script src="js/app.js"></script>
 
-    <!-- Datensicherung -->
+    <!-- Gemeinsamer Header -->
+    <script src="js/header.js"></script>
+
+    <!-- Gemeinsamer Footer -->
+    <script src="js/footer.js"></script>
+
+    <!-- Backup-Funktionen -->
     <script src="js/backup.js"></script>
 
+    <!-- Scroll-to-Top -->
     <script src="js/scroll-top.js"></script>
+
+    <!-- Dark Mode -->
+    <script src="js/dark-mode.js"></script>
 
     </body>
 
