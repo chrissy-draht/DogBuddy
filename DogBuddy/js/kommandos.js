@@ -9,6 +9,23 @@
 
 const COMMAND_STORAGE_KEY = "commandChecklist";
 
+console.log("KOMMANDOS.JS NEU GELADEN", new Date().toLocaleTimeString());
+
+
+// ==================================================
+// BEARBEITBARE KOMMANDOS - SPEICHER
+// ==================================================
+
+const COMMAND_CUSTOMIZATION_STORAGE_KEY =
+    "commandCustomizations";
+
+const CUSTOM_COMMANDS_STORAGE_KEY =
+    "customCommands";
+
+const DELETED_COMMANDS_STORAGE_KEY =
+    "deletedCommands";
+
+
 // ==================================================
 // WOCHENPLAN - SPEICHER
 // ==================================================
@@ -784,6 +801,195 @@ const commandCategories = [
 
 
 // ==================================================
+// ANGEPASSTE SIGNALWÖRTER LADEN
+// ==================================================
+
+let commandCustomizations = {};
+
+const savedCommandCustomizations =
+    localStorage.getItem(
+        COMMAND_CUSTOMIZATION_STORAGE_KEY
+    );
+
+if (savedCommandCustomizations !== null) {
+
+    try {
+
+        commandCustomizations =
+            JSON.parse(
+                savedCommandCustomizations
+            );
+
+    } catch (error) {
+
+        commandCustomizations = {};
+
+    }
+
+}
+
+
+// ==================================================
+// EIGENE WUNSCHKOMMANDOS LADEN
+// ==================================================
+
+let customCommands = [];
+
+const savedCustomCommands =
+    localStorage.getItem(
+        CUSTOM_COMMANDS_STORAGE_KEY
+    );
+
+if (savedCustomCommands !== null) {
+
+    try {
+
+        const parsedCustomCommands =
+            JSON.parse(
+                savedCustomCommands
+            );
+
+        if (Array.isArray(parsedCustomCommands)) {
+
+            customCommands =
+                parsedCustomCommands;
+
+        }
+
+    } catch (error) {
+
+        customCommands = [];
+
+    }
+
+}
+
+
+// ==================================================
+// GELÖSCHTE KOMMANDOS LADEN
+// ==================================================
+
+let deletedCommands = [];
+
+const savedDeletedCommands =
+    localStorage.getItem(
+        DELETED_COMMANDS_STORAGE_KEY
+    );
+
+if (savedDeletedCommands !== null) {
+
+    try {
+
+        const parsedDeletedCommands =
+            JSON.parse(
+                savedDeletedCommands
+            );
+
+        if (Array.isArray(parsedDeletedCommands)) {
+
+            deletedCommands =
+                parsedDeletedCommands;
+
+        }
+
+    } catch (error) {
+
+        deletedCommands = [];
+
+    }
+
+}
+
+
+// ==================================================
+// URSPRÜNGLICHE NAMEN MERKEN
+// ==================================================
+
+commandCategories.forEach(
+    function (category) {
+
+        category.commands.forEach(
+            function (command) {
+
+                command.originalName =
+                    command.name;
+
+                const customizationKey =
+                    category.id +
+                    "|" +
+                    command.id;
+
+                // ==================================================
+                // GESPEICHERTE ÄNDERUNGEN ÜBERNEHMEN
+                // ==================================================
+
+                const customization =
+                    commandCustomizations[
+                        customizationKey
+                    ];
+                
+                
+                if (
+                    typeof customization === "string"
+                ) {
+                
+                    // ==================================================
+                    // ALTE SPEICHERUNG
+                    //
+                    // Bereits früher geänderte Signalwörter
+                    // bleiben dadurch weiterhin erhalten.
+                    // ==================================================
+                
+                    command.name =
+                        customization;
+                
+                } else if (
+                    customization &&
+                    typeof customization === "object"
+                ) {
+                
+                    // ==================================================
+                    // NEUE SPEICHERUNG
+                    //
+                    // Signalwort und Notiz werden übernommen.
+                    // ==================================================
+                
+                    command.name =
+                        customization.name ||
+                        command.name;
+                
+                    command.description =
+                        customization.description || "";
+                
+                }
+
+            }
+        );
+
+    }
+);
+
+
+// ==================================================
+// WUNSCHKOMMANDOS ALS ERSTE KATEGORIE
+// ==================================================
+
+const customCommandCategory = {
+
+    id: "wunschkommandos",
+
+    title: "⭐ Wunschkommandos",
+
+    commands: customCommands
+
+};
+
+commandCategories.unshift(
+    customCommandCategory
+);
+
+
+// ==================================================
 // ELEMENTE AUS DEM HTML HOLEN
 // ==================================================
 
@@ -793,6 +999,33 @@ const pageDogName =
 const commandChecklist =
     document.getElementById("command-checklist");
 
+// ==================================================
+// KOMMANDOS - POSITION DES STICKY KATEGORIEKOPFS
+// ==================================================
+
+const commandProgress =
+    document.querySelector(
+        ".discovery-progress"
+    );
+
+function updateCommandStickyPosition() {
+
+    const progressHeight =
+        commandProgress.offsetHeight;
+
+    document.documentElement.style.setProperty(
+        "--command-sticky-top",
+        progressHeight + "px"
+    );
+}
+
+updateCommandStickyPosition();
+
+window.addEventListener(
+    "resize",
+    updateCommandStickyPosition
+);
+
 const progressSeen =
     document.getElementById("progress-seen");
 
@@ -801,6 +1034,81 @@ const progressExperienced =
 
 const progressRelaxed =
     document.getElementById("progress-relaxed");
+
+
+// ==================================================
+// KOMMANDO-EDITOR - ELEMENTE
+// ==================================================
+
+const addCommandButton =
+    document.getElementById(
+        "add-command-button"
+    );
+
+const commandEditorModal =
+    document.getElementById(
+        "command-editor-modal"
+    );
+
+const commandEditorTitle =
+    document.getElementById(
+        "command-editor-title"
+    );
+
+const commandEditorName =
+    document.getElementById(
+        "command-editor-name"
+    );
+
+const commandEditorNoteArea =
+    document.getElementById(
+        "command-editor-note-area"
+    );
+
+const commandEditorNote =
+    document.getElementById(
+        "command-editor-note"
+    );
+
+const commandEditorCancel =
+    document.getElementById(
+        "command-editor-cancel"
+    );
+
+const closeCommandEditorButton =
+    document.getElementById(
+        "close-command-editor"
+    );
+
+const commandEditorDelete =
+    document.getElementById(
+        "command-editor-delete"
+    );
+
+const commandEditorSave =
+    document.getElementById(
+        "command-editor-save"
+    );
+
+
+// ==================================================
+// ÄHNLICHE KOMMANDOS - ELEMENTE
+// ==================================================
+
+const commandSuggestions =
+    document.getElementById(
+        "command-suggestions"
+    );
+
+const commandSuggestionsList =
+    document.getElementById(
+        "command-suggestions-list"
+    );
+
+
+let editedCommand = null;
+let editedCategory = null;
+let editorMode = null;
 
 
 // ==================================================
@@ -931,10 +1239,28 @@ commandCategories.forEach(
         category.commands.forEach(
             function (command) {
 
-                const key =
-                    category.title +
+                // ==================================================
+                // GELÖSCHTE KOMMANDOS ÜBERSPRINGEN
+                // ==================================================
+
+                const deletedCommandId =
+                    category.id +
                     "|" +
-                    command.name;
+                    command.id;
+
+                if (
+                    deletedCommands.includes(
+                        deletedCommandId
+                    )
+                ) {
+                    return;
+                }
+
+                const key =
+                    getCommandStateKey(
+                        category,
+                        command
+                    );
 
                 if (
                     commandState[key] ===
@@ -1145,13 +1471,43 @@ function displayCommandChecklist() {
             // EINZELNE KOMMANDOS
             // ==================================================
 
-            category.commands.forEach(
-                function (command) {
-
-                    const key =
-                        category.title +
+            [...category.commands]
+                .sort(
+                    function (a, b) {
+                    
+                        return a.name.localeCompare(
+                            b.name,
+                            "de",
+                            {
+                                sensitivity: "base"
+                            }
+                        );
+                    
+                    }
+                )
+                .forEach(
+                    function (command) {
+                
+                    const deletedCommandId =
+                        category.id +
                         "|" +
-                        command.name;
+                        command.id;
+                
+                    if (
+                        deletedCommands.includes(
+                            deletedCommandId
+                        )
+                    ) {
+                    
+                        return;
+                    
+                    }
+                
+                    const key =
+                        getCommandStateKey(
+                            category,
+                            command
+                        );
 
 
                     const row =
@@ -1190,6 +1546,37 @@ function displayCommandChecklist() {
                     name.textContent =
                         command.name;
 
+                    name.dataset.commandId =
+                        command.id;
+
+                    name.dataset.categoryId =
+                        category.id;
+
+                    // ==================================================
+                    // KOMMANDO BEARBEITEN
+                    // ==================================================
+
+                    name.classList.add(
+                        "editable-command-name"
+                    );
+
+                    name.title =
+                        "Kommando bearbeiten";
+
+                    name.addEventListener(
+                        "click",
+                        function (event) {
+                        
+                            event.stopPropagation();
+                        
+                            openCommandEditor(
+                                category,
+                                command
+                            );
+                        
+                        }
+                    );
+
 
                     const description =
                         document.createElement(
@@ -1218,41 +1605,63 @@ function displayCommandChecklist() {
 
 
                     // ==================================================
-                    // 👀 KENNENGELERNT
+                    // FORTSCHRITT - 👀 🐾 😌
                     // ==================================================
 
-                    row.appendChild(
+                    const seenButton =
                         createCommandCheckbox(
                             key,
                             "seen",
                             "👀"
-                        )
-                    );
-
-
-                    // ==================================================
-                    // 🐾 SELBST ERLEBT
-                    // ==================================================
-
-                    row.appendChild(
+                        );
+                    
+                    const experiencedButton =
                         createCommandCheckbox(
                             key,
                             "experienced",
                             "🐾"
-                        )
-                    );
-
-
-                    // ==================================================
-                    // 😌 ENTSPANNT DABEI
-                    // ==================================================
-
-                    row.appendChild(
+                        );
+                    
+                    const relaxedButton =
                         createCommandCheckbox(
                             key,
                             "relaxed",
                             "😌"
-                        )
+                        );
+                    
+                    
+                    // Die drei Buttons gehören zusammen.
+                    // Dadurch können bei einem Klick alle drei
+                    // aktualisiert werden, ohne die Kategorie
+                    // neu aufzubauen.
+                    
+                    const progressButtons = {
+                        seen: seenButton,
+                        experienced: experiencedButton,
+                        relaxed: relaxedButton
+                    };
+
+
+                    seenButton.progressButtons =
+                        progressButtons;
+
+                    experiencedButton.progressButtons =
+                        progressButtons;
+
+                    relaxedButton.progressButtons =
+                        progressButtons;
+
+
+                    row.appendChild(
+                        seenButton
+                    );
+
+                    row.appendChild(
+                        experiencedButton
+                    );
+
+                    row.appendChild(
+                        relaxedButton
                     );
 
 
@@ -1341,14 +1750,20 @@ function createCommandCheckbox(
     );
 
 
-    // Für Screenreader
+    // ==================================================
+    // FÜR SCREENREADER
+    // ==================================================
+
     button.setAttribute(
         "aria-label",
         emoji
     );
 
 
-    // Aktuellen Zustand anzeigen
+    // ==================================================
+    // AKTUELLEN ZUSTAND ANZEIGEN
+    // ==================================================
+
     updateCommandButton(
         button,
         commandState[key][type]
@@ -1366,29 +1781,251 @@ function createCommandCheckbox(
             event.stopPropagation();
 
 
-            commandState[key][type] =
-                !commandState[key][type];
+            // ==================================================
+            // 👀 GESEHEN
+            // ==================================================
+
+            if (type === "seen") {
+
+                if (
+                    commandState[key].seen ===
+                    true
+                ) {
+
+                    commandState[key].seen =
+                        false;
+
+                    commandState[key].experienced =
+                        false;
+
+                    commandState[key].relaxed =
+                        false;
+
+                } else {
+
+                    commandState[key].seen =
+                        true;
+                }
+            }
 
 
-            updateCommandButton(
-                button,
-                commandState[key][type]
-            );
+            // ==================================================
+            // 🐾 SELBST ERLEBT
+            // ==================================================
 
+            else if (
+                type === "experienced"
+            ) {
+
+                if (
+                    commandState[key].experienced ===
+                    true
+                ) {
+
+                    commandState[key].experienced =
+                        false;
+
+                    commandState[key].relaxed =
+                        false;
+
+                } else {
+
+                    commandState[key].seen =
+                        true;
+
+                    commandState[key].experienced =
+                        true;
+                }
+            }
+
+
+            // ==================================================
+            // 😌 ENTSPANNT DABEI
+            // ==================================================
+
+            else if (
+                type === "relaxed"
+            ) {
+
+                if (
+                    commandState[key].relaxed ===
+                    true
+                ) {
+
+                    commandState[key].relaxed =
+                        false;
+
+                } else {
+
+                    commandState[key].seen =
+                        true;
+
+                    commandState[key].experienced =
+                        true;
+
+                    commandState[key].relaxed =
+                        true;
+                }
+            }
+
+
+            // ==================================================
+            // SPEICHERN
+            // ==================================================
 
             saveCommandState();
 
+
+            // ==================================================
+            // NUR DIE DREI BUTTONS AKTUALISIEREN
+            // ==================================================
+
+            if (button.progressButtons) {
+
+                updateCommandButton(
+                    button.progressButtons.seen,
+                    commandState[key].seen
+                );
+
+                updateCommandButton(
+                    button.progressButtons.experienced,
+                    commandState[key].experienced
+                );
+
+                updateCommandButton(
+                    button.progressButtons.relaxed,
+                    commandState[key].relaxed
+                );
+            }
+
+
+            // ==================================================
+            // FORTSCHRITT AKTUALISIEREN
+            // ==================================================
+
             updateCommandProgress();
 
-            updateCommandCategoryProgressTexts();
 
+            // ==================================================
+            // FORTSCHRITT FÜR ERFOLGE ERMITTELN
+            //
+            // Die Erfolgsprüfung wird nach jeder Änderung
+            // eines Fortschrittshakens ausgeführt.
+            //
+            // Das ist wichtig, weil beim Entfernen von 👀 oder 🐾
+            // auch 😌 automatisch entfernt werden kann.
+            //
+            // Für die Erfolge werden nur aktuell vorhandene
+            // Kommandos gezählt.
+            // Gelöschte Kommandos werden nicht berücksichtigt.
+            // ==================================================
+
+            let relaxedCount = 0;
+            let totalCount = 0;
+
+            commandCategories.forEach(
+                function (category) {
+                
+                    category.commands.forEach(
+                        function (command) {
+                        
+                            const deletedCommandId =
+                                category.id +
+                                "|" +
+                                command.id;
+                        
+                        
+                            // ==================================================
+                            // GELÖSCHTE KOMMANDOS ÜBERSPRINGEN
+                            // ==================================================
+                        
+                            if (
+                                deletedCommands.includes(
+                                    deletedCommandId
+                                )
+                            ) {
+                            
+                                return;
+                            
+                            }
+                        
+                        
+                            // ==================================================
+                            // FORTSCHRITTSSCHLÜSSEL HOLEN
+                            // ==================================================
+                        
+                            const commandKey =
+                                getCommandStateKey(
+                                    category,
+                                    command
+                                );
+                            
+                            
+                            // ==================================================
+                            // NUR VORHANDENE KOMMANDOS ZÄHLEN
+                            // ==================================================
+                            
+                            if (
+                                commandState[
+                                    commandKey
+                                ] === undefined
+                            ) {
+                            
+                                return;
+                            
+                            }
+                        
+                        
+                            // ==================================================
+                            // GESAMTMENGE ERHÖHEN
+                            // ==================================================
+                        
+                            totalCount++;
+                        
+                        
+                            // ==================================================
+                            // 😌 ENTSPANNT DABEI ZÄHLEN
+                            // ==================================================
+                        
+                            if (
+                                commandState[
+                                    commandKey
+                                ].relaxed === true
+                            ) {
+                            
+                                relaxedCount++;
+                            
+                            }
+                        
+                        }
+                    );
+                
+                }
+            );
+
+
+            // ==================================================
+            // KOMMANDO-ACHIEVEMENT PRÜFEN
+            // ==================================================
+
+            checkCommandAchievement(
+                relaxedCount,
+                totalCount
+            );
+
+
+            // ==================================================
+            // KATEGORIE-FORTSCHRITT AKTUALISIEREN
+            // ==================================================
+
+            updateCommandCategoryProgressTexts();
         }
     );
 
 
     return button;
-
 }
+
 
 // ==================================================
 // WOCHENPLAN-BUTTON ERSTELLEN
@@ -1506,24 +2143,28 @@ function createWeeklyCommandButton(
 
                 weeklySelections.commands.push(
                     {
-
+                    
                         id: weeklyId,
-
+                    
                         commandId:
                             command.id,
-
+                    
                         categoryId:
                             category.id,
-
+                    
                         category:
                             category.title,
-
+                    
+                        originalName:
+                            command.originalName ||
+                            command.name,
+                    
                         name:
                             command.name,
-
+                    
                         description:
                             command.description
-
+                    
                     }
                 );
 
@@ -1674,22 +2315,25 @@ function syncCommandWithWeeklyTasks(
                     id:
                         Date.now() +
                         Math.random(),
-
+                
                     category:
                         "Kommando",
-
+                
+                    sourceCategory:
+                        category.title || "",
+                
                     title:
                         command.name,
-
+                
                     note:
                         command.description || "",
-
+                
                     completed:
                         false,
-
+                
                     source:
                         "command",
-
+                
                     sourceId:
                         weeklyId
                 }
@@ -1796,6 +2440,10 @@ function saveCommandState() {
 
 function updateCommandProgress() {
 
+    // ==================================================
+    // ZÄHLER VORBEREITEN
+    // ==================================================
+
     let total = 0;
 
     let seen = 0;
@@ -1805,39 +2453,133 @@ function updateCommandProgress() {
     let relaxed = 0;
 
 
-    Object.values(
-        commandState
-    ).forEach(
-        function (state) {
+    // ==================================================
+    // ALLE AKTUELL VORHANDENEN KOMMANDOS DURCHGEHEN
+    // ==================================================
 
-            total++;
+    commandCategories.forEach(
+        function (category) {
 
-
-            if (state.seen === true) {
-
-                seen++;
-
-            }
+            category.commands.forEach(
+                function (command) {
 
 
-            if (
-                state.experienced === true
-            ) {
+                    // ==================================================
+                    // EINDEUTIGE ID DES KOMMANDOS ERSTELLEN
+                    // ==================================================
 
-                experienced++;
+                    const deletedCommandId =
+                        category.id +
+                        "|" +
+                        command.id;
 
-            }
+
+                    // ==================================================
+                    // GELÖSCHTE KOMMANDOS NICHT MITZÄHLEN
+                    // ==================================================
+
+                    if (
+                        deletedCommands.includes(
+                            deletedCommandId
+                        )
+                    ) {
+
+                        return;
+
+                    }
 
 
-            if (
-                state.relaxed === true
-            ) {
+                    // ==================================================
+                    // FORTSCHRITTSSCHLÜSSEL DES KOMMANDOS HOLEN
+                    // ==================================================
 
-                relaxed++;
+                    const key =
+                        getCommandStateKey(
+                            category,
+                            command
+                        );
 
-            }
+
+                    // ==================================================
+                    // NUR KOMMANDOS MIT FORTSCHRITTSSTATUS ZÄHLEN
+                    // ==================================================
+
+                    if (
+                        commandState[key] ===
+                        undefined
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    // ==================================================
+                    // KOMMANDO ZÄHLT ZUR GESAMTMENGE
+                    // ==================================================
+
+                    total++;
+
+
+                    // ==================================================
+                    // 👀 GESEHEN
+                    // ==================================================
+
+                    if (
+                        commandState[key].seen ===
+                        true
+                    ) {
+
+                        seen++;
+
+                    }
+
+
+                    // ==================================================
+                    // 🐾 SELBST ERLEBT
+                    // ==================================================
+
+                    if (
+                        commandState[key].experienced ===
+                        true
+                    ) {
+
+                        experienced++;
+
+                    }
+
+
+                    // ==================================================
+                    // 😌 ENTSPANNT DABEI
+                    // ==================================================
+
+                    if (
+                        commandState[key].relaxed ===
+                        true
+                    ) {
+
+                        relaxed++;
+
+                    }
+
+                }
+            );
 
         }
+    );
+
+    // ==================================================
+    // AKTUELLE KOMMANDO-GESAMTZAHL SPEICHERN
+    //
+    // Der Wochenplan kennt die vollständige
+    // Kommandoliste nicht.
+    // Deshalb wird die hier korrekt berechnete
+    // Gesamtzahl für den Wochenplan gespeichert.
+    // ==================================================
+
+    localStorage.setItem(
+        "commandTotalCount",
+        total
     );
 
 
@@ -1869,7 +2611,7 @@ function updateCommandProgress() {
     // ==================================================
 
     progressSeen.textContent =
-        "👀 Kennengelernt: " +
+        "👀 Gesehen: " +
         seenPercent +
         " %";
 
@@ -1904,7 +2646,7 @@ function calculateCommandPercent(
     }
 
 
-    return Math.round(
+    return Math.floor(
         value / total * 100
     );
 
@@ -1919,17 +2661,67 @@ function getCommandCategoryProgress(
     category
 ) {
 
-    let relaxedCount = 0;
+    // ==================================================
+    // ZÄHLER VORBEREITEN
+    // ==================================================
 
+    let relaxedCount = 0;
+    let totalCount = 0;
+
+
+    // ==================================================
+    // ALLE KOMMANDOS DER KATEGORIE DURCHGEHEN
+    // ==================================================
 
     category.commands.forEach(
         function (command) {
 
-            const key =
-                category.title +
-                "|" +
-                command.name;
+            // ==================================================
+            // EINDEUTIGE ID DES KOMMANDOS ERSTELLEN
+            // ==================================================
 
+            const deletedCommandId =
+                category.id +
+                "|" +
+                command.id;
+
+
+            // ==================================================
+            // GELÖSCHTE KOMMANDOS NICHT MITZÄHLEN
+            // ==================================================
+
+            if (
+                deletedCommands.includes(
+                    deletedCommandId
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            // ==================================================
+            // KOMMANDO ZÄHLT ZUR GESAMTMENGE
+            // ==================================================
+
+            totalCount++;
+
+
+            // ==================================================
+            // FORTSCHRITTSSCHLÜSSEL HOLEN
+            // ==================================================
+
+            const key =
+                getCommandStateKey(
+                    category,
+                    command
+                );
+
+
+            // ==================================================
+            // "ENTSPANNT DABEI" ZÄHLEN
+            // ==================================================
 
             if (
                 commandState[key] &&
@@ -1944,10 +2736,17 @@ function getCommandCategoryProgress(
     );
 
 
+    // ==================================================
+    // ANZEIGE ZURÜCKGEBEN
+    //
+    // Beispiel:
+    // 12 / 80
+    // ==================================================
+
     return (
         relaxedCount +
         " / " +
-        category.commands.length
+        totalCount
     );
 
 }
@@ -1981,6 +2780,1753 @@ function updateCommandCategoryProgressTexts() {
                     getCommandCategoryProgress(
                         category
                     );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ==================================================
+// KOMMANDO - STABILER FORTSCHRITTS-SCHLÜSSEL
+// ==================================================
+
+function getCommandStateKey(
+    category,
+    command
+) {
+
+    if (
+        category.id === "wunschkommandos"
+    ) {
+
+        return (
+            category.title +
+            "|" +
+            command.id
+        );
+
+    }
+
+    return (
+        category.title +
+        "|" +
+        (
+            command.originalName ||
+            command.name
+        )
+    );
+
+}
+
+
+// ==================================================
+// KOMMANDO-EDITOR ÖFFNEN
+// ==================================================
+
+function openCommandEditor(
+    category,
+    command
+) {
+
+    if (
+        !commandEditorModal ||
+        !commandEditorName ||
+        !commandEditorTitle
+    ) {
+
+        return;
+
+    }
+
+    editedCategory =
+        category;
+
+    editedCommand =
+        command;
+
+    editorMode =
+        category.id === "wunschkommandos"
+            ? "custom"
+            : "existing";
+
+
+    commandEditorTitle.textContent =
+        editorMode === "custom"
+            ? "Wunschkommando bearbeiten"
+            : "Signalwort bearbeiten";
+
+    commandEditorSave.textContent =
+        "Ändern";
+
+
+    commandEditorName.value =
+        command.name;
+
+
+    // ==================================================
+    // VORHANDENES KOMMANDO
+    // ==================================================
+    
+    if (editorMode === "existing") {
+    
+        commandEditorNoteArea.hidden =
+            false;
+    
+        commandEditorNote.value =
+            command.description || "";
+    
+        commandEditorDelete.hidden =
+            false;
+    
+    }
+    
+
+    // ==================================================
+    // EIGENES WUNSCHKOMMANDO
+    // ==================================================
+
+    else {
+
+        commandEditorNoteArea.hidden =
+            false;
+
+        commandEditorNote.value =
+            command.description || "";
+
+            displayCommandSuggestions();
+
+        commandEditorDelete.hidden =
+            false;
+
+    }
+
+
+    commandEditorModal.classList.add(
+        "show"
+    );
+
+    commandEditorName.focus();
+
+}
+
+
+// ==================================================
+// NEUES WUNSCHKOMMANDO
+// ==================================================
+
+function openNewCommandEditor() {
+
+    editedCategory =
+        customCommandCategory;
+
+    editedCommand =
+        null;
+
+    editorMode =
+        "new";
+
+
+    commandEditorTitle.textContent =
+        "Kommando hinzufügen";
+
+    commandEditorSave.textContent =
+        "🐾 Speichern";
+
+    commandEditorName.value =
+        "";
+
+    commandEditorNote.value =
+        "";
+        if (
+            commandSuggestions &&
+            commandSuggestionsList
+        ) {
+
+        
+    commandSuggestions.hidden =
+        true;
+
+    commandSuggestionsList.innerHTML =
+        "";
+}
+
+    commandEditorNoteArea.hidden =
+        false;
+
+    commandEditorDelete.hidden =
+        true;
+
+
+    commandEditorModal.classList.add(
+        "show"
+    );
+
+    commandEditorName.focus();
+
+}
+
+
+// ==================================================
+// EDITOR SCHLIESSEN
+// ==================================================
+
+function closeCommandEditor() {
+
+    commandEditorModal.classList.remove(
+        "show"
+    );
+
+    editedCategory =
+        null;
+
+    editedCommand =
+        null;
+
+    editorMode =
+        null;
+
+}
+
+
+// ==================================================
+// KOMMANDO SPEICHERN
+// ==================================================
+
+function saveCommandEditor() {
+
+    const wasNewCommand =
+        editorMode === "new";
+
+    const newName =
+        commandEditorName.value.trim();
+
+    const newNote =
+        commandEditorNote.value.trim();
+
+
+    if (newName === "") {
+
+        alert(
+            "Bitte gib ein Signalwort ein."
+        );
+
+        return;
+
+    }
+
+
+    // ==================================================
+    // NEUES WUNSCHKOMMANDO
+    // ==================================================
+
+    if (editorMode === "new") {
+
+        const newCommand = {
+
+            id:
+                "custom-" +
+                Date.now(),
+
+            name:
+                newName,
+
+            description:
+                newNote
+
+        };
+
+
+        customCommands.push(
+            newCommand
+        );
+
+
+        customCommandCategory.commands =
+            customCommands;
+
+
+        const stateKey =
+            getCommandStateKey(
+                customCommandCategory,
+                newCommand
+            );
+
+
+        commandState[stateKey] = {
+
+            seen: false,
+            experienced: false,
+            relaxed: false
+
+        };
+
+
+        saveCustomCommands();
+
+        saveCommandState();
+
+        
+
+    }
+
+
+    // ==================================================
+    // VORHANDENES KOMMANDO UMBENENNEN
+    // ==================================================
+
+    else if (
+        editorMode === "existing" &&
+        editedCommand &&
+        editedCategory
+    ) {
+
+        const customizationKey =
+            editedCategory.id +
+            "|" +
+            editedCommand.id;
+
+
+        // ==================================================
+        // SIGNALWORT UND NOTIZ SPEICHERN
+        // ==================================================
+
+        commandCustomizations[
+            customizationKey
+        ] = {
+            name: newName,
+            description: newNote
+        };
+
+
+        // ==================================================
+        // KOMMANDO DIREKT AKTUALISIEREN
+        // ==================================================
+
+        editedCommand.name =
+            newName;
+
+        editedCommand.description =
+            newNote;
+
+
+        // ==================================================
+        // ÄNDERUNGEN SPEICHERN
+        // ==================================================
+
+        saveCommandCustomizations();
+
+
+        // ==================================================
+        // WOCHENPLAN EBENFALLS AKTUALISIEREN
+        // ==================================================
+
+        updateOpenWeeklyCommandName(
+            editedCategory,
+            editedCommand
+        );
+
+    }
+
+
+    // ==================================================
+    // WUNSCHKOMMANDO BEARBEITEN
+    // ==================================================
+
+    else if (
+        editorMode === "custom" &&
+        editedCommand
+    ) {
+
+        editedCommand.name =
+            newName;
+
+        editedCommand.description =
+            newNote;
+
+
+        saveCustomCommands();
+
+        updateOpenWeeklyCommandName(
+            customCommandCategory,
+            editedCommand
+        );
+
+    }
+
+    // ==================================================
+    // SICHTBARES KOMMANDO DIREKT AKTUALISIEREN
+    // ==================================================
+
+    if (
+        editedCommand &&
+        editedCategory
+    ) {
+
+        const commandNameElement =
+            document.querySelector(
+                '[data-command-id="' +
+                editedCommand.id +
+                '"][data-category-id="' +
+                editedCategory.id +
+                '"]'
+            );
+
+
+        if (commandNameElement) {
+
+            // ==================================================
+            // SIGNALWORT DIREKT AKTUALISIEREN
+            // ==================================================
+
+            commandNameElement.textContent =
+                editedCommand.name;
+
+
+            // ==================================================
+            // ZUGEHÖRIGE NOTIZ DIREKT AKTUALISIEREN
+            // ==================================================
+
+            const commandRow =
+                commandNameElement.closest(
+                    ".discovery-row"
+                );
+
+            if (commandRow) {
+
+                const descriptionElement =
+                    commandRow.querySelector(
+                        ".command-description"
+                    );
+
+                if (descriptionElement) {
+
+                    descriptionElement.textContent =
+                        editedCommand.description || "";
+
+                }
+
+            }
+
+        }
+
+    }
+
+    // ==================================================
+    // ERFOLGSSTAND NACH NEUEM WUNSCHKOMMANDO
+    // AKTUALISIEREN
+    // ==================================================
+
+    if (wasNewCommand === true) {
+
+        let relaxedCount = 0;
+        let totalCount = 0;
+
+        commandCategories.forEach(
+            function (category) {
+
+                category.commands.forEach(
+                    function (command) {
+
+                        const deletedCommandId =
+                            category.id +
+                            "|" +
+                            command.id;
+
+                        if (
+                            deletedCommands.includes(
+                                deletedCommandId
+                            )
+                        ) {
+                            return;
+                        }
+
+                        const commandKey =
+                            getCommandStateKey(
+                                category,
+                                command
+                            );
+
+                        if (
+                            commandState[
+                                commandKey
+                            ] === undefined
+                        ) {
+                            return;
+                        }
+
+                        totalCount++;
+
+                        if (
+                            commandState[
+                                commandKey
+                            ].relaxed === true
+                        ) {
+                            relaxedCount++;
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+        // ==================================================
+        // KOMMANDO-ACHIEVEMENT PRÜFEN
+        // ==================================================
+
+        checkCommandAchievement(
+            relaxedCount,
+            totalCount
+        );
+
+    }
+
+    // ==================================================
+    // NEUES WUNSCHKOMMANDO DIREKT ANZEIGEN
+    // ==================================================
+
+    if (wasNewCommand === true) {
+
+        displayCommandChecklist();
+
+        const customCategoryCard =
+            commandChecklist.querySelector(
+                ".discovery-category"
+            );
+
+        if (customCategoryCard) {
+
+            customCategoryCard.classList.add(
+                "open"
+            );
+
+        }
+
+    }
+
+    // ==================================================
+    // EDITOR SCHLIESSEN
+    // ==================================================
+
+    closeCommandEditor();
+
+    }
+
+
+// ==================================================
+// VORHANDENES KOMMANDO LÖSCHEN
+// ==================================================
+
+function deleteExistingCommand() {
+
+    // ==================================================
+    // PRÜFEN, OB WIRKLICH EIN FESTES KOMMANDO
+    // BEARBEITET WIRD
+    // ==================================================
+
+    if (
+        editorMode !== "existing" ||
+        !editedCommand ||
+        !editedCategory
+    ) {
+
+        return;
+
+    }
+
+
+    // ==================================================
+    // SICHERHEITSABFRAGE VOR DEM LÖSCHEN
+    // ==================================================
+
+    const shouldDelete =
+        confirm(
+            "Dieses Kommando wirklich löschen?"
+        );
+
+    if (shouldDelete === false) {
+
+        return;
+
+    }
+
+
+    // ==================================================
+    // EINDEUTIGE ID DES KOMMANDOS ERSTELLEN
+    //
+    // Beispiel:
+    // tricks|peng
+    // ==================================================
+
+    const deletedCommandId =
+        editedCategory.id +
+        "|" +
+        editedCommand.id;
+
+
+    // ==================================================
+    // KOMMANDO ZUR LISTE DER GELÖSCHTEN
+    // KOMMANDOS HINZUFÜGEN
+    // ==================================================
+
+    deletedCommands.push(
+        deletedCommandId
+    );
+
+
+    // ==================================================
+    // GELÖSCHTE KOMMANDOS IM LOCALSTORAGE SPEICHERN
+    // ==================================================
+
+    saveDeletedCommands();
+
+
+    // ==================================================
+    // PASSENDEN SCHLÜSSEL FÜR DEN FORTSCHRITT HOLEN
+    // ==================================================
+
+    const stateKey =
+        getCommandStateKey(
+            editedCategory,
+            editedCommand
+        );
+
+
+    // ==================================================
+    // FORTSCHRITT DES GELÖSCHTEN KOMMANDOS ENTFERNEN
+    //
+    // Dadurch zählt das Kommando nicht mehr bei
+    // Gesehen, Selbst erlebt und Entspannt dabei mit.
+    // ==================================================
+
+    delete commandState[
+        stateKey
+    ];
+
+
+    // ==================================================
+    // NEUEN KOMMANDO-FORTSCHRITT SPEICHERN
+    // ==================================================
+
+    saveCommandState();
+
+
+    // ==================================================
+    // KOMMANDO AUS DEM WOCHENPLAN ENTFERNEN
+    // ==================================================
+
+    const weeklyId =
+        editedCategory.id +
+        "|" +
+        editedCommand.id;
+
+
+    // Auswahl für "Diese Woche" entfernen.
+
+    weeklySelections.commands =
+        weeklySelections.commands.filter(
+            function (entry) {
+
+                return (
+                    entry.id !==
+                    weeklyId
+                );
+
+            }
+        );
+
+    saveWeeklySelections();
+
+
+    // Auch eine noch offene Aufgabe im Wochenplan
+    // entfernen.
+
+    syncCommandWithWeeklyTasks(
+        weeklyId,
+        editedCategory,
+        editedCommand,
+        false
+    );
+
+
+    // ==================================================
+    // BEARBEITUNGSFENSTER SCHLIESSEN
+    // ==================================================
+
+    closeCommandEditor();
+
+
+    // ==================================================
+    // KOMMANDOLISTE NEU AUFBAUEN
+    //
+    // Das gelöschte Kommando verschwindet dadurch
+    // direkt aus der sichtbaren Liste.
+    // Der angezeigte Fortschritt wird ebenfalls
+    // neu berechnet.
+    // ==================================================
+
+    displayCommandChecklist();
+
+
+    // ==================================================
+    // ERFOLGSSTAND NACH GELÖSCHTEM KOMMANDO
+    // AKTUALISIEREN
+    //
+    // Es werden nur Kommandos gezählt,
+    // die aktuell noch vorhanden sind.
+    // Gelöschte Kommandos zählen nicht mehr mit.
+    // ==================================================
+
+    let relaxed = 0;
+    let total = 0;
+
+    commandCategories.forEach(
+        function (category) {
+
+            category.commands.forEach(
+                function (command) {
+
+                    const deletedCommandId =
+                        category.id +
+                        "|" +
+                        command.id;
+
+                    if (
+                        deletedCommands.includes(
+                            deletedCommandId
+                        )
+                    ) {
+                        return;
+                    }
+
+                    const commandKey =
+                        getCommandStateKey(
+                            category,
+                            command
+                        );
+
+                    if (
+                        commandState[
+                            commandKey
+                        ] === undefined
+                    ) {
+                        return;
+                    }
+
+                    total++;
+
+                    if (
+                        commandState[
+                            commandKey
+                        ].relaxed === true
+                    ) {
+                        relaxed++;
+                    }
+
+                }
+            );
+
+        }
+    );
+
+    // ==================================================
+    // KOMMANDO-ACHIEVEMENT PRÜFEN
+    // ==================================================
+    
+    checkCommandAchievement(
+        relaxed,
+        total
+    );
+
+}
+
+
+// ==================================================
+// WUNSCHKOMMANDO LÖSCHEN
+// ==================================================
+
+function deleteCustomCommand() {
+
+    if (
+        editorMode !== "custom" ||
+        !editedCommand
+    ) {
+
+        return;
+
+    }
+
+
+    const shouldDelete =
+        confirm(
+            "Dieses Wunschkommando wirklich löschen?"
+        );
+
+
+    if (shouldDelete === false) {
+
+        return;
+
+    }
+
+
+    const weeklyId =
+        customCommandCategory.id +
+        "|" +
+        editedCommand.id;
+
+    const stateKey =
+        getCommandStateKey(
+            customCommandCategory,
+            editedCommand
+        );
+
+
+    customCommands =
+        customCommands.filter(
+            function (command) {
+
+                return (
+                    command.id !==
+                    editedCommand.id
+                );
+
+            }
+        );
+
+
+    customCommandCategory.commands =
+        customCommands;
+
+
+    delete commandState[
+        stateKey
+    ];
+
+
+    // ==================================================
+    // WOCHENAUSWAHL ENTFERNEN
+    // ==================================================
+
+    weeklySelections.commands =
+        weeklySelections.commands.filter(
+            function (entry) {
+
+                return (
+                    entry.id !==
+                    weeklyId
+                );
+
+            }
+        );
+
+
+    // ==================================================
+    // OFFENE WOCHENAUFGABE ENTFERNEN
+    // ==================================================
+
+    const savedWeeklyTasks =
+        localStorage.getItem(
+            WEEKLY_TASK_STORAGE_KEY
+        );
+
+    let weeklyTasks = [];
+
+
+    if (savedWeeklyTasks !== null) {
+
+        try {
+
+            weeklyTasks =
+                JSON.parse(
+                    savedWeeklyTasks
+                );
+
+        } catch (error) {
+
+            weeklyTasks = [];
+
+        }
+
+    }
+
+
+    weeklyTasks =
+        weeklyTasks.filter(
+            function (task) {
+
+                return !(
+                    task.source === "command" &&
+                    task.sourceId === weeklyId &&
+                    task.completed === false
+                );
+
+            }
+        );
+
+
+    localStorage.setItem(
+        WEEKLY_TASK_STORAGE_KEY,
+        JSON.stringify(
+            weeklyTasks
+        )
+    );
+
+
+    saveCustomCommands();
+
+    saveCommandState();
+
+    saveWeeklySelections();
+
+    closeCommandEditor();
+
+    displayCommandChecklist();
+
+    // ==================================================
+    // ERFOLGSSTAND NACH GELÖSCHTEM WUNSCHKOMMANDO
+    // AKTUALISIEREN
+    // ==================================================
+
+    let relaxedCount = 0;
+    let totalCount = 0;
+
+    commandCategories.forEach(
+        function (category) {
+
+            category.commands.forEach(
+                function (command) {
+
+                    const deletedCommandId =
+                        category.id +
+                        "|" +
+                        command.id;
+
+                    if (
+                        deletedCommands.includes(
+                            deletedCommandId
+                        )
+                    ) {
+                        return;
+                    }
+
+                    const commandKey =
+                        getCommandStateKey(
+                            category,
+                            command
+                        );
+
+                    if (
+                        commandState[
+                            commandKey
+                        ] === undefined
+                    ) {
+                        return;
+                    }
+
+                    totalCount++;
+
+                    if (
+                        commandState[
+                            commandKey
+                        ].relaxed === true
+                    ) {
+                        relaxedCount++;
+                    }
+
+                }
+            );
+
+        }
+    );
+
+    // ==================================================
+    // KOMMANDO-ACHIEVEMENT PRÜFEN
+    // ==================================================
+
+    checkCommandAchievement(
+        relaxedCount,
+        totalCount
+    );
+
+}
+
+
+// ==================================================
+// GELÖSCHTE KOMMANDOS SPEICHERN
+// ==================================================
+
+function saveDeletedCommands() {
+
+    localStorage.setItem(
+        DELETED_COMMANDS_STORAGE_KEY,
+        JSON.stringify(
+            deletedCommands
+        )
+    );
+
+}
+
+
+// ==================================================
+// ANGEPASSTE SIGNALWÖRTER SPEICHERN
+// ==================================================
+
+function saveCommandCustomizations() {
+
+    localStorage.setItem(
+        COMMAND_CUSTOMIZATION_STORAGE_KEY,
+        JSON.stringify(
+            commandCustomizations
+        )
+    );
+
+}
+
+
+// ==================================================
+// WUNSCHKOMMANDOS SPEICHERN
+// ==================================================
+
+function saveCustomCommands() {
+
+    localStorage.setItem(
+        CUSTOM_COMMANDS_STORAGE_KEY,
+        JSON.stringify(
+            customCommands
+        )
+    );
+
+}
+
+
+// ==================================================
+// WOCHENPLAN NACH UMBENENNEN AKTUALISIEREN
+// ==================================================
+
+function updateOpenWeeklyCommandName(
+    category,
+    command
+) {
+
+    const weeklyId =
+        category.id +
+        "|" +
+        command.id;
+
+
+    const weeklyEntry =
+        weeklySelections.commands.find(
+            function (entry) {
+
+                return (
+                    entry.id ===
+                    weeklyId
+                );
+
+            }
+        );
+
+
+    if (weeklyEntry) {
+
+        weeklyEntry.name =
+            command.name;
+
+        weeklyEntry.description =
+            command.description;
+
+        saveWeeklySelections();
+
+    }
+
+
+    const savedWeeklyTasks =
+        localStorage.getItem(
+            WEEKLY_TASK_STORAGE_KEY
+        );
+
+
+    if (savedWeeklyTasks === null) {
+
+        return;
+
+    }
+
+
+    let weeklyTasks = [];
+
+
+    try {
+
+        weeklyTasks =
+            JSON.parse(
+                savedWeeklyTasks
+            );
+
+    } catch (error) {
+
+        return;
+
+    }
+
+
+    weeklyTasks.forEach(
+        function (task) {
+
+            if (
+                task.source === "command" &&
+                task.sourceId === weeklyId &&
+                task.completed === false
+            ) {
+
+                task.title =
+                    command.name;
+
+                task.note =
+                    command.description || "";
+
+            }
+
+        }
+    );
+
+
+    localStorage.setItem(
+        WEEKLY_TASK_STORAGE_KEY,
+        JSON.stringify(
+            weeklyTasks
+        )
+    );
+
+}
+
+
+// ==================================================
+// ÄHNLICHE KOMMANDOS SUCHEN
+// ==================================================
+
+function normalizeCommandText(text) {
+
+    return String(text || "")
+        .toLowerCase()
+        .trim()
+        .replace(/[.,!?;:()[\]{}"'/-]/g, " ")
+        .replace(/\s+/g, " ");
+}
+
+
+// ==================================================
+// ÄHNLICHKEIT PRÜFEN
+// ==================================================
+
+function commandTextsAreSimilar(
+    searchText,
+    existingText
+) {
+
+    const normalizedSearch =
+        normalizeCommandText(
+            searchText
+        );
+
+    const normalizedExisting =
+        normalizeCommandText(
+            existingText
+        );
+
+
+    if (
+        normalizedSearch.length < 3 ||
+        normalizedExisting.length < 3
+    ) {
+
+        return false;
+    }
+
+
+    // ==================================================
+    // GENAUER ODER TEILWEISER TREFFER
+    // ==================================================
+
+    if (
+        normalizedSearch ===
+            normalizedExisting ||
+        normalizedExisting.includes(
+            normalizedSearch
+        ) ||
+        normalizedSearch.includes(
+            normalizedExisting
+        )
+    ) {
+
+        return true;
+    }
+
+
+    // ==================================================
+    // GEMEINSAME WÖRTER
+    // ==================================================
+
+    const searchWords =
+        normalizedSearch
+            .split(" ")
+            .filter(
+                function (word) {
+
+                    return (
+                        word.length >= 3
+                    );
+                }
+            );
+
+
+    return searchWords.some(
+        function (word) {
+
+            return (
+                normalizedExisting.includes(
+                    word
+                )
+            );
+        }
+    );
+}
+
+
+// ==================================================
+// PASSENDE KOMMANDOS FINDEN
+// ==================================================
+
+function findSimilarCommands(
+    searchName,
+    searchNote
+) {
+
+    const matches = [];
+
+
+    commandCategories.forEach(
+        function (category) {
+
+            category.commands.forEach(
+                function (command) {
+
+                    // ==================================================
+                    // GELÖSCHTE KOMMANDOS NICHT VORSCHLAGEN
+                    // ==================================================
+
+                    const deletedCommandId =
+                        category.id +
+                        "|" +
+                        command.id;
+
+                    if (
+                        deletedCommands.includes(
+                            deletedCommandId
+                        )
+                    ) {
+                        return;
+                    }
+
+                    // ==================================================
+                    // AKTUELL BEARBEITETES WUNSCHKOMMANDO
+                    // NICHT MIT SICH SELBST VERGLEICHEN
+                    // ==================================================
+
+                    if (
+                        editorMode === "custom" &&
+                        editedCommand &&
+                        command === editedCommand
+                    ) {
+
+                        return;
+                    }
+
+
+                    // ==================================================
+                    // SIGNALWORT VERGLEICHEN
+                    // ==================================================
+
+                    const nameMatch =
+                        commandTextsAreSimilar(
+                            searchName,
+                            command.name
+                        );
+
+
+                    // ==================================================
+                    // NOTIZ / BESCHREIBUNG VERGLEICHEN
+                    // ==================================================
+
+                    const noteMatch =
+                        commandTextsAreSimilar(
+                            searchNote,
+                            command.description
+                        );
+
+
+                    // ==================================================
+                    // MINDESTENS EIN TREFFER
+                    // ==================================================
+
+                    if (
+                        nameMatch === true ||
+                        noteMatch === true
+                    ) {
+
+                        matches.push(
+                            {
+                                category:
+                                    category,
+
+                                command:
+                                    command,
+
+                                nameMatch:
+                                    nameMatch,
+
+                                noteMatch:
+                                    noteMatch
+                            }
+                        );
+                    }
+                }
+            );
+        }
+    );
+
+
+    return matches;
+}
+
+
+// ==================================================
+// WOCHENPLAN-BUTTON FÜR SUCHTREFFER
+// ==================================================
+
+function createCommandSuggestionWeeklyButton(
+    category,
+    command
+) {
+
+    const weeklyId =
+        category.id +
+        "|" +
+        command.id;
+
+
+    const button =
+        document.createElement(
+            "button"
+        );
+
+    button.type =
+        "button";
+
+    button.classList.add(
+        "secondary-button",
+        "discovery-suggestion-weekly-button"
+    );
+
+
+    // ==================================================
+    // BUTTON-TEXT AKTUALISIEREN
+    // ==================================================
+
+    function updateButtonText() {
+
+        const isSelected =
+            weeklySelections.commands.some(
+                function (entry) {
+
+                    return (
+                        entry.id ===
+                        weeklyId
+                    );
+                }
+            );
+
+
+        button.textContent =
+            isSelected
+                ? "✓ Diese Woche eingeplant"
+                : "📅 Für diese Woche einplanen";
+    }
+
+
+    updateButtonText();
+
+
+    // ==================================================
+    // KLICK AUF DEN BUTTON
+    // ==================================================
+
+    button.addEventListener(
+        "click",
+        function (event) {
+
+            event.stopPropagation();
+
+
+            const existingIndex =
+                weeklySelections.commands.findIndex(
+                    function (entry) {
+
+                        return (
+                            entry.id ===
+                            weeklyId
+                        );
+                    }
+                );
+
+
+            // ==================================================
+            // BEREITS EINGEPLANT -> ENTFERNEN
+            // ==================================================
+
+            if (existingIndex !== -1) {
+
+                weeklySelections.commands.splice(
+                    existingIndex,
+                    1
+                );
+
+                saveWeeklySelections();
+
+                syncCommandWithWeeklyTasks(
+                    weeklyId,
+                    category,
+                    command,
+                    false
+                );
+
+            }
+
+
+            // ==================================================
+            // NOCH NICHT EINGEPLANT -> HINZUFÜGEN
+            // ==================================================
+
+            else {
+
+                weeklySelections.commands.push(
+                    {
+                        id:
+                            weeklyId,
+
+                        commandId:
+                            command.id,
+
+                        categoryId:
+                            category.id,
+
+                        category:
+                            category.title,
+
+                        originalName:
+                            command.originalName ||
+                            command.name,
+
+                        name:
+                            command.name,
+
+                        description:
+                            command.description
+                    }
+                );
+
+
+                saveWeeklySelections();
+
+
+                syncCommandWithWeeklyTasks(
+                    weeklyId,
+                    category,
+                    command,
+                    true
+                );
+            }
+
+
+            updateButtonText();
+        }
+    );
+
+
+    return button;
+
+}
+
+
+// ==================================================
+// ÄHNLICHE KOMMANDOS ANZEIGEN
+// ==================================================
+
+function displayCommandSuggestions() {
+
+    // ==================================================
+    // BEI FESTEN KOMMANDOS KEINE VORSCHLÄGE
+    // ==================================================
+
+    if (editorMode === "existing") {
+
+        commandSuggestions.hidden =
+            true;
+
+        commandSuggestionsList.innerHTML =
+            "";
+
+        return;
+    }
+
+
+    // ==================================================
+    // ÄHNLICHE KOMMANDOS SUCHEN
+    // ==================================================
+
+    const matches =
+        findSimilarCommands(
+            commandEditorName.value,
+            commandEditorNote.value
+        );
+
+
+    commandSuggestionsList.innerHTML =
+        "";
+
+
+    if (matches.length === 0) {
+
+        commandSuggestions.hidden =
+            true;
+
+        return;
+    }
+
+
+    commandSuggestions.hidden =
+        false;
+
+
+    matches.forEach(
+        function (match) {
+
+            const suggestion =
+                document.createElement(
+                    "div"
+                );
+
+            suggestion.classList.add(
+                "discovery-suggestion-item"
+            );
+
+
+            // ==================================================
+            // TEXT
+            // ==================================================
+
+            const textArea =
+                document.createElement(
+                    "div"
+                );
+
+
+            const name =
+                document.createElement(
+                    "strong"
+                );
+
+            name.textContent =
+                match.command.name;
+
+
+            const category =
+                document.createElement(
+                    "span"
+                );
+
+            category.classList.add(
+                "discovery-suggestion-category"
+            );
+
+            category.textContent =
+                match.category.title;
+
+
+            textArea.appendChild(
+                name
+            );
+
+            textArea.appendChild(
+                category
+            );
+
+
+            // ==================================================
+            // BESCHREIBUNG / NOTIZ
+            // ==================================================
+
+            if (
+                match.command.description !== ""
+            ) {
+
+                const description =
+                    document.createElement(
+                        "span"
+                    );
+
+                description.classList.add(
+                    "discovery-suggestion-description"
+                );
+
+                description.textContent =
+                    match.command.description;
+
+
+                textArea.appendChild(
+                    description
+                );
+            }
+
+
+            // ==================================================
+            // WOCHENPLAN-BUTTON
+            // ==================================================
+
+            const weeklyButton =
+                createCommandSuggestionWeeklyButton(
+                    match.category,
+                    match.command
+                );
+
+
+            suggestion.appendChild(
+                textArea
+            );
+
+            suggestion.appendChild(
+                weeklyButton
+            );
+
+
+            commandSuggestionsList.appendChild(
+                suggestion
+            );
+        }
+    );
+}
+
+
+// ==================================================
+// BEIM SCHREIBEN VERGLEICHEN
+// ==================================================
+
+if (commandEditorName) {
+
+    commandEditorName.addEventListener(
+        "input",
+        displayCommandSuggestions
+    );
+}
+
+
+if (commandEditorNote) {
+
+    commandEditorNote.addEventListener(
+        "input",
+        displayCommandSuggestions
+    );
+}
+
+
+// ==================================================
+// KOMMANDO-EDITOR - EVENTS
+// ==================================================
+
+if (addCommandButton) {
+
+    addCommandButton.addEventListener(
+        "click",
+        openNewCommandEditor
+    );
+
+}
+
+
+if (commandEditorCancel) {
+
+    commandEditorCancel.addEventListener(
+        "click",
+        closeCommandEditor
+    );
+
+}
+
+
+if (closeCommandEditorButton) {
+
+    closeCommandEditorButton.addEventListener(
+        "click",
+        closeCommandEditor
+    );
+
+}
+
+
+if (commandEditorSave) {
+
+    commandEditorSave.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
+            saveCommandEditor();
+
+        }
+    );
+
+}
+
+
+if (commandEditorDelete) {
+
+    commandEditorDelete.addEventListener(
+        "click",
+        function () {
+
+            if (editorMode === "existing") {
+
+                deleteExistingCommand();
+
+            } else if (editorMode === "custom") {
+
+                deleteCustomCommand();
+
+            }
+
+        }
+    );
+
+}
+
+
+if (commandEditorModal) {
+
+    commandEditorModal.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target ===
+                commandEditorModal
+            ) {
+
+                closeCommandEditor();
 
             }
 

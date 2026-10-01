@@ -204,6 +204,9 @@ function syncWeeklyCommands() {
                     category:
                         "Kommando",
 
+                    sourceCategory:
+                        command.category || "",
+
                     title:
                         command.name,
 
@@ -271,11 +274,14 @@ function syncWeeklyDiscoveries() {
                     category:
                         "Entdecker",
 
+                    sourceCategory:
+                        discovery.category || "",
+
                     title:
                         discovery.name,
 
                     note:
-                        discovery.category,
+                        "",
 
                     completed:
                         false,
@@ -498,30 +504,112 @@ saveWeeklyTaskButton.addEventListener(
         // ==================================================
 
         else {
-
+        
             const task =
                 weeklyTasks.find(
                     function (weeklyTask) {
-
+                    
                         return weeklyTask.id ===
                             editingWeeklyTaskId;
                     }
                 );
-
-
+            
+            
             if (task !== undefined) {
+            
+                // ==================================================
+                // SELBST ERSTELLTE AUFGABE
+                // KATEGORIE DARF GEÄNDERT WERDEN
+                // ==================================================
+            
+                if (
+                    task.source !== "command" &&
+                    task.source !== "discovery"
+                ) {
+                
+                    task.category =
+                        category;
+                
+                }
+            
+            
+                // ==================================================
+                // BISHERIGEN STATUS MERKEN
+                // ==================================================
 
-                task.category =
-                    category;
+                const wasCompleted =
+                    task.completed;
 
-                task.title =
-                    title;
 
-                task.note =
-                    note;
+                // ==================================================
+                // NAME UND NOTIZ AKTUALISIEREN
+                // ENTDECKER BLEIBEN UNVERÄNDERT
+                // ==================================================
+
+                if (task.source !== "discovery") {
+                
+                    task.title =
+                        title;
+                
+                    task.note =
+                        note;
+                
+                }
+
+
+                // ==================================================
+                // STATUS AKTUALISIEREN
+                // ==================================================
 
                 task.completed =
                     completed;
+
+
+                // ==================================================
+                // KOMMANDO BEIM NEUEN ERLEDIGEN SYNCHRONISIEREN
+                // ==================================================
+
+                if (
+                    task.source === "command" &&
+                    wasCompleted === false &&
+                    completed === true
+                ) {
+                
+                    completeWeeklyCommand(
+                        task
+                    );
+                
+                }
+
+
+                // ==================================================
+                // ENTDECKER BEIM NEUEN ERLEDIGEN SYNCHRONISIEREN
+                // ==================================================
+
+                if (
+                    task.source === "discovery" &&
+                    wasCompleted === false &&
+                    completed === true
+                ) {
+                
+                    completeWeeklyDiscovery(
+                        task
+                    );
+                
+                }
+
+                // ==================================================
+                // KOMMANDO MIT KOMMANDOLISTE SYNCHRONISIEREN
+                // ==================================================
+
+                if (task.source === "command") {
+                
+                    updateCommandFromWeeklyTask(
+                        task
+                    );
+                
+                }
+            
             }
         }
 
@@ -654,6 +742,44 @@ function displayWeeklyTasks() {
             }
         );
     }
+
+    // ==================================================
+    // VOM DASHBOARD ZU DEN WEITEREN AUFGABEN SPRINGEN
+    // ==================================================
+    
+    const urlParameters =
+        new URLSearchParams(
+            window.location.search
+        );
+    
+    if (
+        urlParameters.get("weitereAufgaben") === "true" &&
+        openTasks.length > 3
+    ) {
+    
+        const openTaskCards =
+            openWeeklyTasksContainer.querySelectorAll(
+                ".weekly-task-item"
+            );
+        
+        const firstAdditionalTask =
+            openTaskCards[3];
+        
+        if (firstAdditionalTask !== undefined) {
+        
+            setTimeout(
+                function () {
+                
+                    firstAdditionalTask.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+                
+                },
+                100
+            );
+        }
+    }
 }
 
 // ==================================================
@@ -685,7 +811,9 @@ function completeWeeklyCommand(task) {
         } catch (error) {
 
             commandChecklist = {};
+
         }
+
     }
 
 
@@ -697,8 +825,11 @@ function completeWeeklyCommand(task) {
         weeklySelections.commands.find(
             function (command) {
 
-                return command.id ===
-                    task.sourceId;
+                return (
+                    command.id ===
+                    task.sourceId
+                );
+
             }
         );
 
@@ -706,13 +837,44 @@ function completeWeeklyCommand(task) {
     if (selectedCommand !== undefined) {
 
         // ==================================================
-        // SCHLÜSSEL WIE IN KOMMANDOS.JS ERSTELLEN
+        // PASSENDEN FORTSCHRITTS-SCHLÜSSEL ERSTELLEN
         // ==================================================
 
-        const commandKey =
-            selectedCommand.category +
-            "|" +
-            selectedCommand.name;
+        let commandKey;
+
+
+        // ==================================================
+        // EIGENES WUNSCHKOMMANDO
+        // ==================================================
+
+        if (
+            selectedCommand.categoryId ===
+            "wunschkommandos"
+        ) {
+
+            commandKey =
+                selectedCommand.category +
+                "|" +
+                selectedCommand.commandId;
+
+        }
+
+
+        // ==================================================
+        // VORHANDENES KOMMANDO
+        // ==================================================
+
+        else {
+
+            commandKey =
+                selectedCommand.category +
+                "|" +
+                (
+                    selectedCommand.originalName ||
+                    selectedCommand.name
+                );
+
+        }
 
 
         const commandState =
@@ -728,32 +890,104 @@ function completeWeeklyCommand(task) {
 
         if (commandState !== undefined) {
 
+            // Noch nicht kennengelernt
             if (commandState.seen !== true) {
 
                 commandState.seen = true;
 
-            } else if (
+            }
+
+            // Kennengelernt vorhanden
+            // -> als Nächstes selbst erlebt
+            else if (
                 commandState.experienced !== true
             ) {
 
                 commandState.experienced = true;
 
-            } else if (
+            }
+
+            // Die ersten beiden vorhanden
+            // -> als Nächstes entspannt dabei
+            else if (
                 commandState.relaxed !== true
             ) {
 
                 commandState.relaxed = true;
+
             }
 
+            // Sind bereits alle drei true,
+            // wird absichtlich nichts verändert.
 
-            // Fortschritt speichern
+
+            // ==================================================
+            // FORTSCHRITT SPEICHERN
+            // ==================================================
+
             localStorage.setItem(
                 "commandChecklist",
                 JSON.stringify(
                     commandChecklist
                 )
             );
+
+            // ==================================================
+            // KOMMANDO-FORTSCHRITT FÜR ACHIEVEMENT BERECHNEN
+            //
+            // Die Gesamtzahl der vorhandenen Kommandos wurde
+            // auf der Kommandoseite korrekt berechnet und
+            // im localStorage gespeichert.
+            //
+            // Im Wochenplan muss deshalb nur noch gezählt
+            // werden, wie viele Kommandos aktuell auf
+            // 😌 "Entspannt dabei" stehen.
+            // ==================================================
+
+            let relaxedCount = 0;
+
+            const totalCount =
+                Number(
+                    localStorage.getItem(
+                        "commandTotalCount"
+                    )
+                ) || 0;
+            
+            
+            // ==================================================
+            // ENTSPANNTE KOMMANDOS ZÄHLEN
+            // ==================================================
+            
+            Object.values(
+                commandChecklist
+            ).forEach(
+                function (state) {
+                
+                    if (
+                        state !== undefined &&
+                        state !== null &&
+                        typeof state === "object" &&
+                        state.relaxed === true
+                    ) {
+                    
+                        relaxedCount++;
+                    
+                    }
+                
+                }
+            );
+
+
+            // ==================================================
+            // KOMMANDO-ACHIEVEMENT PRÜFEN
+            // ==================================================
+
+            checkCommandAchievement(
+                relaxedCount,
+                totalCount
+            );
         }
+
     }
 
 
@@ -765,8 +999,11 @@ function completeWeeklyCommand(task) {
         weeklySelections.commands.filter(
             function (command) {
 
-                return command.id !==
-                    task.sourceId;
+                return (
+                    command.id !==
+                    task.sourceId
+                );
+
             }
         );
 
@@ -777,6 +1014,7 @@ function completeWeeklyCommand(task) {
             weeklySelections
         )
     );
+
 }
 
 
@@ -833,10 +1071,38 @@ function completeWeeklyDiscovery(task) {
         // SCHLÜSSEL WIE IN ENTDECKER.JS
         // ==================================================
 
-        const discoveryKey =
-            selectedDiscovery.category +
-            "|" +
-            selectedDiscovery.name;
+        let discoveryKey;
+
+
+        // ==================================================
+        // EIGENE ENTDECKUNG
+        // ==================================================
+
+        if (
+            selectedDiscovery.categoryId ===
+            "eigene-entdeckungen"
+        ) {
+        
+            discoveryKey =
+                selectedDiscovery.category +
+                "|" +
+                selectedDiscovery.discoveryId;
+        
+        }
+
+
+        // ==================================================
+        // FESTE ENTDECKUNG
+        // ==================================================
+
+        else {
+        
+            discoveryKey =
+                selectedDiscovery.category +
+                "|" +
+                selectedDiscovery.name;
+        
+        }
 
 
         const discoveryState =
@@ -870,13 +1136,59 @@ function completeWeeklyDiscovery(task) {
             }
 
 
-            // Fortschritt speichern
+            // ==================================================
+            // ENTDECKER-FORTSCHRITT SPEICHERN
+            // ==================================================
+
             localStorage.setItem(
                 "discoveryChecklist",
                 JSON.stringify(
                     discoveryChecklist
                 )
             );
+
+
+            // ==================================================
+            // AKTUELLE ANZAHL "ENTSPANNT DABEI" BERECHNEN
+            // ==================================================
+
+            // Der Wochenplan lädt entdecker.js nicht.
+            // Deshalb muss die aktuelle Anzahl hier
+            // direkt aus der Entdecker-Checkliste
+            // neu berechnet werden.
+
+            let relaxedCount = 0;
+
+            Object.values(
+                discoveryChecklist
+            ).forEach(
+                function (state) {
+                
+                    if (
+                        state.relaxed === true
+                    ) {
+                    
+                        relaxedCount++;
+                    }
+                }
+            );
+
+
+            // ==================================================
+            // AKTUELLE ANZAHL SPEICHERN
+            // ==================================================
+
+            localStorage.setItem(
+                "discoveryRelaxedCount",
+                relaxedCount
+            );
+
+
+            // ==================================================
+            // ENTDECKER-ACHIEVEMENT PRÜFEN
+            // ==================================================
+
+            checkDiscoveryAchievement();
         }
     }
 
@@ -943,7 +1255,10 @@ function createWeeklyTaskCard(task) {
         document.createElement("div");
 
 
-    // Kategorie
+    // ==================================================
+    // HERKUNFT / KATEGORIE
+    // ==================================================
+
     const category =
         document.createElement("p");
 
@@ -951,12 +1266,36 @@ function createWeeklyTaskCard(task) {
         "weekly-task-category"
     );
 
-    category.textContent =
-        getWeeklyCategoryIcon(
-            task.category
-        ) +
-        " " +
-        task.category;
+
+    // Kommando aus der Kommandoliste
+    if (task.source === "command") {
+
+        category.textContent =
+            "📌 Kommando";
+
+    }
+
+
+    // Entdeckung aus der Entdeckerliste
+    else if (task.source === "discovery") {
+
+        category.textContent =
+            "📌 Entdecker";
+
+    }
+
+
+    // Selbst erstellte Wochenaufgabe
+    else {
+
+        category.textContent =
+            getWeeklyCategoryIcon(
+                task.category
+            ) +
+            " " +
+            task.category;
+
+    }
 
 
     // Titel
@@ -974,6 +1313,35 @@ function createWeeklyTaskCard(task) {
     titleArea.appendChild(
         title
     );
+
+
+    // ==================================================
+    // URSPRÜNGLICHE KATEGORIE
+    // ==================================================
+
+    if (
+        (
+            task.source === "command" ||
+            task.source === "discovery"
+        ) &&
+        task.sourceCategory
+    ) {
+
+        const sourceCategory =
+            document.createElement("p");
+
+        sourceCategory.classList.add(
+            "weekly-task-note"
+        );
+
+        sourceCategory.textContent =
+            task.sourceCategory;
+
+        titleArea.appendChild(
+            sourceCategory
+        );
+
+    }
 
 
     // Status
@@ -1161,7 +1529,7 @@ function createWeeklyTaskCard(task) {
     );
 
     editButton.textContent =
-        "✏ Ändern";
+        "Ändern";
 
 
     editButton.addEventListener(
@@ -1228,6 +1596,123 @@ function createWeeklyTaskCard(task) {
 
 
 // ==================================================
+// KOMMANDO AUS WOCHENPLAN AKTUALISIEREN
+// ==================================================
+
+function updateCommandFromWeeklyTask(task) {
+
+    if (task.source !== "command") {
+
+        return;
+
+    }
+
+
+    // ==================================================
+    // PASSENDEN EINTRAG DER WOCHENAUSWAHL FINDEN
+    // ==================================================
+
+    const weeklyCommand =
+        weeklySelections.commands.find(
+            function (command) {
+
+                return command.id ===
+                    task.sourceId;
+
+            }
+        );
+
+
+    if (weeklyCommand === undefined) {
+
+        return;
+
+    }
+
+
+    // ==================================================
+    // WOCHENAUSWAHL AKTUALISIEREN
+    // ==================================================
+
+    weeklyCommand.name =
+        task.title;
+
+    weeklyCommand.description =
+        task.note;
+
+
+    localStorage.setItem(
+        WEEKLY_SELECTION_STORAGE_KEY,
+        JSON.stringify(
+            weeklySelections
+        )
+    );
+
+
+    // ==================================================
+    // KOMMANDO-ANPASSUNGEN LADEN
+    // ==================================================
+
+    let commandCustomizations = {};
+
+    const savedCustomizations =
+        localStorage.getItem(
+            "commandCustomizations"
+        );
+
+
+    if (savedCustomizations !== null) {
+
+        try {
+
+            commandCustomizations =
+                JSON.parse(
+                    savedCustomizations
+                );
+
+        } catch (error) {
+
+            commandCustomizations = {};
+
+        }
+
+    }
+
+
+    // ==================================================
+    // NAME UND NOTIZ DES KOMMANDOS SPEICHERN
+    // ==================================================
+
+    const customizationKey =
+        weeklyCommand.categoryId +
+        "|" +
+        weeklyCommand.commandId;
+
+
+    commandCustomizations[
+        customizationKey
+    ] = {
+
+        name:
+            task.title,
+
+        description:
+            task.note
+
+    };
+
+
+    localStorage.setItem(
+        "commandCustomizations",
+        JSON.stringify(
+            commandCustomizations
+        )
+    );
+
+}
+
+
+// ==================================================
 // AUFGABE BEARBEITEN
 // ==================================================
 
@@ -1248,15 +1733,169 @@ function editWeeklyTask(id) {
     }
 
 
-    // Werte ins Formular schreiben
-    weeklyCategoryInput.value =
-        task.category;
+    // ==================================================
+    // AUFGABENNAME
+    // ==================================================
 
     weeklyTitleInput.value =
         task.title;
 
+
+    // ==================================================
+    // ENTDECKER
+    // NAME DARF NICHT GEÄNDERT WERDEN
+    // ==================================================
+
+    if (task.source === "discovery") {
+
+        weeklyTitleInput.disabled =
+            true;
+
+    }
+
+
+    // ==================================================
+    // KOMMANDO UND EIGENE AUFGABEN
+    // NAME DARF GEÄNDERT WERDEN
+    // ==================================================
+
+    else {
+
+        weeklyTitleInput.disabled =
+            false;
+
+    }
+
+
+    // ==================================================
+    // NOTIZ
+    // ==================================================
+
     weeklyNoteInput.value =
         task.note || "";
+
+
+    // ==================================================
+    // SELBST ERSTELLTE AUFGABE
+    // KATEGORIE DARF GEÄNDERT WERDEN
+    // ==================================================
+
+    if (
+        task.source !== "command" &&
+        task.source !== "discovery"
+    ) {
+
+        weeklyCategoryInput.disabled =
+            false;
+
+        weeklyCategoryInput.value =
+            task.category;
+
+    }
+
+
+    // ==================================================
+    // KOMMANDO ODER ENTDECKER
+    // KATEGORIE DARF NICHT GEÄNDERT WERDEN
+    // ==================================================
+
+    else {
+
+        weeklyCategoryInput.disabled =
+            true;
+
+
+        // ==================================================
+        // KATEGORIE IM AUSWAHLFELD ANZEIGEN
+        // ==================================================
+
+        let sourceOption =
+            weeklyCategoryInput.querySelector(
+                'option[data-source-category="true"]'
+            );
+
+
+        if (sourceOption === null) {
+
+            sourceOption =
+                document.createElement(
+                    "option"
+                );
+
+            sourceOption.dataset.sourceCategory =
+                "true";
+
+            weeklyCategoryInput.appendChild(
+                sourceOption
+            );
+
+        }
+
+
+        sourceOption.value =
+            task.category;
+
+        sourceOption.textContent =
+            task.category;
+
+        weeklyCategoryInput.value =
+            task.category;
+
+    }
+
+    // ==================================================
+    // NOTIZ JE NACH HERKUNFT
+    // ==================================================
+
+    const weeklyNoteField =
+        weeklyNoteInput.closest(
+            ".weekly-form-group"
+        );
+
+
+    // ==================================================
+    // ENTDECKER
+    // HABEN KEINE EIGENE NOTIZ
+    // ==================================================
+
+    if (task.source === "discovery") {
+
+        weeklyNoteInput.disabled =
+            true;
+
+        weeklyNoteInput.value =
+            "";
+
+
+        if (weeklyNoteField !== null) {
+
+            weeklyNoteField.style.display =
+                "none";
+
+        }
+
+    }
+
+
+// ==================================================
+// KOMMANDO UND EIGENE AUFGABEN
+// DÜRFEN EINE NOTIZ HABEN
+// ==================================================
+
+else {
+
+    weeklyNoteInput.disabled =
+        false;
+
+
+    if (weeklyNoteField !== null) {
+
+        weeklyNoteField.style.display =
+            "";
+
+    }
+
+}
 
 
     // Status setzen
@@ -1286,7 +1925,7 @@ function editWeeklyTask(id) {
 
     // Buttontext ändern
     saveWeeklyTaskButton.textContent =
-        "Änderungen speichern";
+        "Ändern";
 
 
     // Popup öffnen
@@ -1313,14 +1952,90 @@ function deleteWeeklyTask(id) {
     if (reallyDelete === false) {
 
         return;
+
     }
 
+
+    // ==================================================
+    // ZU LÖSCHENDE AUFGABE FINDEN
+    // ==================================================
+
+    const taskToDelete =
+        weeklyTasks.find(
+            function (task) {
+
+                return task.id === id;
+
+            }
+        );
+
+
+    // ==================================================
+    // KOMMANDO AUS WOCHENAUSWAHL ENTFERNEN
+    // ==================================================
+
+    if (
+        taskToDelete &&
+        taskToDelete.source === "command"
+    ) {
+
+        weeklySelections.commands =
+            weeklySelections.commands.filter(
+                function (command) {
+
+                    return command.id !==
+                        taskToDelete.sourceId;
+
+                }
+            );
+
+    }
+
+
+    // ==================================================
+    // ENTDECKER AUS WOCHENAUSWAHL ENTFERNEN
+    // ==================================================
+
+    if (
+        taskToDelete &&
+        taskToDelete.source === "discovery"
+    ) {
+
+        weeklySelections.discoveries =
+            weeklySelections.discoveries.filter(
+                function (discovery) {
+
+                    return discovery.id !==
+                        taskToDelete.sourceId;
+
+                }
+            );
+
+    }
+
+
+    // ==================================================
+    // WOCHENAUSWAHL SPEICHERN
+    // ==================================================
+
+    localStorage.setItem(
+        WEEKLY_SELECTION_STORAGE_KEY,
+        JSON.stringify(
+            weeklySelections
+        )
+    );
+
+
+    // ==================================================
+    // AUFGABE AUS WOCHENPLAN ENTFERNEN
+    // ==================================================
 
     weeklyTasks =
         weeklyTasks.filter(
             function (task) {
 
                 return task.id !== id;
+
             }
         );
 
@@ -1330,12 +2045,16 @@ function deleteWeeklyTask(id) {
     displayWeeklyTasks();
 
 
-    // Falls gerade genau diese Aufgabe
-    // bearbeitet wurde
+    // ==================================================
+    // BEARBEITUNGSFENSTER SCHLIESSEN
+    // ==================================================
+
     if (editingWeeklyTaskId === id) {
 
         closeWeeklyModal();
+
     }
+
 }
 
 
@@ -1345,14 +2064,48 @@ function deleteWeeklyTask(id) {
 
 function clearWeeklyForm() {
 
+    // ==================================================
+    // FORMULARFELDER ZURÜCKSETZEN
+    // ==================================================
+
+    weeklyCategoryInput.disabled =
+        false;
+
     weeklyCategoryInput.value =
         "Training";
+
+    // ==================================================
+    // AUFGABENNAME WIEDER FREIGEBEN
+    // ==================================================
+
+    weeklyTitleInput.disabled =
+        false;
 
     weeklyTitleInput.value =
         "";
 
+    weeklyNoteInput.disabled =
+        false;
+
     weeklyNoteInput.value =
         "";
+
+    // ==================================================
+    // NOTIZFELD WIEDER EINBLENDEN
+    // ==================================================
+
+    const weeklyNoteField =
+        weeklyNoteInput.closest(
+            ".weekly-form-group"
+        );
+
+
+    if (weeklyNoteField !== null) {
+
+        weeklyNoteField.style.display =
+            "";
+
+    }
 
 
     document.querySelector(
@@ -1367,7 +2120,7 @@ function clearWeeklyForm() {
 
     // Button wieder zurücksetzen
     saveWeeklyTaskButton.textContent =
-        "Aufgabe speichern";
+        "🐾 Speichern";
 
 
     // Überschrift wieder zurücksetzen

@@ -818,7 +818,7 @@ function createAppointmentCard(appointment) {
     );
 
     editButton.textContent =
-        "✏ Ändern";
+        "Ändern";
 
 
     editButton.addEventListener(
@@ -952,7 +952,7 @@ function editAppointment(appointmentId) {
 
     // Speichern-Button ändern
     saveAppointmentButton.textContent =
-        "Änderungen speichern";
+        "Ändern";
 
 
     // Popup öffnen
@@ -1044,7 +1044,7 @@ function clearAppointmentForm() {
 
     // Button zurücksetzen
     saveAppointmentButton.textContent =
-        "Termin speichern";
+        "🐾 Speichern";
 
 
     // Überschrift zurücksetzen

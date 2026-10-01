@@ -32,25 +32,37 @@
         <!-- ÜBERSCHRIFT -->
         <!-- ====================================== -->
 
-        <section class="discovery-page-header">
+        <section class="page-header">
 
-            <p class="eyebrow">
-                ENTDECKERZEIT
-            </p>
-
-            <h1>
-                🐾
-                <span id="page-dog-name">
-                    Major
-                </span>s große Entdecker-Checkliste
-            </h1>
-
-            <p>
-                Neue Situationen kennenlernen,
-                selbst erleben und irgendwann
-                ganz entspannt meistern.
-            </p>
-
+            <div class="page-header-text">
+            
+                <p class="page-eyebrow">
+                    ENTDECKERZEIT
+                </p>
+            
+                <h1 class="page-main-title">
+                    <span id="page-dog-name">
+                        Major
+                    </span>s große Entdecker-Checkliste
+                </h1>
+            
+                <p class="page-subtitle">
+                    Neue Situationen kennenlernen,
+                    selbst erleben und irgendwann
+                    ganz entspannt meistern.
+                </p>
+            
+            </div>
+        
+            <!-- POPUP ÖFFNEN -->
+            <button
+                type="button"
+                id="add-discovery-button"
+                class="gallery-add-button"
+            >
+                + Entdeckung hinzufügen
+            </button>
+        
         </section>
 
 
@@ -127,69 +139,243 @@
         <!-- ========================================== -->
         <!-- POPUP - ENTDECKER ERFOLG -->
         <!-- ========================================== -->
-        
+
         <div
             id="discovery-achievement-modal"
             class="app-modal"
         >
-        
-            <div class="app-modal-content discovery-achievement-content">
+
+            <div class="app-modal-content achievement-content">
             
-                <div class="discovery-achievement-body">
-                
-                
-                    <!-- ERFOLGS-ICON -->
-                
-                    <div
-                        id="achievement-icon"
-                        class="discovery-achievement-icon"
-                    >
-                        🐾
+                <div class="achievement-body">
+
+                    <!-- ================================================== -->
+                    <!-- ALTER ERFOLGSINHALT                                -->
+                    <!-- ================================================== -->
+
+
+                    <!-- ERFOLGSBILD - ALT
+
+                    <div class="achievement-image-wrapper">
+                    
+                        <img
+                            id="discovery-achievement-profile-image"
+                            class="achievement-profile-image"
+                            src=""
+                            alt="Profilbild des Hundes"
+                        >
+                    
+                        <div
+                            id="achievement-icon"
+                            class="achievement-icon"
+                        >
+                            🐾
+                        </div>
+                    
                     </div>
                 
+                    -->
                 
-                    <!-- KLEINE ÜBERSCHRIFT -->
+                
+                    <!-- KLEINE ÜBERSCHRIFT - ALT
                 
                     <p class="eyebrow">
                         ENTDECKER-ERFOLG
                     </p>
                 
+                    -->
                 
-                    <!-- ERFOLGS-TITEL -->
+                
+                    <!-- ERFOLGS-TITEL - ALT
                 
                     <h2 id="achievement-title">
                         Du bist ein echter Entdecker!
                     </h2>
                 
+                    -->
                 
-                    <!-- ERFOLGS-TEXT -->
+                
+                    <!-- ERFOLGS-TEXT - ALT
                 
                     <p
                         id="achievement-text"
-                        class="discovery-achievement-text"
+                        class="achievement-text"
                     ></p>
                 
+                    -->
                 
-                    <!-- PROZENT -->
+                
+                    <!-- PROZENT - ALT
                 
                     <div
                         id="achievement-percent"
-                        class="discovery-achievement-percent"
+                        class="achievement-percent"
                     >
                         25 %
                     </div>
                 
+                    -->
                 
-                    <!-- POPUP SCHLIESSEN -->
+                    <!-- ================================================== -->
+                    <!-- NEUES ERFOLGSBILD                                  -->
+                    <!-- ================================================== -->
+
+                    <img
+                        id="discovery-achievement-image"
+                        class="discovery-achievement-image"
+                        src=""
+                        alt="Entdecker-Erfolg"
+                    >
+
+                    
+                    <!-- ================================================== -->
+                    <!-- POPUP SCHLIESSEN                                   -->
+                    <!-- ================================================== -->
                 
                     <button
                         type="button"
                         id="close-achievement-modal"
-                        class="primary-button"
+                        class="achievement-close"
+                        aria-label="Popup schließen"
                     >
-                        Weiter entdecken
+                        ×
                     </button>
                 
+                </div>
+            
+            </div>
+        
+        </div>
+
+
+        <!-- ================================================== -->
+        <!-- EIGENE ENTDECKUNG - POPUP                          -->
+        <!-- ================================================== -->
+
+        <div
+            id="discovery-editor-modal"
+            class="app-modal"
+            hidden
+        >
+
+            <div class="app-modal-content">
+            
+            
+                <!-- ================================================== -->
+                <!-- KOPF                                               -->
+                <!-- ================================================== -->
+            
+                <div class="app-modal-header">
+
+                    <div>
+                    
+                        <p class="eyebrow">
+                            ENTDECKUNG
+                        </p>
+                    
+                        <h2 id="discovery-editor-title">
+                            Entdeckung hinzufügen
+                        </h2>
+                    
+                    </div>
+                
+                
+                    <!-- ================================================== -->
+                    <!-- POPUP SCHLIESSEN                                   -->
+                    <!-- ================================================== -->
+                
+                    <button
+                        type="button"
+                        id="close-discovery-editor"
+                        class="app-modal-close"
+                        aria-label="Popup schließen"
+                    >
+                        ×
+                    </button>
+                
+                </div>
+            
+            
+                <!-- ================================================== -->
+                <!-- INHALT                                             -->
+                <!-- ================================================== -->
+            
+                <div class="app-modal-body">
+                
+                    <label for="discovery-editor-name">
+                        Name
+                    </label>
+                
+                    <input
+                        type="text"
+                        id="discovery-editor-name"
+                        autocomplete="off"
+                        placeholder="z. B. Busbahnhof anschauen"
+                    >
+                
+                
+                    <label for="discovery-editor-note">
+                        Notiz
+                    </label>
+                
+                    <textarea
+                        id="discovery-editor-note"
+                        rows="3"
+                        placeholder="z. B. Erst einmal mit Abstand beobachten"
+                    ></textarea>
+                
+                
+                    <!-- ================================================== -->
+                    <!-- ÄHNLICHE ENTDECKUNGEN                              -->
+                    <!-- ================================================== -->
+                
+                    <div
+                        id="discovery-suggestions"
+                        class="discovery-suggestions"
+                        hidden
+                    >
+                
+                        <p class="discovery-suggestions-title">
+                            Ähnliche Entdeckungen bereits vorhanden:
+                        </p>
+                    
+                        <div id="discovery-suggestions-list"></div>
+                    
+                    </div>
+                
+                </div>
+            
+            
+                <!-- ================================================== -->
+                <!-- BUTTONS                                            -->
+                <!-- ================================================== -->
+            
+                <div class="app-modal-buttons">
+                
+                    <button
+                        type="button"
+                        id="discovery-editor-delete"
+                        class="app-cancel-button"
+                        hidden
+                    >
+                        Löschen
+                    </button>
+                
+                    <button
+                        type="button"
+                        id="discovery-editor-cancel"
+                        class="app-cancel-button"
+                    >
+                        Abbrechen
+                    </button>
+                
+                    <button
+                        type="button"
+                        id="discovery-editor-save"
+                        class="primary-button"
+                    >
+                        🐾 Speichern
+                    </button>
                 
                 </div>
             
@@ -201,6 +387,9 @@
         <!-- ========================================== -->
         <!-- JAVASCRIPT                                 -->
         <!-- ========================================== -->
+
+        <!-- Entdecker ErfolgspopUp -->
+        <script src="../js/entdecker-achievements.js"></script>
 
         <!-- Eigenes JavaScript der jeweiligen Seite -->
         <script src="../js/entdecker.js"></script>
@@ -216,6 +405,9 @@
 
         <!-- Scroll-to-Top -->
         <script src="../js/scroll-top.js"></script>
+
+        <!-- Schwebendes Navigationsmenü -->
+        <script src="../js/floating-menu.js"></script>
 
         <!-- Dark Mode -->
         <script src="../js/dark-mode.js"></script>

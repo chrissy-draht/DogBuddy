@@ -19,6 +19,30 @@ const saveButton = document.getElementById("save-profile");
 // Abbrechen-Button
 const cancelButton = document.getElementById("cancel-profile");
 
+// Versteckte Bildauswahl
+const profileImageInput =
+    document.getElementById(
+        "profile-image-input"
+    );
+
+// Profilbild auf dem Dashboard
+const dogProfileImage =
+    document.getElementById(
+        "dog-profile-image"
+    );
+
+// Bereich des Profilbildes
+const dogImageArea =
+    document.getElementById(
+        "dog-image-area"
+    );
+
+// Bearbeitungsstift am Profilbild
+const profileImageEditIcon =
+    document.getElementById(
+        "profile-image-edit-icon"
+    );
+
 
 // ==================================================
 // EINGABEFELDER
@@ -103,6 +127,23 @@ if (savedDog !== null) {
 
 
 // ==================================================
+// LOCALSTORAGE - GESPEICHERTES PROFILBILD LADEN
+// ==================================================
+
+const savedProfileImage =
+    localStorage.getItem(
+        "dogProfileImage"
+    );
+
+if (savedProfileImage !== null) {
+
+    dogProfileImage.src =
+        savedProfileImage;
+
+}
+
+
+// ==================================================
 // PROFIL BEARBEITEN
 // ==================================================
 
@@ -111,7 +152,400 @@ editButton.addEventListener("click", function () {
     // Formular anzeigen
     profileForm.style.display = "block";
 
+    // Bearbeitungsstift anzeigen
+    profileImageEditIcon.style.display = "flex";
+
 });
+
+
+// ==================================================
+// PROFILBILD AUSWÄHLEN
+// ==================================================
+
+dogImageArea.addEventListener("click", function () {
+
+    // Nur während der Profilbearbeitung reagieren
+    if (profileForm.style.display !== "block") {
+        return;
+    }
+
+    // Dateiauswahl öffnen
+    profileImageInput.click();
+
+});
+
+// ==================================================
+// AUSGEWÄHLTES PROFILBILD ANZEIGEN
+// ==================================================
+
+const profileCropModal =
+    document.getElementById(
+        "profile-image-crop-modal"
+    );
+
+const profileCropImage =
+    document.getElementById(
+        "profile-crop-image"
+    );
+
+// Bereich, in dem das Bild verschoben wird
+const profileCropArea =
+    document.getElementById(
+        "profile-crop-area"
+    );
+
+// Zoom-Regler
+const profileCropZoom =
+    document.getElementById(
+        "profile-crop-zoom"
+    );
+
+// Übernehmen-Button im Zuschneidefenster
+const saveProfileCrop =
+    document.getElementById(
+        "save-profile-crop"
+    );
+
+// Abbrechen-Button im Zuschneidefenster
+const cancelProfileCrop =
+    document.getElementById(
+        "cancel-profile-crop"
+    );
+
+// X zum Schließen des Zuschneidefensters
+const closeProfileCrop =
+    document.getElementById(
+        "close-profile-crop"
+    );
+
+// Aktueller Zoom
+let cropZoom = 1;
+
+// Aktuelle Position des Bildes
+let cropPositionX = 0;
+let cropPositionY = 0;
+
+// Position beim Start des Ziehens
+let cropStartX = 0;
+let cropStartY = 0;
+
+// Merkt, ob das Bild gerade gezogen wird
+let isCropDragging = false;
+
+// ==================================================
+// PROFILBILD - VERSCHIEBEN STARTEN
+// ==================================================
+
+profileCropArea.addEventListener(
+    "pointerdown",
+    function (event) {
+
+        isCropDragging = true;
+
+        cropStartX =
+            event.clientX - cropPositionX;
+
+        cropStartY =
+            event.clientY - cropPositionY;
+
+        profileCropArea.setPointerCapture(
+            event.pointerId
+        );
+
+    }
+);
+
+
+// ==================================================
+// PROFILBILD - VERSCHIEBEN & ZOOM
+// ==================================================
+
+profileCropArea.addEventListener(
+    "pointermove",
+    function (event) {
+
+        if (isCropDragging === false) {
+            return;
+        }
+
+        cropPositionX =
+            event.clientX - cropStartX;
+
+        cropPositionY =
+            event.clientY - cropStartY;
+
+        profileCropImage.style.left =
+            "calc(50% + " +
+            cropPositionX +
+            "px)";
+
+        profileCropImage.style.top =
+            "calc(50% + " +
+            cropPositionY +
+            "px)";
+
+        profileCropImage.style.transform =
+            "translate(-50%, -50%) scale(" +
+            cropZoom +
+            ")";
+
+    }
+);
+
+
+// ==================================================
+// PROFILBILD - VERSCHIEBEN BEENDEN
+// ==================================================
+
+profileCropArea.addEventListener(
+    "pointerup",
+    function () {
+
+        isCropDragging = false;
+
+    }
+);
+
+profileCropArea.addEventListener(
+    "pointercancel",
+    function () {
+
+        isCropDragging = false;
+
+    }
+);
+
+
+profileImageInput.addEventListener(
+    "change",
+    function () {
+
+        const selectedFile =
+            profileImageInput.files[0];
+
+        if (selectedFile === undefined) {
+            return;
+        }
+
+        const imageURL =
+            URL.createObjectURL(
+                selectedFile
+            );
+
+        profileCropImage.src =
+            imageURL;
+
+        profileCropModal.classList.add(
+            "show"
+        );
+
+    }
+);
+
+
+// ==================================================
+// PROFILBILD - ZOOMEN
+// ==================================================
+
+profileCropZoom.addEventListener(
+    "input",
+    function () {
+
+        cropZoom =
+            Number(
+                profileCropZoom.value
+            );
+
+        profileCropImage.style.transform =
+            "translate(-50%, -50%) scale(" +
+            cropZoom +
+            ")";
+
+    }
+);
+
+
+// ==================================================
+// PROFILBILD - ZUSCHNITT ÜBERNEHMEN
+// ==================================================
+
+saveProfileCrop.addEventListener(
+    "click",
+    function () {
+
+        const canvas =
+            document.createElement(
+                "canvas"
+            );
+
+        const context =
+            canvas.getContext(
+                "2d"
+            );
+
+        const outputSize = 400;
+
+        canvas.width = outputSize;
+        canvas.height = outputSize;
+
+
+        // ==================================================
+        // SICHTBAREN BEREICH DER VORSCHAU ERMITTELN
+        // ==================================================
+
+        const cropRect =
+            profileCropArea.getBoundingClientRect();
+
+        const imageRect =
+            profileCropImage.getBoundingClientRect();
+
+
+        // ==================================================
+        // INNEREN BEREICH DES ZUSCHNITTS ERMITTELN
+        // ==================================================
+
+        const cropLeft =
+            cropRect.left +
+            profileCropArea.clientLeft;
+
+        const cropTop =
+            cropRect.top +
+            profileCropArea.clientTop;
+
+        const cropWidth =
+            profileCropArea.clientWidth;
+
+        const cropHeight =
+            profileCropArea.clientHeight;
+
+
+        // ==================================================
+        // VERHÄLTNIS VORSCHAU -> ORIGINALBILD
+        // ==================================================
+
+        const scaleX =
+            profileCropImage.naturalWidth /
+            imageRect.width;
+
+        const scaleY =
+            profileCropImage.naturalHeight /
+            imageRect.height;
+
+
+        // ==================================================
+        // SICHTBAREN AUSSCHNITT IM ORIGINALBILD BERECHNEN
+        // ==================================================
+
+        const sourceX =
+            (cropLeft - imageRect.left) *
+            scaleX;
+
+        const sourceY =
+            (cropTop - imageRect.top) *
+            scaleY;
+
+        const sourceWidth =
+            cropWidth *
+            scaleX;
+
+        const sourceHeight =
+            cropHeight *
+            scaleY;
+
+
+        // ==================================================
+        // AUSSCHNITT AUF CANVAS ZEICHNEN
+        // ==================================================
+
+        context.drawImage(
+            profileCropImage,
+            sourceX,
+            sourceY,
+            sourceWidth,
+            sourceHeight,
+            0,
+            0,
+            outputSize,
+            outputSize
+        );
+
+
+        // ==================================================
+        // PROFILBILD SPEICHERN
+        // ==================================================
+
+        const croppedProfileImage =
+            canvas.toDataURL(
+                "image/jpeg",
+                0.85
+            );
+
+        localStorage.setItem(
+            "dogProfileImage",
+            croppedProfileImage
+        );
+
+        dogProfileImage.src =
+            croppedProfileImage;
+
+        cancelProfileCrop.click();
+
+    }
+);
+
+
+// ==================================================
+// PROFILBILD - ZUSCHNEIDEN ABBRECHEN
+// ==================================================
+
+cancelProfileCrop.addEventListener(
+    "click",
+    function () {
+
+        // Zuschneidefenster schließen
+        profileCropModal.classList.remove(
+            "show"
+        );
+
+        // Dateiauswahl zurücksetzen
+        profileImageInput.value = "";
+
+        // Position zurücksetzen
+        cropPositionX = 0;
+        cropPositionY = 0;
+
+        // Zoom zurücksetzen
+        cropZoom = 1;
+        profileCropZoom.value = 1;
+
+        // Bildposition zurücksetzen
+        profileCropImage.style.left =
+            "50%";
+
+        profileCropImage.style.top =
+            "50%";
+
+        profileCropImage.style.transform =
+            "translate(-50%, -50%) scale(1)";
+
+        // Vorschaubild entfernen
+        profileCropImage.src = "";
+
+    }
+);
+
+// ==================================================
+// PROFILBILD - ZUSCHNEIDEFENSTER MIT X SCHLIESSEN
+// ==================================================
+
+closeProfileCrop.addEventListener(
+    "click",
+    function () {
+
+        cancelProfileCrop.click();
+
+    }
+);
 
 
 // ==================================================
@@ -122,6 +556,9 @@ cancelButton.addEventListener("click", function () {
 
     // Formular verstecken
     profileForm.style.display = "none";
+
+    // Bearbeitungsstift verstecken
+    profileImageEditIcon.style.display = "none";
 
 });
 
@@ -138,6 +575,12 @@ saveButton.addEventListener("click", function () {
     const gender = dogGenderInput.value;
     const birthday = dogBirthdayInput.value;
     const moveIn = dogMoveInInput.value;
+
+// Formular nach dem Speichern schließen
+profileForm.style.display = "none";
+
+// Bearbeitungsstift verstecken
+profileImageEditIcon.style.display = "none";
 
 
     // ==================================================
@@ -304,17 +747,16 @@ function calculateAge(birthday) {
 // AKTUELLE MESSUNG AUF DEM DASHBOARD ANZEIGEN
 // ==================================================
 
-// Gewicht auf dem Dashboard
-const dashboardWeight =
-    document.getElementById("dashboard-weight");
-
-
 // ==================================================
 // KÖRPERMASSE - WECHSELANZEIGE
 // ==================================================
 
 const bodyMeasurementTitle =
     document.getElementById("body-measurement-title");
+
+// Gewichtsanzeige aus dem Dashboard holen
+const dashboardWeight =
+    document.getElementById("dashboard-weight");
 
 const bodyMeasurementValue =
     document.getElementById("body-measurement-value");
@@ -329,7 +771,7 @@ const bodyMeasurementNext =
     document.getElementById("body-measurement-next");
 
 
-// Die vier Körpermaße
+// Die 5 Körpermaße
 const bodyMeasurements = [
 
     {
@@ -357,7 +799,6 @@ const bodyMeasurements = [
     }
 
 ];
-
 
 // Schulterhöhe ist beim Start ausgewählt
 let currentBodyMeasurementIndex = 0;
@@ -388,28 +829,37 @@ if (dashboardMeasurements !== null) {
     });
 
 
-    // Gewicht anzeigen
-    if (measurements.length > 0) {
+    // ==================================================
+    // NEUESTES VORHANDENES GEWICHT ANZEIGEN
+    // ==================================================
 
-        const latestMeasurement =
-            measurements[0];
+    const latestWeightMeasurement =
+        measurements.find(
+            function (measurement) {
 
-        if (
-            latestMeasurement.weight !== undefined &&
-            latestMeasurement.weight !== ""
-        ) {
+                return (
+                    measurement.weight !== undefined &&
+                    measurement.weight !== null &&
+                    measurement.weight !== ""
+                );
 
-            dashboardWeight.textContent =
-                String(latestMeasurement.weight)
-                    .replace(".", ",") +
-                " kg";
+            }
+        );
 
-        }
+
+    if (
+        dashboardWeight !== null &&
+        latestWeightMeasurement !== undefined
+    ) {
+
+        dashboardWeight.textContent =
+            String(latestWeightMeasurement.weight)
+                .replace(".", ",") +
+            " kg";
 
     }
 
 }
-
 
 // ==================================================
 // AUSGEWÄHLTES KÖRPERMASS ANZEIGEN
@@ -473,7 +923,6 @@ function displayBodyMeasurement() {
             "– cm";
 
     }
-
 
     // Passendes Diagramm anzeigen
     updateBodyMeasurementChart(
@@ -1476,6 +1925,19 @@ function displayDashboardWeeklyTasks() {
             remainingNumber +
             " weitere Aufgaben";
 
+        moreTasks.style.cursor =
+            "pointer";
+
+        moreTasks.addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "html/wochenplan.html?weitereAufgaben=true";
+
+            }
+        );
+
         dashboardWeeklyList.appendChild(
             moreTasks
         );
@@ -1679,13 +2141,44 @@ function completeDashboardCommand(
         // ==================================================
         // SCHLÜSSEL WIE IN KOMMANDOS.JS
         // ==================================================
-
-        const commandKey =
-            selectedCommand.category +
-            "|" +
-            selectedCommand.name;
-
-
+            
+        let commandKey;
+            
+            
+        // ==================================================
+        // WUNSCHKOMMANDO
+        // ==================================================
+            
+        if (
+            selectedCommand.categoryId ===
+            "wunschkommandos"
+        ) {
+        
+            commandKey =
+                "⭐ Wunschkommandos" +
+                "|" +
+                selectedCommand.commandId;
+        
+        }
+        
+        
+        // ==================================================
+        // FESTES KOMMANDO
+        // ==================================================
+        
+        else {
+        
+            commandKey =
+                selectedCommand.category +
+                "|" +
+                (
+                    selectedCommand.originalName ||
+                    selectedCommand.name
+                );
+            
+        }
+        
+        
         const commandState =
             commandChecklist[
                 commandKey
@@ -2029,11 +2522,11 @@ displayDashboardWeeklyTasks();
 
 
 // ==================================================
-// MINI-DIAGRAMME FÜR GEWICHT UND SCHULTERHÖHE
+// MINI-DIAGRAMME FÜR GEWICHT UND KÖRPERMASSE
 // ==================================================
 
 
-// Die beiden Bereiche aus der index.html holen
+// Die beiden Diagrammbereiche aus der dashboard.html holen
 const dashboardWeightChart =
     document.getElementById("dashboard-weight-chart");
 
@@ -2106,6 +2599,7 @@ if (
             );
 
         }
+
     }
 
 }

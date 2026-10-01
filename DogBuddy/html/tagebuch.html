@@ -32,28 +32,26 @@
         <!-- KOPFBEREICH -->
         <!-- ================================================== -->
 
-        <section class="diary-header diary-header-with-button">
+        <section class="page-header">
 
-            <div>
-
-                <p class="eyebrow">
+            <div class="page-header-text">
+            
+                <p class="page-eyebrow">
                     TAGEBUCH
                 </p>
-
-                <h1>
+            
+                <h1 class="page-main-title">
                     <span id="page-dog-name">Major</span>s Tagebuch
                 </h1>
-
-                <p>
+            
+                <p class="page-subtitle">
                     Besondere Momente, Fortschritte und Erinnerungen
                     gemeinsam festhalten.
                 </p>
-
+            
             </div>
-
-
-            <!-- Popup öffnen -->
-
+        
+            <!-- POPUP ÖFFNEN -->
             <button
                 type="button"
                 id="open-diary-form"
@@ -65,7 +63,7 @@
             
                 Neuer Tagebucheintrag
             </button>
-
+        
         </section>
 
 
@@ -126,27 +124,48 @@
             <div class="app-modal-header">
 
                 <div>
-
+                
                     <p class="eyebrow">
                         TAGEBUCH
                     </p>
-
+                
                     <h2 id="diary-form-title">
                         Neuer Tagebucheintrag
                     </h2>
-
+                
                 </div>
+            
+            
+                <div class="diary-header-actions">
+                
+                    <!-- FOTOS UND VIDEOS HINZUFÜGEN -->
 
+                    <label
+                        for="diary-photos"
+                        class="photo-upload-button"
+                    >
+                        Fotos / Videos hinzufügen
+                    </label>
 
-                <button
-                    type="button"
-                    id="close-diary-form"
-                    class="app-modal-close"
-                    aria-label="Fenster schließen"
-                >
-                    ×
-                </button>
-
+                    <input
+                        type="file"
+                        id="diary-photos"
+                        accept="image/*,video/*"
+                        multiple
+                        hidden
+                    >
+                
+                    <button
+                        type="button"
+                        id="close-diary-form"
+                        class="app-modal-close"
+                        aria-label="Fenster schließen"
+                    >
+                        ×
+                    </button>
+                
+                </div>
+            
             </div>
 
 
@@ -155,6 +174,13 @@
             <!-- ================================================== -->
 
             <div class="app-modal-body">
+
+            <!-- FOTO-VORSCHAU -->
+
+            <div
+                id="photo-preview"
+                class="photo-preview"
+            ></div>
 
 
                 <!-- DATUM -->
@@ -273,59 +299,14 @@
                     ></textarea>
 
                 </div>
-
-
-                <!-- ================================================== -->
-                <!-- FOTOS -->
-                <!-- ================================================== -->
-
-                <div class="diary-form-group">
-
-                    <label>
-                        Fotos
-                    </label>
-
-                    <p class="diary-photo-info">
-                        Du kannst mehrere Fotos für diesen
-                        Tagebucheintrag auswählen.
-                    </p>
-
-
-                    <label
-                        for="diary-photos"
-                        class="photo-upload-button"
-                    >
-                        📷 Fotos auswählen
-                    </label>
-
-
-                    <input
-                        type="file"
-                        id="diary-photos"
-                        accept="image/*"
-                        multiple
-                        hidden
-                    >
-
-
-                    <!-- Vorschau -->
-
-                    <div
-                        id="photo-preview"
-                        class="photo-preview"
-                    ></div>
-
-                </div>
-
             </div>
-
 
             <!-- ================================================== -->
             <!-- POPUP-BUTTONS -->
             <!-- ================================================== -->
 
             <div class="app-modal-buttons">
-
+            
                 <button
                     type="button"
                     id="cancel-diary-form"
@@ -333,16 +314,15 @@
                 >
                     Abbrechen
                 </button>
-
-
+            
                 <button
                     type="button"
                     id="save-diary"
                     class="primary-button"
                 >
-                    Tagebucheintrag speichern
+                    🐾 Speichern
                 </button>
-
+            
             </div>
 
         </div>
@@ -368,6 +348,9 @@
 
     <!-- Scroll-to-Top -->
     <script src="../js/scroll-top.js"></script>
+
+    <!-- Schwebendes Navigationsmenü -->
+    <script src="../js/floating-menu.js"></script>
 
     <!-- Dark Mode -->
     <script src="../js/dark-mode.js"></script>

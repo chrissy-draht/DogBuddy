@@ -8,7 +8,7 @@
 // ==================================================
 
 const currentPage =
-    window.location.pathname.split("/").pop() || "index.html";
+    window.location.pathname.split("/").pop() || "dashboard.html";
 
 const isSubpage =
     window.location.pathname.includes("/html/");
@@ -36,7 +36,7 @@ header.innerHTML = `
     <!-- ========================================== -->
 
     <a
-        href="${basePath}index.html"
+        href="${basePath}dashboard.html"
         class="logo-link"
     >
         <img
@@ -57,8 +57,8 @@ header.innerHTML = `
     >
 
         <a
-            href="${basePath}index.html"
-            data-page="index.html"
+            href="${basePath}dashboard.html"
+            data-page="dashboard.html"
         >
             Dashboard
         </a>

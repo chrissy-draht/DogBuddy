@@ -363,6 +363,72 @@ body.dark-mode .mobile-menu-toggle span {
 
 
 /* ================================================== */
+/* GEMEINSAMER SEITENHEADER                           */
+/* ================================================== */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 40px;
+
+    margin-bottom: 40px;
+}
+
+
+.page-header-text {
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.page-header .gallery-add-button,
+.page-header .main-button {
+    flex-shrink: 0;
+}
+
+
+.page-eyebrow {
+    margin-bottom: 5px;
+
+    color: #b87333;
+
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+.page-main-title {
+    margin-bottom: 5px;
+
+    font-family: "Dancing Script", cursive;
+    font-size: 60px;
+    font-weight: 700;
+
+    line-height: 1.1;
+}
+
+/* Entdecker - langer Seitentitel */
+.discovery-page .page-main-title {
+    font-size: clamp(28px, 4vw, 60px);
+    white-space: nowrap;
+}
+
+
+.page-subtitle {
+    color: #756a62;
+
+    font-size: clamp(13px, 1.4vw, 17px);
+    line-height: 1.5;
+}
+
+
+/* ================================================== */
 /* DASHBOARD                                          */
 /* ================================================== */
 
@@ -377,42 +443,6 @@ body.dark-mode .mobile-menu-toggle span {
 }
 
 
-/* ================================================== */
-/* BEGRÜSSUNG                                         */
-/* ================================================== */
-
-/* Hauptüberschriften */
-h1 {
-    font-family: "Dancing Script", cursive;
-    font-weight: 700;
-    font-size: 60px;
-    margin-bottom: 5px;
-}
-
-/* Einheitliche Größe für alle Seiten-Hauptüberschriften */
-main h1 {
-    font-size: 60px !important;
-}
-
-/* Begrüßungsbereich auf dem Dashboard */
-.welcome {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 40px;
-    margin-bottom: 40px;
-}
-
-/* Linker Bereich mit Überschrift und Text */
-.welcome > div {
-    flex: 1;
-}
-
-/* Button bleibt rechts */
-.welcome .main-button {
-    flex-shrink: 0;
-}
-
 /* Kleine Überschriften */
 .small-heading {
     color: #b87333;
@@ -420,14 +450,6 @@ main h1 {
     font-weight: bold;
     letter-spacing: 2px;
     margin-bottom: 5px;
-}
-
-
-/* Text unter der Überschrift */
-.welcome-text {
-    color: #756a62;
-
-    font-size: 17px;
 }
 
 
@@ -453,6 +475,8 @@ main h1 {
     font-size: 14px;
 
     font-weight: bold;
+
+    margin-top: 12px;
 
     cursor: pointer;
 
@@ -492,6 +516,8 @@ main h1 {
 /* Profilbild-Bereich */
 
 .dog-image-area {
+    position: relative;
+
     display: flex;
 
     justify-content: center;
@@ -500,6 +526,34 @@ main h1 {
     flex-shrink: 0;
 }
 
+
+/* Bearbeitungssymbol auf dem Profilbild */
+
+.profile-image-edit-icon {
+    display: none;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 46px;
+    height: 46px;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(255, 255, 255, 0.65);
+
+    border-radius: 50%;
+
+    font-size: 22px;
+    line-height: 1;
+
+    cursor: pointer;
+    z-index: 5;
+}
 
 /* Profilbild */
 
@@ -545,6 +599,120 @@ main h1 {
     font-size: 16px;
 
     margin-bottom: 22px;
+}
+
+
+/* ================================================== */
+/* PROFILBILD ZUSCHNEIDEN                              */
+/* ================================================== */
+
+.profile-crop-content {
+    position: relative;
+
+    width: min(480px, calc(100vw - 40px));
+
+    padding: 30px;
+
+    text-align: center;
+}
+
+.profile-crop-close {
+    position: absolute;
+
+    top: 22px;
+    right: 22px;
+}
+
+.profile-crop-content .eyebrow {
+    margin-bottom: 6px;
+}
+
+.profile-crop-content h2 {
+    margin: 0 0 8px;
+}
+
+.profile-crop-content .profile-crop-info {
+    margin: 0 0 20px;
+
+    text-align: center;
+}
+
+.profile-crop-content .form-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.profile-crop-info {
+    margin-bottom: 20px;
+}
+
+
+/* Vorschau */
+
+.profile-crop-area {
+    position: relative;
+
+    width: 320px;
+    height: 320px;
+
+    margin: 20px auto;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    background-color: #1f1c19;
+
+    border: 4px solid #b87333;
+
+    box-shadow:
+        0 4px 18px rgba(0, 0, 0, 0.25);
+
+    cursor: grab;
+}
+
+.profile-crop-area:active {
+    cursor: grabbing;
+}
+
+
+/* Bild innerhalb der Vorschau */
+
+.profile-crop-image {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: auto;
+    height: 100%;
+
+    max-width: none;
+
+    transform: translate(-50%, -50%);
+
+    user-select: none;
+    pointer-events: none;
+}
+
+
+/* Zoom */
+
+.profile-crop-zoom {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 320px;
+
+    margin: 0 auto 20px;
+}
+
+.profile-crop-zoom input {
+    width: 100%;
 }
 
 
@@ -662,9 +830,6 @@ main h1 {
     align-items: center;
 }
 
-.body-measurement-content {
-    flex: 1;
-}
 
 /* Pfeile links und rechts */
 .body-measurement-arrow {
@@ -812,20 +977,6 @@ main h1 {
 }
 
 
-/* Einzelne Karte */
-.dashboard-card {
-    background-color: #ffffff;
-
-    border: 1px solid #eee5dd;
-
-    border-radius: 14px;
-
-    padding: 24px;
-
-    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.04);
-}
-
-
 /* Kartenüberschrift */
 .dashboard-card h2 {
     font-size: 19px;
@@ -845,7 +996,7 @@ main h1 {
 
 
 /* ================================================== */
-/* TRAINING - ZWEI BEREICHE                           */
+/* DASHBOARD - TRAININGSBEREICHE                      */
 /* ================================================== */
 
 .dashboard-training-boxes {
@@ -859,7 +1010,7 @@ main h1 {
 
 
 /* ================================================== */
-/* TRAINING - EINZELNER KASTEN                        */
+/* DASHBOARD - TRAININGSKASTEN                        */
 /* ================================================== */
 
 .dashboard-training-box {
@@ -885,7 +1036,7 @@ main h1 {
 
 
 /* ================================================== */
-/* TRAINING - FORTSCHRITTSZEILEN                      */
+/* DASHBOARD - TRAININGSFORTSCHRITTSZEILEN            */
 /* ================================================== */
 
 .dashboard-training-box-row {
@@ -914,7 +1065,7 @@ main h1 {
 
 
 /* ================================================== */
-/* TRAINING - LINK                                    */
+/* DASHBOARD - TRAININGSLINK                          */
 /* ================================================== */
 
 .dashboard-training-box-link {
@@ -965,30 +1116,6 @@ main h1 {
     font-weight: 600;
 
     text-align: right;
-}
-
-
-/* ================================================== */
-/* KARTEN-LINK                                        */
-/* ================================================== */
-
-.card-link {
-    display: inline-block;
-
-    margin-top: 16px;
-
-    color: #b87333;
-
-    text-decoration: none;
-
-    font-size: 13px;
-
-    font-weight: bold;
-}
-
-
-.card-link:hover {
-    text-decoration: underline;
 }
 
 
@@ -1057,7 +1184,7 @@ main h1 {
 
     text-align: center;
 
-    padding: 18px 25px;
+    padding: 35px 25px;
 }
 
 
@@ -1279,15 +1406,6 @@ main h1 {
 /* ================================================== */
 /* GROSSE DASHBOARD-KARTEN                            */
 /* ================================================== */
-
-.dashboard-grid {
-    display: grid;
-
-    grid-template-columns: repeat(2, 1fr);
-
-    gap: 25px;
-}
-
 
 /* Einzelne Dashboard-Karte */
 .dashboard-card {
@@ -1942,19 +2060,6 @@ main h1 {
 
 
 /* ================================================== */
-/* DASHBOARD - WEITERE AUFGABEN                       */
-/* ================================================== */
-
-.dashboard-more-tasks {
-    margin: 4px 0 0;
-
-    color: #302a26;
-
-    font-size: 14px;
-    line-height: 1.3;
-}
-
-/* ================================================== */
 /* TRAINING                                           */
 /* ================================================== */
 
@@ -2187,54 +2292,6 @@ main h1 {
     max-width: 1200px;
     margin: 0 auto;
     padding: 50px 40px 80px;
-}
-
-
-/* ================================================== */
-/* ENTWICKLUNG - ÜBERSCHRIFT                          */
-/* ================================================== */
-
-.development-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 40px;
-
-    margin-bottom: 35px;
-}
-
-
-/* ================================================== */
-/* ENTWICKLUNG - ÜBERSCHRIFT TEXT                     */
-/* ================================================== */
-
-.development-header > div {
-    flex: 1;
-}
-
-
-/* ================================================== */
-/* ENTWICKLUNG - HINZUFÜGEN BUTTON                    */
-/* ================================================== */
-
-.development-header .gallery-add-button {
-    flex-shrink: 0;
-
-    background-color: #c9782c;
-    color: #ffffff;
-
-    border: 1px solid #c9782c;
-}
-
-
-/* ================================================== */
-/* ENTWICKLUNG - HINZUFÜGEN BUTTON HOVER              */
-/* ================================================== */
-
-.development-header .gallery-add-button:hover {
-    background-color: #b86b26;
-    border-color: #b86b26;
 }
 
 
@@ -2668,15 +2725,6 @@ main h1 {
 
 }
 
-/* ================================================== */
-/* TRAINING                                           */
-/* ================================================== */
-
-.training-page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 50px 40px 80px;
-}
 
 /* ================================================== */
 /* WACHSTUMSKURVE ANKLICKBAR */
@@ -2700,8 +2748,8 @@ main h1 {
 /* ================================================== */
 
 .growth-chart-modal-content.app-modal-content {
-    width: 90vw;
-    max-width: 1500px;
+    width: 80vw;
+    max-width: 1200px;
     height: auto;
 }
 
@@ -2719,354 +2767,6 @@ main h1 {
     background-color: #ffffff;
     border: 1px solid #eee7e1;
     border-radius: 10px;
-}
-
-/* ================================================== */
-/* TRAINING - ÜBERSCHRIFT                             */
-/* ================================================== */
-
-.training-header {
-    margin-bottom: 35px;
-}
-
-
-.training-header .eyebrow {
-    color: #b87333;
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
-}
-
-
-.training-header h1 {
-    font-size: 36px;
-    margin: 0 0 10px;
-    color: #302a26;
-}
-
-
-.training-header > p:last-child {
-    color: #6f665f;
-    margin: 0;
-}
-
-
-/* ================================================== */
-/* TRAINING - FORMULAR KARTE                          */
-/* ================================================== */
-
-.training-form-card {
-    background-color: #ffffff;
-
-    padding: 30px;
-
-    border-radius: 16px;
-
-    margin-bottom: 30px;
-
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
-}
-
-
-.training-form-card h2 {
-    margin-top: 0;
-
-    margin-bottom: 25px;
-
-    color: #302a26;
-}
-
-
-/* ================================================== */
-/* TRAINING - FORMULARFELDER                          */
-/* ================================================== */
-
-.training-form-group {
-    display: flex;
-
-    flex-direction: column;
-
-    margin-bottom: 22px;
-}
-
-
-.training-form-group label {
-    font-size: 14px;
-
-    font-weight: 600;
-
-    color: #514941;
-
-    margin-bottom: 8px;
-}
-
-
-.training-form-group input,
-.training-form-group textarea {
-    width: 100%;
-
-    box-sizing: border-box;
-
-    padding: 12px 14px;
-
-    border: 1px solid #ddd3ca;
-
-    border-radius: 8px;
-
-    font-size: 15px;
-
-    font-family: inherit;
-
-    color: #302a26;
-
-    background-color: #ffffff;
-}
-
-
-.training-form-group textarea {
-    resize: vertical;
-
-    min-height: 100px;
-}
-
-
-.training-form-group input:focus,
-.training-form-group textarea:focus {
-    outline: none;
-
-    border-color: #b87333;
-}
-
-
-/* ================================================== */
-/* TRAINING - STERNE                                  */
-/* ================================================== */
-
-.star-rating {
-    display: flex;
-
-    gap: 5px;
-
-    margin-top: 3px;
-}
-
-
-.star {
-    background: none;
-
-    border: none;
-
-    padding: 0;
-
-    font-size: 32px;
-
-    line-height: 1;
-
-    color: #b87333;
-
-    cursor: pointer;
-}
-
-
-.star:hover {
-    transform: scale(1.12);
-}
-
-
-.rating-text {
-    margin-top: 10px;
-
-    font-size: 14px;
-
-    color: #8a7d73;
-}
-
-
-/* ================================================== */
-/* TRAINING - SPEICHERN BUTTON                        */
-/* ================================================== */
-
-.training-form-card .primary-button {
-    background-color: #b87333;
-
-    color: #ffffff;
-
-    border: none;
-
-    border-radius: 8px;
-
-    padding: 12px 20px;
-
-    font-size: 15px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-
-.training-form-card .primary-button:hover {
-    opacity: 0.85;
-}
-
-
-/* ================================================== */
-/* TRAINING - ÜBERSICHT                               */
-/* ================================================== */
-
-.training-overview {
-    background-color: #ffffff;
-
-    padding: 30px;
-
-    border-radius: 16px;
-
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
-}
-
-
-.training-overview h2 {
-    margin-top: 0;
-
-    margin-bottom: 25px;
-
-    color: #302a26;
-}
-
-
-/* ================================================== */
-/* TRAINING - GESPEICHERTE ÜBUNG                      */
-/* ================================================== */
-
-.training-item {
-    padding: 20px;
-
-    border: 1px solid #eee6df;
-
-    border-radius: 10px;
-
-    margin-bottom: 15px;
-
-    background-color: #faf7f4;
-}
-
-
-.training-item:last-child {
-    margin-bottom: 0;
-}
-
-
-.training-item-header {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    gap: 20px;
-}
-
-
-.training-item h3 {
-    margin: 0;
-
-    font-size: 18px;
-
-    color: #302a26;
-}
-
-
-.training-item-stars {
-    color: #b87333;
-
-    font-size: 21px;
-
-    letter-spacing: 2px;
-}
-
-
-.training-item-note {
-    margin: 12px 0 0;
-
-    color: #6f665f;
-
-    line-height: 1.5;
-}
-
-
-/* ================================================== */
-/* TRAINING - DATUM                                   */
-/* ================================================== */
-
-.training-item-date {
-    margin: 8px 0 0;
-
-    font-size: 13px;
-
-    font-weight: 600;
-
-    color: #b87333;
-}
-
-
-/* ================================================== */
-/* TRAINING - LÖSCHEN BUTTON                          */
-/* ================================================== */
-
-.delete-training-button {
-    margin-top: 15px;
-
-    background-color: transparent;
-
-    color: #b87333;
-
-    border: 1px solid #b87333;
-
-    border-radius: 6px;
-
-    padding: 7px 12px;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-
-.delete-training-button:hover {
-    background-color: #b87333;
-
-    color: #ffffff;
-}
-
-/* ================================================== */
-/* ENTDECKER-SEITE */
-/* ================================================== */
-
-.discovery-page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 30px 60px;
-}
-
-
-/* ================================================== */
-/* ENTDECKER - ÜBERSCHRIFT */
-/* ================================================== */
-
-.discovery-page-header {
-    margin-bottom: 30px;
-}
-
-.discovery-page-header h1 {
-    margin-top: 5px;
-    margin-bottom: 10px;
-}
-
-.discovery-page-header > p:last-child {
-    color: #786f68;
 }
 
 
@@ -3115,10 +2815,82 @@ main h1 {
 
 
 /* ================================================== */
+/* ENTDECKER - EDITOR                                 */
+/* ================================================== */
+
+#discovery-editor-modal .eyebrow {
+    margin: 0 0 6px 0;
+
+    color: #d68a4b;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+#discovery-editor-title {
+    margin: 0 0 24px 0;
+
+    color: #3f3732;
+
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+#discovery-editor-modal label {
+    display: block;
+
+    margin: 0 0 7px 0;
+
+    color: #4f4741;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#discovery-editor-name,
+#discovery-editor-note {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d8cec6;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+    color: #3e3732;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    box-sizing: border-box;
+}
+
+#discovery-editor-name {
+    height: 48px;
+}
+
+#discovery-editor-note {
+    min-height: 95px;
+
+    line-height: 1.5;
+
+    resize: vertical;
+}
+
+#discovery-editor-modal label[for="discovery-editor-note"] {
+    margin-top: 18px;
+}
+
+/* ================================================== */
 /* ENTDECKER - FORTSCHRITT */
 /* ================================================== */
 
 .discovery-progress {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+
     margin-bottom: 30px;
 
     padding: 30px;
@@ -3130,6 +2902,7 @@ main h1 {
     box-shadow:
         0 8px 25px rgba(0, 0, 0, 0.06);
 }
+
 
 .discovery-progress h2 {
     margin-top: 5px;
@@ -3216,6 +2989,21 @@ main h1 {
 /* ENTDECKER - KATEGORIEN */
 /* ================================================== */
 
+/* ================================================== */
+/* STICKY KATEGORIE-KOPF */
+/* ================================================== */
+
+#discovery-checklist .discovery-category.open {
+    overflow: visible;
+}
+
+#discovery-checklist .discovery-category.open
+.discovery-category-header {
+    position: sticky;
+    top: var(--discovery-sticky-top);
+    z-index: 15;
+}
+
 .discovery-category {
     margin-bottom: 15px;
 
@@ -3254,6 +3042,20 @@ main h1 {
     cursor: pointer;
 
     text-align: left;
+}
+
+/* ================================================== */
+/* KOMMANDOS - STICKY KATEGORIEKOPF                   */
+/* ================================================== */
+
+#command-checklist .discovery-category.open {
+    overflow: visible;
+}
+
+#command-checklist .discovery-category.open .discovery-category-header {
+    position: sticky;
+    top: var(--command-sticky-top);
+    z-index: 15;
 }
 
 .discovery-category-header:hover {
@@ -3373,6 +3175,224 @@ main h1 {
 }
 
 
+/* ================================================== */
+/* KOMMANDOS - OBERE AKTIONSLEISTE                    */
+/* ================================================== */
+
+.command-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+
+    margin-bottom: 25px;
+}
+
+.command-edit-hint {
+    margin: 0 0 18px 0;
+
+    color: #6f6259;
+
+    font-size: clamp(12px, 1.4vw, 16px);
+    line-height: 1.5;
+}
+
+.command-add-button {
+    flex-shrink: 0;
+}
+
+
+/* ================================================== */
+/* KOMMANDOS - BEARBEITBARER NAME                     */
+/* ================================================== */
+
+.editable-command-name {
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease;
+}
+
+.editable-command-name:hover {
+    color: #d68a4b;
+}
+
+
+/* ================================================== */
+/* KOMMANDOS - EDITOR                                 */
+/* ================================================== */
+
+#command-editor-modal .eyebrow {
+    margin: 0 0 6px 0;
+
+    color: #d68a4b;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+#command-editor-title {
+    margin: 0 0 24px 0;
+
+    color: #3f3732;
+
+    font-size: 24px;
+    line-height: 1.2;
+}
+
+#command-editor-modal label {
+    display: block;
+
+    margin: 0 0 7px 0;
+
+    color: #4f4741;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+#command-editor-note-area {
+    margin-top: 18px;
+}
+
+#command-editor-name,
+#command-editor-note {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d8cec6;
+    border-radius: 10px;
+
+    background-color: #ffffff;
+    color: #3e3732;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    box-sizing: border-box;
+}
+
+#command-editor-name {
+    height: 48px;
+}
+
+#command-editor-note {
+    min-height: 95px;
+
+    line-height: 1.5;
+
+    resize: vertical;
+}
+
+#command-editor-name::placeholder,
+#command-editor-note::placeholder {
+    color: #a69a91;
+}
+
+#command-editor-name:focus,
+#command-editor-note:focus {
+    outline: none;
+
+    border-color: #d68a4b;
+}
+
+
+/* ================================================== */
+/* KOMMANDOS - RESPONSIVE                             */
+/* ================================================== */
+
+@media (max-width: 800px) {
+
+    .command-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .command-add-button {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .command-editor-actions {
+        flex-wrap: wrap;
+    }
+
+}
+
+
+/* ================================================== */
+/* DARK MODE - KOMMANDO-ERWEITERUNGEN                 */
+/* ================================================== */
+
+body.dark-mode .command-edit-hint {
+    color: #bfb3aa;
+}
+
+body.dark-mode .editable-command-name:hover {
+    color: #d68a4b;
+}
+
+body.dark-mode #command-editor-title {
+    color: #f2ebe6;
+}
+
+body.dark-mode #discovery-editor-title {
+    color: #f2ebe6;
+}
+
+body.dark-mode #command-editor-modal label,
+body.dark-mode #discovery-editor-modal label {
+    color: #e0d7d0;
+}
+
+body.dark-mode #command-editor-name,
+body.dark-mode #command-editor-note,
+body.dark-mode #discovery-editor-name,
+body.dark-mode #discovery-editor-note {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #e9e1db;
+}
+
+body.dark-mode #command-editor-name:focus,
+body.dark-mode #command-editor-note:focus,
+body.dark-mode #discovery-editor-name:focus,
+body.dark-mode #discovery-editor-note:focus {
+    border-color: #d68a4b;
+}
+
+
+/* ================================================== */
+/* DARK MODE - SUCHERGEBNISSE                         */
+/* ================================================== */
+
+body.dark-mode .discovery-suggestions {
+    background-color: #342f2a;
+
+    border-color: #544a42;
+
+    color: #e9e1db;
+}
+
+body.dark-mode .discovery-suggestions button {
+    background-color: #342f2a;
+    color: #e9e1db;
+
+    border: 1px solid #d68a4b;
+}
+
+body.dark-mode .discovery-suggestions button:hover {
+    background-color: #d68a4b;
+    color: #ffffff;
+}
+
+
 /* ==================================================*/
 /* KOMMANDOS - NAME UND BESCHREIBUNG */
 /* ================================================== */
@@ -3444,10 +3464,6 @@ main h1 {
 
 @media (max-width: 800px) {
 
-    .discovery-progress-grid {
-        grid-template-columns: 1fr;
-    }
-
     .discovery-column-header,
     .discovery-row {
         grid-template-columns:
@@ -3458,6 +3474,12 @@ main h1 {
     }
 
 }
+
+    .discovery-page {
+        width: min(1100px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 45px 0 70px;
+    }
 
 
 @media (max-width: 550px) {
@@ -3492,22 +3514,6 @@ main h1 {
 
 }
 
-/* ================================================== */
-/* TRAINING - ÜBERSICHT KOPF */
-/* ================================================== */
-
-.training-overview-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 20px;
-}
-
-.training-overview-header h2 {
-    margin-bottom: 0;
-}
-
 
 /* ================================================== */
 /* TAGEBUCH                                           */
@@ -3519,81 +3525,6 @@ main h1 {
     margin: 0 auto;
 
     padding: 50px 40px 80px;
-}
-
-
-/* ================================================== */
-/* TAGEBUCH - ÜBERSCHRIFT                             */
-/* ================================================== */
-
-.diary-header {
-    margin-bottom: 35px;
-}
-
-
-.diary-header .eyebrow {
-    margin-bottom: 8px;
-
-    color: #b87333;
-
-    font-size: 13px;
-
-    font-weight: 700;
-
-    letter-spacing: 2px;
-}
-
-
-.diary-header h1 {
-    margin: 0 0 10px;
-
-    color: #302a26;
-
-    font-size: 38px;
-}
-
-
-.diary-header > p:last-child {
-    margin: 0;
-
-    color: #746b65;
-}
-
-
-/* Überschrift und Button nebeneinander */
-
-.diary-header-with-button {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 40px;
-}
-
-
-/* ================================================== */
-/* TAGEBUCH - HINZUFÜGEN BUTTON                      */
-/* ================================================== */
-
-.diary-header-with-button .gallery-add-button {
-    flex-shrink: 0;
-
-    background-color: #c9782c;
-    color: #ffffff;
-
-    border: 1px solid #c9782c;
-}
-
-
-/* ================================================== */
-/* TAGEBUCH - HINZUFÜGEN BUTTON HOVER                */
-/* ================================================== */
-
-.diary-header-with-button .gallery-add-button:hover {
-    background-color: #b86b26;
-    border-color: #b86b26;
 }
 
 
@@ -3693,32 +3624,24 @@ main h1 {
 
 .photo-upload-button {
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
 
-    width: auto;
+    width: fit-content;
 
-    padding: 10px 17px;
+    padding: 10px 15px;
 
-    background-color: #ffffff;
+    background-color: #fffaf5;
+    color: #a85f1f;
 
-    color: #8a674b;
-
-    border: 1px solid #d8c5b5;
-
-    border-radius: 9px;
+    border: 1px solid #d68a4b;
+    border-radius: 8px;
 
     font-family: inherit;
-
     font-size: 14px;
-
     font-weight: 600;
 
     cursor: pointer;
-
-    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.04);
 
     transition:
         background-color 0.2s ease,
@@ -3728,11 +3651,20 @@ main h1 {
 
 
 .photo-upload-button:hover {
-    background-color: #f4ede6;
-
-    border-color: #b98a62;
-
+    background-color: #f8eee5;
+    border-color: #c4772b;
     transform: translateY(-1px);
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - AKTIONEN IM POPUP-KOPF                  */
+/* ================================================== */
+
+.diary-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 
@@ -4100,54 +4032,6 @@ main h1 {
 
 
 /* ================================================== */
-/* GESUNDHEIT - ÜBERSCHRIFT                           */
-/* ================================================== */
-
-.health-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 40px;
-
-    margin-bottom: 35px;
-}
-
-
-/* ================================================== */
-/* GESUNDHEIT - ÜBERSCHRIFT TEXT                      */
-/* ================================================== */
-
-.health-header > div {
-    flex: 1;
-}
-
-
-/* ================================================== */
-/* GESUNDHEIT - HINZUFÜGEN BUTTON                     */
-/* ================================================== */
-
-.health-header .gallery-add-button {
-    flex-shrink: 0;
-
-    background-color: #c9782c;
-    color: #ffffff;
-
-    border: 1px solid #c9782c;
-}
-
-
-/* ================================================== */
-/* GESUNDHEIT - HINZUFÜGEN BUTTON HOVER               */
-/* ================================================== */
-
-.health-header .gallery-add-button:hover {
-    background-color: #b86b26;
-    border-color: #b86b26;
-}
-
-
-/* ================================================== */
 /* GESUNDHEIT - TERMINFORMULAR                        */
 /* ================================================== */
 
@@ -4420,16 +4304,14 @@ main h1 {
 }
 
 
-.status-open {
+.appointment-status.status-open {
     background-color: #f7eadf;
-
     color: #a45f27;
 }
 
 
-.status-completed {
+.appointment-status.status-completed {
     background-color: #ecebea;
-
     color: #6d655f;
 }
 
@@ -4626,55 +4508,6 @@ main h1 {
     margin: 0 auto;
 
     padding: 50px 0 70px;
-}
-
-
-
-/* ================================================== */
-/* WOCHENPLAN - ÜBERSCHRIFT                           */
-/* ================================================== */
-
-.weekly-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 40px;
-
-    margin-bottom: 35px;
-}
-
-
-/* ================================================== */
-/* WOCHENPLAN - ÜBERSCHRIFT TEXT                      */
-/* ================================================== */
-
-.weekly-header > div {
-    flex: 1;
-}
-
-
-/* ================================================== */
-/* WOCHENPLAN - HINZUFÜGEN BUTTON                     */
-/* ================================================== */
-
-.weekly-header .gallery-add-button {
-    flex-shrink: 0;
-
-    background-color: #c9782c;
-    color: #ffffff;
-
-    border: 1px solid #c9782c;
-}
-
-
-/* ================================================== */
-/* WOCHENPLAN - HINZUFÜGEN BUTTON HOVER               */
-/* ================================================== */
-
-.weekly-header .gallery-add-button:hover {
-    background-color: #b86b26;
-    border-color: #b86b26;
 }
 
 
@@ -4962,61 +4795,6 @@ main h1 {
     margin: 0 auto;
 
     padding: 50px 0 80px;
-}
-
-
-/* ================================================== */
-/* GALERIE - ÜBERSCHRIFT                              */
-/* ================================================== */
-
-.gallery-header {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    gap: 40px;
-
-    margin-bottom: 35px;
-}
-
-
-.gallery-header-text {
-    flex: 1;
-}
-
-
-.gallery-header .eyebrow {
-    margin: 0 0 7px;
-
-    color: #b87333;
-
-    font-size: 13px;
-
-    font-weight: 700;
-
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
-}
-
-
-.gallery-header h1 {
-    margin: 0 0 10px;
-
-    color: #302a26;
-
-    font-size: 38px;
-}
-
-
-.gallery-header-text > p:last-child {
-    margin: 0;
-
-    color: #746b65;
-
-    line-height: 1.6;
 }
 
 
@@ -5467,130 +5245,8 @@ main h1 {
 
 
 /* ================================================== */
-/* GALERIE - POPUP                                    */
-/* ================================================== */
-
-.gallery-form-modal {
-    position: fixed;
-
-    inset: 0;
-
-    z-index: 1000;
-
-    display: none;
-
-    align-items: center;
-
-    justify-content: center;
-
-    padding: 30px;
-
-    background-color: rgba(39, 34, 31, 0.55);
-}
-
-
-/* Wird vom JavaScript eingeblendet */
-
-.gallery-form-modal.show {
-    display: flex;
-}
-
-
-/* Popup-Fenster */
-
-.gallery-form-content {
-    width: min(650px, 100%);
-    max-height: 90vh;
-
-    display: flex;
-    flex-direction: column;
-
-    overflow: hidden;
-
-    background-color: #ffffff;
-
-    border-radius: 16px;
-
-    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.20);
-}
-
-
-/* ================================================== */
-/* GALERIE - POPUP KOPF                               */
-/* ================================================== */
-
-.gallery-form-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-
-    padding: 22px 25px;
-
-    border-bottom: 1px solid #eee7e1;
-}
-
-
-.gallery-form-header h2 {
-    margin: 4px 0 0;
-
-    color: #302a26;
-
-    font-size: 21px;
-}
-
-
-/* X oben rechts */
-
-.gallery-form-close {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: 35px;
-
-    height: 35px;
-
-    padding: 0;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background-color: transparent;
-
-    color: #746b65;
-
-    font-size: 25px;
-
-    line-height: 1;
-
-    cursor: pointer;
-}
-
-
-.gallery-form-close:hover {
-    background-color: #f3eee9;
-
-    color: #302a26;
-}
-
-
-/* ================================================== */
 /* GALERIE - POPUP INHALT                             */
 /* ================================================== */
-
-.gallery-form-body {
-    flex: 1;
-    min-height: 0;
-
-    overflow-y: auto;
-
-    padding: 25px 25px 30px;
-}
-
 
 .gallery-form-group {
     display: flex;
@@ -5762,88 +5418,6 @@ main h1 {
     border-radius: 10px;
 
     background-color: #eee8e2;
-}
-
-
-/* ================================================== */
-/* GALERIE - POPUP BUTTONS                            */
-/* ================================================== */
-
-.gallery-form-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-
-    flex-shrink: 0;
-
-    margin: 0;
-    padding: 18px 25px 22px;
-
-    border-top: 1px solid #eee7e1;
-    background-color: #ffffff;
-}
-
-
-/* Abbrechen */
-
-.gallery-cancel-button {
-    padding: 10px 17px;
-
-    border: 1px solid #d8c5b5;
-
-    border-radius: 9px;
-
-    background-color: #ffffff;
-
-    color: #6f6258;
-
-    font-family: inherit;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-
-.gallery-cancel-button:hover {
-    background-color: #f7f3ee;
-}
-
-
-/* Speichern */
-
-.gallery-save-button {
-    padding: 10px 18px;
-
-    border: none;
-
-    border-radius: 9px;
-
-    background-color: #c4772b;
-
-    color: #ffffff;
-
-    font-family: inherit;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.2s ease,
-        transform 0.2s ease;
-}
-
-
-.gallery-save-button:hover {
-    background-color: #a96020;
-
-    transform: translateY(-1px);
 }
 
 
@@ -6134,20 +5708,30 @@ main h1 {
 
 /* ================================================== */
 /* GEMEINSAME POPUPS                                  */
-/* Tagebuch, Training, Entwicklung, Gesundheit usw.   */
+/* ================================================== */
+
+/*
+    Dieser Bereich steuert das Grunddesign aller
+    normalen Popups in DogBuddy.
+
+    Änderungen an Hintergrund, Größe, Abständen,
+    Kopfbereich, X oder Buttonleiste werden hier
+    zentral für alle Popups vorgenommen.
+*/
+
+
+/* ================================================== */
+/* POPUP - HINTERGRUND                                */
 /* ================================================== */
 
 .app-modal {
     position: fixed;
-
     inset: 0;
 
     z-index: 1000;
 
     display: none;
-
     align-items: center;
-
     justify-content: center;
 
     padding: 30px;
@@ -6156,7 +5740,7 @@ main h1 {
 }
 
 
-/* Popup wird vom JavaScript geöffnet */
+/* Popup wird durch JavaScript geöffnet */
 
 .app-modal.show {
     display: flex;
@@ -6168,14 +5752,15 @@ main h1 {
 /* ================================================== */
 
 .app-modal-content {
-    width: min(650px, 100%);
-
-    max-height: 90vh;
+    width: min(650px, calc(100vw - 40px));
+    max-height: min(90vh, 850px);
 
     display: flex;
     flex-direction: column;
 
     overflow: hidden;
+
+    box-sizing: border-box;
 
     background-color: #ffffff;
 
@@ -6187,7 +5772,9 @@ main h1 {
 }
 
 
-/* Kleine Öffnungsanimation */
+/* ================================================== */
+/* POPUP - ÖFFNUNGSANIMATION                         */
+/* ================================================== */
 
 @keyframes appModalOpen {
 
@@ -6211,16 +5798,18 @@ main h1 {
 
 .app-modal-header {
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     gap: 20px;
 
+    flex-shrink: 0;
+
     padding: 22px 25px;
 
     border-bottom: 1px solid #eee5dd;
+
+    background-color: #ffffff;
 }
 
 
@@ -6238,30 +5827,26 @@ main h1 {
 /* ================================================== */
 
 .app-modal-close {
-    display: flex;
-
+    display: inline-flex;
     align-items: center;
-
     justify-content: center;
 
     flex-shrink: 0;
 
     width: 35px;
-
     height: 35px;
 
     padding: 0;
 
     border: none;
-
     border-radius: 50%;
 
     background-color: transparent;
 
     color: #746b65;
 
+    font-family: inherit;
     font-size: 25px;
-
     line-height: 1;
 
     cursor: pointer;
@@ -6285,7 +5870,6 @@ main h1 {
 
 .app-modal-body {
     flex: 1;
-
     min-height: 0;
 
     overflow-y: auto;
@@ -6293,15 +5877,15 @@ main h1 {
     padding: 25px 25px 30px;
 }
 
+
 /* ================================================== */
 /* POPUP - BUTTONBEREICH UNTEN                        */
 /* ================================================== */
 
 .app-modal-buttons {
     display: flex;
-
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     gap: 12px;
 
@@ -6317,21 +5901,49 @@ main h1 {
 }
 
 
+/* Versteckte Buttons wirklich ausblenden */
+
+.app-modal-buttons > button[hidden] {
+    display: none;
+}
+
+
+/* Einheitliche Größe aller normalen Popup-Buttons */
+
+.app-modal-buttons > button {
+    width: 135px;
+    min-height: 42px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    box-sizing: border-box;
+}
+
+
+/* ================================================== */
+/* TAGEBUCH - POPUP-HÖHE                              */
+/* ================================================== */
+
+#diary-form-modal .app-modal-content {
+    height: min(90vh, 850px);
+}
+
+
 /* ================================================== */
 /* POPUP - ABBRECHEN                                  */
+/* Tagebuch, Entwickling, Galerie usw.                */
 /* ================================================== */
 
 .app-cancel-button {
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
 
     padding: 10px 17px;
 
     border: 1px solid #d8c5b5;
-
     border-radius: 9px;
 
     background-color: #ffffff;
@@ -6339,9 +5951,7 @@ main h1 {
     color: #6f6258;
 
     font-family: inherit;
-
     font-size: 14px;
-
     font-weight: 600;
 
     cursor: pointer;
@@ -6373,59 +5983,6 @@ main h1 {
     Deshalb braucht er KEINEN zweiten eigenen
     CSS-Block mehr.
 */
-
-
-/* ================================================== */
-/* TAGEBUCH - DATEI AUSWÄHLEN                         */
-/* ================================================== */
-
-/*
-    Falls im HTML ein eigenes Label mit
-    photo-upload-button verwendet wird,
-    sieht es genauso aus wie in der Galerie.
-*/
-
-.photo-upload-button {
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    width: auto;
-
-    padding: 10px 15px;
-
-    border: 1px solid #d8c5b5;
-
-    border-radius: 8px;
-
-    background-color: #ffffff;
-
-    color: #8a674b;
-
-    font-family: inherit;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease;
-}
-
-
-.photo-upload-button:hover {
-    background-color: #f4ede6;
-
-    border-color: #b98a62;
-
-    transform: translateY(-1px);
-}
 
 
 /* ================================================== */
@@ -6626,21 +6183,6 @@ main h1 {
 
 
 /* ================================================== */
-/* WILLKOMMEN SCHRIFT                                 */
-/* ================================================== */
-
-.welcome-script {
-    font-family: "Dancing Script", cursive;
-
-    color: #b87333;
-
-    font-size: 30px;
-
-    font-weight: 700;
-}
-
-
-/* ================================================== */
 /* MINI-DIAGRAMME AUF DEM DASHBOARD                   */
 /* Gewicht und Schulterhöhe                           */
 /* ================================================== */
@@ -6731,6 +6273,688 @@ main h1 {
 
 
 /* ================================================== */
+/* ERFOLGS-POPUP - KOMMANDOS & ENTDECKER              */
+/* ================================================== */
+
+.achievement-content {
+    width: min(520px, calc(100vw - 40px));
+
+    text-align: center;
+}
+
+.achievement-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 14px;
+}
+
+/* Hintergrundbild der Erfolgskarte - ALT */
+
+/*
+
+#discovery-achievement-modal .achievement-content {
+    position: relative;
+    overflow: hidden;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    border: 1px solid #c4772b;
+}
+*/
+
+/* Dunkle Ebene über dem Hintergrundbild - ALT */
+
+/*
+
+#discovery-achievement-modal .achievement-content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            ellipse 70% 65% at 50% 62%,
+            rgba(15, 12, 10, 0.78) 0%,
+            rgba(15, 12, 10, 0.68) 35%,
+            rgba(15, 12, 10, 0.42) 60%,
+            rgba(15, 12, 10, 0.12) 82%,
+            rgba(15, 12, 10, 0.02) 100%
+        );
+
+    pointer-events: none;
+    z-index: 0;
+}
+*/
+
+
+/* ================================================== */
+/* ENTDECKER - NEUES ERFOLGSBILD */
+/* ================================================== */
+
+#discovery-achievement-modal .discovery-achievement-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+
+
+/* Inhalt über der dunklen Ebene */
+
+#discovery-achievement-modal .achievement-body {
+    position: relative;
+    z-index: 1;
+}
+
+/* ================================================== */
+/* ENTDECKER - ERFOLGS-POPUP TEXTE - ALT */
+/* ================================================== */
+
+/*
+
+#discovery-achievement-modal .achievement-body .eyebrow {
+    color: #f0a13a;
+    text-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.65);
+}
+
+#discovery-achievement-modal .achievement-body h2 {
+    color: #ffffff;
+    text-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.75);
+}
+
+#discovery-achievement-modal .achievement-text {
+    color: #ffffff;
+    text-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+#discovery-achievement-modal .achievement-percent {
+    color: #f39a18;
+    text-shadow:
+        0 2px 7px rgba(0, 0, 0, 0.75);
+}
+
+*/
+
+
+/* ================================================== */
+/* ENTDECKER - ERFOLGSBILD - ALT */
+/* ================================================== */
+
+/*
+
+#discovery-achievement-modal .achievement-image-wrapper {
+    position: relative;
+    width: 135px;
+    height: 125px;
+    margin: 0 auto 8px;
+}
+
+#discovery-achievement-modal .achievement-profile-image {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 105px;
+    height: 105px;
+
+    object-fit: cover;
+    border: 4px solid #ffffff;
+    border-radius: 50%;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+
+
+#discovery-achievement-modal .achievement-icon {
+    position: absolute;
+    right: 0;
+    bottom: 4px;
+
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #fff4e8;
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+
+    font-size: 22px;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.35);
+}
+*/
+
+/* ================================================== */
+/* ENTDECKER - ERFOLGS-POPUP LAYOUT */
+/* ================================================== */
+
+/*
+
+#discovery-achievement-modal .achievement-content {
+    width: min(580px, calc(100vw - 40px));
+    padding: 40px 44px 36px;
+}
+
+#discovery-achievement-modal .achievement-body {
+    gap: 10px;
+    text-align: center;
+}
+
+#discovery-achievement-modal .achievement-body h2 {
+    max-width: 330px;
+    margin: 0 auto;
+
+    font-size: 27px;
+    line-height: 1.2;
+    text-align: center;
+}
+
+#discovery-achievement-modal .achievement-text {
+    max-width: 340px;
+    margin: 0 auto;
+
+    line-height: 1.5;
+    text-align: center;
+}
+
+#discovery-achievement-modal .achievement-percent {
+    margin: 4px 0 6px;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+*/
+
+
+/* ================================================== */
+/* ENTDECKER - ERFOLGS-POPUP BUTTON - ALT             */
+/* ================================================== */
+
+/*
+
+#discovery-achievement-modal .save-button {
+    min-width: 220px;
+    margin-top: 10px;
+    padding: 15px 30px;
+
+    background: linear-gradient(
+        135deg,
+        #ff9d00,
+        #df7200
+    );
+
+    border: 2px solid #ffb23e;
+    border-radius: 12px;
+
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 16px rgba(0, 0, 0, 0.55),
+        0 0 20px rgba(255, 157, 0, 0.55);
+}
+
+#discovery-achievement-modal .save-button:hover {
+    background-color: #f59a16;
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.55),
+        0 0 16px rgba(245, 154, 22, 0.45);
+}
+*/
+
+
+/* ================================================== */
+/* ENTDECKER - NEUER ERFOLGS-POPUP                    */
+/* ================================================== */
+
+#discovery-achievement-modal .achievement-content {
+    position: relative;
+    width: min(500px, calc(100vw - 40px));
+    max-width: 500px;
+    padding: 0;
+    overflow: hidden;
+
+    background: transparent;
+    border: none;
+    border-radius: 20px;
+    box-shadow: none;
+}
+
+#discovery-achievement-modal .achievement-body {
+    display: block;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - ERFOLGS-POPUP SCHLIESSEN               */
+/* ================================================== */
+
+#discovery-achievement-modal .achievement-close {
+    position: absolute;
+
+    top: 14px;
+    right: 14px;
+
+    width: 38px;
+    height: 38px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: rgba(255, 255, 255, 0.35);
+    color: #302a26;
+
+    font-size: 26px;
+    line-height: 38px;
+
+    cursor: pointer;
+
+    z-index: 10;
+}
+
+#discovery-achievement-modal .achievement-close:hover {
+    background-color: #ffffff;
+}
+
+
+/* ================================================== */
+/* ERFOLGS-POPUP - PROFILBILD                          */
+/* ================================================== */
+
+.achievement-image-wrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 150px;
+    height: 150px;
+
+    margin: 5px 0 10px;
+}
+
+.achievement-profile-image {
+    width: 120px;
+    height: 120px;
+
+    object-fit: cover;
+
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.achievement-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 72px;
+    height: 72px;
+
+    border-radius: 50%;
+
+    background-color: #f5e8dc;
+
+    font-size: 36px;
+}
+
+.achievement-body h2 {
+    margin: 0;
+}
+
+.achievement-text {
+    margin: 0;
+
+    color: #6f6259;
+
+    line-height: 1.6;
+}
+
+.achievement-percent {
+    margin: 4px 0;
+
+    color: #c4772b;
+
+    font-size: 32px;
+    font-weight: 700;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - EIGENE ENTDECKUNG POPUP                */
+/* ================================================== */
+
+#discovery-editor-modal .app-modal-content {
+    width: min(650px, 100%);
+    gap: 8px;
+}
+
+#discovery-editor-modal label {
+    margin-top: 8px;
+
+    color: #4f4640;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#discovery-editor-name,
+#discovery-editor-note {
+    width: 100%;
+
+    padding: 11px 12px;
+
+    border: 1px solid #ddd2c8;
+    border-radius: 8px;
+
+    background-color: #ffffff;
+    color: #332d29;
+
+    font: inherit;
+
+    box-sizing: border-box;
+}
+
+#discovery-editor-name:focus,
+#discovery-editor-note:focus {
+    outline: none;
+
+    border-color: #c4772b;
+}
+
+#discovery-editor-note {
+    resize: vertical;
+}
+
+
+/* ================================================== */
+/* ENTDECKER - ÄHNLICHE ENTDECKUNGEN                  */
+/* ================================================== */
+
+.discovery-suggestions {
+    margin-top: 12px;
+    padding: 14px;
+
+    border: 1px solid #eadfd5;
+    border-radius: 10px;
+
+    background-color: #faf7f4;
+}
+
+.discovery-suggestions-title {
+    margin: 0 0 10px 0;
+
+    color: #6f6259;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.discovery-suggestion-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #ebe3dc;
+}
+
+.discovery-suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.discovery-suggestion-item > div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    min-width: 0;
+}
+
+.discovery-suggestion-category,
+.discovery-suggestion-description {
+    display: block;
+
+    color: #7c7169;
+
+    font-size: 12px;
+}
+
+.discovery-suggestion-weekly-button {
+    flex-shrink: 0;
+
+    padding: 7px 10px;
+
+    border: 1px solid #d8c9bc;
+    border-radius: 7px;
+
+    background-color: #ffffff;
+    color: #5b5048;
+
+    cursor: pointer;
+}
+
+.discovery-suggestion-weekly-button:hover {
+    border-color: #c4772b;
+
+    color: #c4772b;
+}
+
+
+/* ============================================= */
+/* KOMMANDO - ERFOLGS-POPUP                      */
+/* ============================================= */
+
+.command-achievement-content {
+    position: relative;
+
+    width: min(500px, calc(100vw - 40px));
+    max-width: 500px;
+
+    padding: 0;
+
+    overflow: hidden;
+
+    background: transparent;
+
+    border: none;
+    border-radius: 20px;
+
+    box-shadow: none;
+}
+
+
+/* ============================================= */
+/* KOMMANDO - ERFOLGSBILD                        */
+/* ============================================= */
+
+.command-achievement-image {
+    display: block;
+
+    width: 100%;
+    height: auto;
+}
+
+
+/* ================================================== */
+/* KOMMANDO - ERFOLGS-POPUP SCHLIESSEN                */
+/* ================================================== */
+
+.command-achievement-close {
+    position: absolute;
+
+    top: 14px;
+    right: 14px;
+
+    width: 38px;
+    height: 38px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: rgba(255, 255, 255, 0.35);
+    color: #302a26;
+
+    font-size: 26px;
+    line-height: 38px;
+
+    cursor: pointer;
+
+    z-index: 10;
+}
+
+.command-achievement-close:hover {
+    background-color: #ffffff;
+}
+
+
+/* ================================================== */
+/* KOMMANDO - ERFOLGS-POPUP                           */
+/* ================================================== */
+
+.command-achievement-content {
+    position: relative;
+
+    width: 380px;
+    max-width: calc(100vw - 40px);
+}
+
+
+/* ================================================== */
+/* KOMMANDO-EDITOR - BREITE                           */
+/* ================================================== */
+
+#command-editor-modal .app-modal-content {
+    width: min(750px, calc(100vw - 40px));
+    max-width: 700px;
+}
+
+
+/* ================================================== */
+/* KOMMANDOS - ÄHNLICHE KOMMANDOS                     */
+/* ================================================== */
+
+.command-suggestions .discovery-suggestion-item {
+    position: relative;
+
+    display: block;
+
+    padding-right: 0;
+}
+
+
+/* ================================================== */
+/* TEXTBEREICH                                        */
+/* ================================================== */
+
+.command-suggestions .discovery-suggestion-item > div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+
+    width: 100%;
+    min-width: 0;
+
+    overflow: hidden;
+}
+
+
+/* ================================================== */
+/* KOMMANDONAME                                       */
+/* ================================================== */
+
+.command-suggestions .discovery-suggestion-item strong {
+    padding-right: 190px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* ================================================== */
+/* KATEGORIE                                          */
+/* ================================================== */
+
+.command-suggestions .discovery-suggestion-category {
+    width: 100%;
+
+    font-weight: 700;
+
+    margin-top: 10px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* ================================================== */
+/* BESCHREIBUNG / NOTIZ                               */
+/* ================================================== */
+
+.command-suggestions .discovery-suggestion-description {
+    width: 100%;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* ================================================== */
+/* WOCHENPLAN-BUTTON                                  */
+/* ================================================== */
+
+.command-suggestions .discovery-suggestion-weekly-button {
+    position: absolute;
+
+    top: 10px;
+    right: 0;
+
+    white-space: nowrap;
+}
+
+
+/* ================================================== */
+/* ABSTAND ZUM ERSTEN TREFFER                         */
+/* ================================================== */
+
+.command-suggestions .discovery-suggestions-title {
+    margin-bottom: 16px;
+}
+
+
+/* ================================================== */
 /* KLEINE HILFSKLASSEN                                */
 /* ================================================== */
 
@@ -6749,30 +6973,22 @@ main h1 {
 /* ================================================== */
 
 .app-modal-content::-webkit-scrollbar,
-.gallery-form-content::-webkit-scrollbar,
 .gallery-lightbox-content::-webkit-scrollbar {
     width: 8px;
 }
 
-
 .app-modal-content::-webkit-scrollbar-track,
-.gallery-form-content::-webkit-scrollbar-track,
 .gallery-lightbox-content::-webkit-scrollbar-track {
     background-color: #f3eee9;
 }
 
-
 .app-modal-content::-webkit-scrollbar-thumb,
-.gallery-form-content::-webkit-scrollbar-thumb,
 .gallery-lightbox-content::-webkit-scrollbar-thumb {
     background-color: #ccb8a7;
-
     border-radius: 10px;
 }
 
-
 .app-modal-content::-webkit-scrollbar-thumb:hover,
-.gallery-form-content::-webkit-scrollbar-thumb:hover,
 .gallery-lightbox-content::-webkit-scrollbar-thumb:hover {
     background-color: #b98a62;
 }
@@ -6802,63 +7018,6 @@ main h1 {
 }
 
 
-/* ================================================== */
-/* DASHBOARD - NÄCHSTE TERMINE                        */
-/* ================================================== */
-
-.dashboard-appointment-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-
-    margin-top: 18px;
-}
-
-
-/* ================================================== */
-/* DASHBOARD - EINZELNER TERMIN                       */
-/* ================================================== */
-
-.dashboard-appointment-box {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-
-    padding: 12px 14px;
-
-    border: 1px solid #e5ddd5;
-    border-radius: 10px;
-
-    background-color: #ffffff;
-}
-
-
-/* ================================================== */
-/* DASHBOARD - TERMIN TITEL                           */
-/* ================================================== */
-
-.dashboard-appointment-box-title {
-    color: #302a26;
-
-    font-size: 14px;
-    font-weight: 700;
-
-    line-height: 1.3;
-}
-
-
-/* ================================================== */
-/* DASHBOARD - DATUM UND UHRZEIT                      */
-/* ================================================== */
-
-.dashboard-appointment-box-date {
-    color: #8a817a;
-
-    font-size: 12px;
-    font-weight: 400;
-
-    line-height: 1.3;
-}
 
 /* ================================================== */
 /* DASHBOARD - WOCHENPLAN LISTE                       */
@@ -6956,14 +7115,251 @@ main h1 {
 /* ================================================== */
 
 .dashboard-more-tasks {
-    margin: 4px 0 0;
+    width: fit-content;
 
-    color: #302a26;
+    margin: 10px 0 0 auto;
+    padding: 7px 12px;
+
+    color: #b87333;
+    background-color: #ffffff;
+
+    border: 1px solid #b87333;
+    border-radius: 8px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.dashboard-more-tasks:hover {
+    color: #ffffff;
+    background-color: #b87333;
+}
+
+
+/* ================================================== */
+/* SCHWEBENDES NAVIGATIONSMENÜ                        */
+/* ================================================== */
+
+
+/* ================================================== */
+/* SCHWEBENDER MENÜ-BUTTON                            */
+/* ================================================== */
+
+.floating-menu-button {
+    position: fixed;
+
+    right: 24px;
+    bottom: 74px;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 50%;
+
+    background-color: #ffffff;
+    color: #b87333;
+
+    font-family: inherit;
+    font-size: 20px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+
+    z-index: 1001;
+}
+
+
+/* ================================================== */
+/* SCHWEBENDER MENÜ-BUTTON - HOVER                    */
+/* ================================================== */
+
+.floating-menu-button:hover {
+    opacity: 1;
+
+    background-color: #f7f3ee;
+    border-color: #b87333;
+
+    transform: translateY(-2px);
+}
+
+
+/* ================================================== */
+/* SCHWEBENDER MENÜ-BUTTON - SICHTBAR                 */
+/* ================================================== */
+
+.floating-menu-button.visible {
+    opacity: 0.8;
+    visibility: visible;
+}
+
+
+/* ================================================== */
+/* SCHWEBENDES MENÜ                                   */
+/* ================================================== */
+
+.floating-menu {
+    position: fixed;
+
+    right: 24px;
+    bottom: 122px;
+
+    width: 210px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 8px;
+
+    box-sizing: border-box;
+
+    background-color: #ffffff;
+
+    border: 1px solid #e5ddd5;
+    border-radius: 12px;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.12);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(8px);
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.2s ease,
+        visibility 0.2s ease,
+        transform 0.2s ease;
+
+    z-index: 1000;
+}
+
+
+/* ================================================== */
+/* SCHWEBENDES MENÜ - GEÖFFNET                        */
+/* ================================================== */
+
+.floating-menu.open {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+
+    pointer-events: auto;
+}
+
+
+/* ================================================== */
+/* SCHWEBENDES MENÜ - LINKS                           */
+/* ================================================== */
+
+.floating-menu a {
+    display: block;
+
+    padding: 9px 12px;
+
+    border-radius: 8px;
+
+    color: #5f554e;
 
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 600;
 
-    line-height: 1.3;
+    line-height: 1.2;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+/* ================================================== */
+/* SCHWEBENDES MENÜ - LINKS HOVER                     */
+/* ================================================== */
+
+.floating-menu a:hover {
+    background-color: #f7f3ee;
+    color: #b87333;
+}
+
+
+/* ================================================== */
+/* SCHWEBENDES MENÜ - AKTUELLE SEITE                  */
+/* ================================================== */
+
+.floating-menu a.active {
+    background-color: #f3e7dc;
+    color: #b87333;
+}
+
+
+/* ================================================== */
+/* DARK MODE - SCHWEBENDER MENÜ-BUTTON                */
+/* ================================================== */
+
+body.dark-mode .floating-menu-button {
+    background-color: #342f2a;
+    border-color: #544a42;
+    color: #d68a4b;
+}
+
+body.dark-mode .floating-menu-button:hover {
+    background-color: #403933;
+    border-color: #d68a4b;
+}
+
+
+/* ================================================== */
+/* DARK MODE - SCHWEBENDES MENÜ                       */
+/* ================================================== */
+
+body.dark-mode .floating-menu {
+    background-color: #342f2a;
+    border-color: #544a42;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.35);
+}
+
+body.dark-mode .floating-menu a {
+    color: #f2ebe6;
+}
+
+body.dark-mode .floating-menu a:hover {
+    background-color: #403933;
+    color: #d68a4b;
+}
+
+body.dark-mode .floating-menu a.active {
+    background-color: #403933;
+    color: #d68a4b;
 }
 
 
@@ -7283,9 +7679,20 @@ body.dark-mode .task-list li {
     border-color: #4b423b;
 }
 
-body.dark-mode .dashboard-weekly-box-title,
-body.dark-mode .dashboard-more-tasks {
+body.dark-mode .dashboard-weekly-box-title {
     color: #f2ebe6;
+}
+
+body.dark-mode .dashboard-more-tasks {
+    color: #d88432;
+    background-color: #332e29;
+
+    border-color: #d88432;
+}
+
+body.dark-mode .dashboard-more-tasks:hover {
+    color: #ffffff;
+    background-color: #d88432;
 }
 
 
@@ -7417,6 +7824,16 @@ body.dark-mode .measurement-table tbody tr:hover {
 /* ================================================== */
 /* DARK MODE - WOCHENPLAN                             */
 /* ================================================== */
+
+
+/* ================================================== */
+/* DARK MODE - WOCHENPLAN ZÄHLER                      */
+/* ================================================== */
+
+body.dark-mode .weekly-counter {
+    background-color: #37312c;
+    color: #f2ebe6;
+}
 
 body.dark-mode .weekly-form-card,
 body.dark-mode .weekly-task-item {
@@ -7821,17 +8238,6 @@ body.dark-mode .gallery-delete-button {
 /* DARK MODE - GALERIE POPUP                          */
 /* ================================================== */
 
-body.dark-mode .gallery-form-content,
-body.dark-mode .gallery-form-buttons {
-    background-color: #292521;
-    border-color: #443c36;
-    color: #e9e1db;
-}
-
-body.dark-mode .gallery-form-header h2 {
-    color: #f2ebe6;
-}
-
 body.dark-mode .gallery-form-group label {
     color: #c9beb6;
 }
@@ -7844,8 +8250,7 @@ body.dark-mode .gallery-form-group textarea {
     color: #f2ebe6;
 }
 
-body.dark-mode .gallery-file-button,
-body.dark-mode .gallery-cancel-button {
+body.dark-mode .gallery-file-button{
     background-color: #342f2a;
     border-color: #544a42;
     color: #e9e1db;
@@ -7868,6 +8273,9 @@ body.dark-mode .gallery-lightbox-info {
 
 body.dark-mode .gallery-lightbox-info h2 {
     color: #f2ebe6;
+    
+
+
 }
 
 body.dark-mode .gallery-lightbox-date {
@@ -7883,40 +8291,57 @@ body.dark-mode .gallery-lightbox-description {
 /* DARK MODE - ALLGEMEINE POPUPS                      */
 /* ================================================== */
 
+/* Popup-Fenster, Kopf und Buttonbereich */
+
 body.dark-mode .app-modal-content,
+body.dark-mode .app-modal-header,
 body.dark-mode .app-modal-buttons {
     background-color: #292521;
     border-color: #443c36;
     color: #e9e1db;
 }
 
+/* Goldener Rand um alle Popups */
+
+body.dark-mode .app-modal-content {
+    border: 1px solid #d68a4b;
+}
+
+
+/* Überschrift */
+
 body.dark-mode .app-modal-header h2 {
     color: #f2ebe6;
 }
 
-body.dark-mode .app-cancel-button,
-body.dark-mode .photo-upload-button,
-body.dark-mode #cancel-diary-form {
-    background-color: #342f2a;
-    border-color: #544a42;
-    color: #e9e1db;
-}
 
+/* X zum Schließen */
 
-/* ================================================== */
-/* DARK MODE - DATEIUPLOAD                            */
-/* ================================================== */
-
-body.dark-mode #diary-photos {
-    background-color: #342f2a;
-    border-color: #544a42;
+body.dark-mode .app-modal-close {
     color: #c9beb6;
 }
 
-body.dark-mode #diary-photos::file-selector-button {
-    background-color: #403832;
-    border-color: #5a5048;
+
+body.dark-mode .app-modal-close:hover {
+    background-color: #403933;
+    color: #f2ebe6;
+}
+
+
+/* Abbrechen-Button und Foto-Button */
+
+body.dark-mode .app-cancel-button,
+body.dark-mode .photo-upload-button {
+    background-color: #342f2a;
+    border-color: #544a42;
     color: #e9e1db;
+}
+
+
+body.dark-mode .app-cancel-button:hover,
+body.dark-mode .photo-upload-button:hover {
+    background-color: #403933;
+    border-color: #6a5c52;
 }
 
 
@@ -7960,16 +8385,30 @@ body.dark-mode .scroll-top-button {
 /* DARK MODE - SCROLLBARS                             */
 /* ================================================== */
 
+body.dark-mode .app-modal-content,
+body.dark-mode .gallery-lightbox-content {
+    scrollbar-color: #5a5048 #292521;
+}
+
+body.dark-mode .app-modal-content::-webkit-scrollbar,
+body.dark-mode .gallery-lightbox-content::-webkit-scrollbar {
+    width: 8px;
+}
+
 body.dark-mode .app-modal-content::-webkit-scrollbar-track,
-body.dark-mode .gallery-form-content::-webkit-scrollbar-track,
 body.dark-mode .gallery-lightbox-content::-webkit-scrollbar-track {
     background-color: #292521;
 }
 
 body.dark-mode .app-modal-content::-webkit-scrollbar-thumb,
-body.dark-mode .gallery-form-content::-webkit-scrollbar-thumb,
 body.dark-mode .gallery-lightbox-content::-webkit-scrollbar-thumb {
     background-color: #5a5048;
+    border-radius: 10px;
+}
+
+body.dark-mode .app-modal-content::-webkit-scrollbar-thumb:hover,
+body.dark-mode .gallery-lightbox-content::-webkit-scrollbar-thumb:hover {
+    background-color: #75685e;
 }
 
 
@@ -8172,6 +8611,1074 @@ body.dark-mode .gallery-add-button:hover {
     background-color: #d68a4b;
     border-color: #d68a4b;
     color: #ffffff;
+}
+
+
+
+
+/* ================================================== */
+/* RESPONSIVE - LAPTOP, TABLET UND HANDY              */
+/* ================================================== */
+
+/* Kleine Laptops und große Tablets */
+@media (max-width: 1100px) {
+
+    /* Dashboard: Profil auf kleineren Bildschirmen sauber anordnen */
+    .dog-profile {
+        align-items: flex-start;
+        gap: 28px;
+    }
+
+    .dog-profile-info {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .dog-details {
+        position: static;
+        margin-top: 16px;
+        align-self: flex-start;
+    }
+
+    .dog-detail {
+        min-width: 0;
+        padding: 5px 20px;
+    }
+
+    .dog-detail:first-child {
+        padding-left: 0;
+    }
+
+    .edit-profile-button {
+        align-self: flex-start;
+        margin-top: 16px;
+        white-space: nowrap;
+    }
+
+    /* Gewicht / Körpermaß / Alter nicht mehr in drei enge Spalten pressen */
+    .overview {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .overview > :last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+    }
+
+    /* Dashboard-Fortschritt bekommt wieder Luft */
+    .dashboard-training-boxes {
+        gap: 18px;
+        margin-top: 5px;
+    }
+
+    .dashboard-training-box {
+        padding: 18px;
+    }
+
+    .dashboard-training-box-row {
+        min-height: 34px;
+        gap: 12px;
+    }
+
+    /* Entwicklung: Diagramm oben, Soll-Ist-Vergleich darunter */
+    .growth-section {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .growth-chart-card,
+    .growth-comparison-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .growth-comparison-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* Tablet */
+@media (max-width: 800px) {
+
+    .discovery-progress-item {
+        min-width: 0;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .page-main-title {
+        font-size: clamp(34px, 6vw, 40px);
+    }
+
+    /* Entdecker - Fortschrittskästen */
+    .discovery-progress-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(6px, 1.5vw, 10px);
+    }
+
+    .discovery-progress-item {
+        padding:
+            clamp(8px, 1.5vw, 12px)
+            clamp(4px, 1vw, 8px);
+    }
+
+    .discovery-progress-item strong {
+        font-size: clamp(12px, 1.7vw, 16px);
+        white-space: normal;
+        overflow-wrap: break-word;
+    }
+
+    /* Seitenheader - Buttons */
+    .page-header .gallery-add-button,
+    .page-header .main-button {
+        font-size: clamp(11px, 1.8vw, 13px);
+        padding:
+            clamp(7px, 1.2vw, 9px)
+            clamp(9px, 1.8vw, 12px);
+        white-space: nowrap;
+        transform: translateY(16px);
+    }
+
+    /* Seitenheader - Untertitel */
+    .page-subtitle {
+        font-size: clamp(13px, 2.2vw, 16px);
+        line-height: 1.4;
+    }
+
+    /* Entdecker - Fortschritt */
+    .discovery-progress {
+        padding: clamp(15px, 3vw, 30px);
+    }
+
+    .discovery-progress h2 {
+        font-size: clamp(18px, 3vw, 24px);
+    }
+
+    .discovery-progress-item span {
+        font-size: clamp(11px, 1.8vw, 14px);
+    }
+
+    /* Entdecker - Kategorien */
+    .discovery-category-header {
+        padding: clamp(12px, 2vw, 18px);
+    }
+
+    .discovery-category-header h2 {
+        font-size: clamp(14px, 2.5vw, 20px);
+        line-height: 1.2;
+    }
+
+    /* Entdecker - Untertitel möglichst lange Zeile */
+    .discovery-page .page-subtitle {
+        width: max-content;
+        max-width: calc(100vw - 80px);
+    }
+
+    /* Kommandos - Hinweis */
+    .command-hint {
+        font-size: clamp(12px, 1.8vw, 16px);
+        line-height: 1.5;
+    }
+
+}
+
+
+/* Handy */
+@media (max-width: 600px) {
+
+    .dashboard {
+        width: calc(100% - 30px);
+        padding-top: 30px;
+    }
+
+    .dog-profile {
+        padding: 22px 18px;
+    }
+
+    .dog-profile-image {
+        width: 125px;
+        height: 125px;
+    }
+
+    .dog-details {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dog-detail,
+    .dog-detail:first-child {
+        align-items: flex-start;
+        width: 100%;
+        padding: 8px 0;
+        border-left: none;
+        border-bottom: 1px solid #e5ddd5;
+    }
+
+    .dog-detail:last-child {
+        border-bottom: none;
+    }
+
+    .dashboard-training-boxes {
+        grid-template-columns: 1fr;
+    }
+
+    .growth-comparison-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+/* ================================================== */
+/* RESPONSIVE - FEINSCHLIFF KLEINE LAPTOPS            */
+/* ================================================== */
+
+@media (min-width: 801px) and (max-width: 1100px) {
+
+    /* Dashboard: Alter nicht über die komplette Breite ziehen */
+    .overview > :last-child:nth-child(odd) {
+        grid-column: auto;
+    }
+
+    /* Dashboard: Fortschritt untereinander und deutlich kompakter */
+    .dashboard-training-boxes {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: -5px;
+    }
+
+    .dashboard-training-box {
+        padding: 12px 18px;
+    }
+
+    .dashboard-training-box h3 {
+        margin-bottom: 8px;
+    }
+
+    .dashboard-training-box-row {
+        min-height: 23px;
+        gap: 8px;
+        line-height: 1.2;
+    }
+
+    .dashboard-training-box-link {
+        margin-top: 9px;
+    }
+
+    /* Kommandos + Entdecker:
+       Statuswerte kleiner, damit jede Angabe in einer Zeile bleibt */
+    .discovery-progress-item {
+        padding: 14px 10px;
+        gap: 5px;
+    }
+
+    .discovery-progress-item strong {
+        font-size: clamp(12px, 1.6vw, 19px);
+        line-height: 1.25;
+        white-space: nowrap;
+    }
+
+    /* Entwicklung:
+       Aktionsbuttons kleiner, gleich groß und mit sichtbarem Abstand */
+    .measurement-table th:last-child,
+    .measurement-table td:last-child {
+        width: 88px;
+        min-width: 88px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .measurement-table .edit-measurement-button,
+    .measurement-table .delete-measurement-button {
+        display: block;
+        width: 74px;
+        min-width: 74px;
+        padding: 6px 7px;
+        margin-left: auto;
+        margin-right: auto;
+        box-sizing: border-box;
+        font-size: 12px;
+    }
+
+    .measurement-table .edit-measurement-button {
+        margin-bottom: 7px;
+    }
+}
+
+
+/* ================================================== */
+/* RESPONSIVE - FEINSCHLIFF V7                        */
+/* Nur Korrekturen für Kommandos, Entdecker, Galerie */
+/* ================================================== */
+
+@media (min-width: 801px) and (max-width: 1100px) {
+
+    /* GALERIE:
+       Filter kompakter machen */
+    .gallery-filter-button,
+    .gallery-filter {
+        min-width: 0;
+        min-height: 0;
+        padding: 9px 13px;
+        font-size: 12px;
+        line-height: 1.15;
+        border-radius: 14px;
+    }
+
+    .gallery-filters,
+    .gallery-filter-buttons {
+        gap: 8px;
+    }
+}
+
+
+/* ================================================== */
+/* RESPONSIVE - FEINSCHLIFF V8                        */
+/* Kommandos-Button + kompaktere Galerie-Filter      */
+/* ================================================== */
+
+@media (min-width: 801px) and (max-width: 1100px) {
+
+    /* GALERIE:
+       Filterbuttons noch kleiner und kompakter */
+    .gallery-filter-button,
+    .gallery-filter {
+        min-width: 0 !important;
+        min-height: 0 !important;
+        padding: 7px 10px !important;
+        font-size: 11px !important;
+        line-height: 1.1;
+        border-radius: 12px;
+    }
+
+    .gallery-filters,
+    .gallery-filter-buttons {
+        gap: 6px !important;
+    }
+}
+
+
+/* ================================================== */
+/* RESPONSIVE - GEMEINSAMER SEITENHEADER              */
+/* ================================================== */
+
+
+/* Kleine Laptops */
+@media (min-width: 801px) and (max-width: 1100px) {
+
+    .page-header {
+        gap: 25px;
+    }
+
+    .page-main-title {
+        font-size: clamp(36px, 4vw, 44px);
+        white-space: nowrap;
+    }
+}
+
+
+/* Tablet */
+@media (max-width: 800px) {
+
+    .page-header {
+        align-items: flex-start;
+        gap: 20px;
+    }
+}
+
+
+/* Handy */
+@media (max-width: 600px) {
+
+    .page-header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .page-main-title {
+        font-size: clamp(32px, 9vw, 38px);
+        white-space: normal;
+    }
+
+    .page-header .gallery-add-button,
+    .page-header .main-button {
+        align-self: flex-start;
+    }
+
+}
+
+
+/* ================================================== */
+/* LOGIN / FRONTPAGE */
+/* ================================================== */
+
+
+/* ================================================== */
+/* ÖFFENTLICHER HEADER */
+/* ================================================== */
+
+.public-header {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px max(60px, calc((100% - 1100px) / 2));
+
+    background-color: #ffffff;
+
+    border-bottom: 1px solid #e8d7d6;
+
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+
+    box-sizing: border-box;
+}
+
+
+/* ================================================== */
+/* LOGO IM ÖFFENTLICHEN HEADER */
+/* ================================================== */
+
+.public-header-logo-link {
+    display: flex;
+    align-items: center;
+}
+
+.public-header-logo {
+    width: 125px;
+    height: auto;
+
+    display: block;
+}
+
+
+/* ================================================== */
+/* ANMELDEN-BUTTON IM HEADER */
+/* ================================================== */
+
+.public-login-button {
+    padding: 11px 22px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: #9a5b2f;
+    color: white;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.public-login-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 14px rgba(90, 55, 30, 0.18);
+}
+
+
+/* ================================================== */
+/* LOGIN-SEITE */
+/* ================================================== */
+
+.login-page {
+    min-height: calc(100vh - 149px);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+}
+
+
+/* ================================================== */
+/* HERO-BEREICH */
+/* ================================================== */
+
+.login-container {
+    width: 100%;
+    max-width: 650px;
+
+    text-align: center;
+}
+
+
+/* ================================================== */
+/* HERO-LOGO */
+/* ================================================== */
+
+.login-logo {
+    width: 260px;
+    max-width: 75%;
+
+    height: auto;
+
+    margin-bottom: 20px;
+}
+
+
+/* ================================================== */
+/* HERO-EYEBROW */
+/* ================================================== */
+
+.login-eyebrow {
+    margin: 0 0 14px;
+
+    color: #9a5b2f;
+
+    font-size: 1rem;
+    font-weight: 700;
+
+    letter-spacing: 2.5px;
+}
+
+
+/* ================================================== */
+/* HERO-ÜBERSCHRIFT */
+/* ================================================== */
+
+.login-container h1 {
+    margin: 0 0 14px;
+
+    font-size: 2.5rem;
+    line-height: 1.15;
+}
+
+
+/* ================================================== */
+/* HERO-UNTERTITEL */
+/* ================================================== */
+
+.login-subtitle {
+    margin: 0 0 8px;
+
+    font-size: 1.15rem;
+    line-height: 1.6;
+}
+
+
+/* ================================================== */
+/* HERO-BESCHREIBUNG */
+/* ================================================== */
+
+.login-description {
+    max-width: 520px;
+
+    margin: 0 auto 28px;
+
+    font-size: 1rem;
+    line-height: 1.6;
+
+    opacity: 0.75;
+}
+
+
+/* ================================================== */
+/* HERO-AKTIONEN */
+/* ================================================== */
+
+.login-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: clamp(25px, 3.5vh, 45px);
+}
+
+
+/* ================================================== */
+/* HAUPT-ANMELDEN-BUTTON */
+/* ================================================== */
+
+.login-main-button {
+    min-width: 210px;
+
+    padding: 13px 28px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: #9a5b2f;
+    color: white;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.login-main-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 14px rgba(90, 55, 30, 0.18);
+}
+
+
+/* ================================================== */
+/* REGISTRIEREN */
+/* ================================================== */
+
+.login-register-text {
+    margin: 0;
+
+    font-size: 0.9rem;
+}
+
+.login-register-button {
+    padding: 0;
+
+    border: none;
+
+    background: none;
+    color: #9a5b2f;
+
+    font: inherit;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.login-register-button:hover {
+    text-decoration: underline;
+}
+
+
+/* ================================================== */
+/* LOGIN-UNTERTITEL */
+/* ================================================== */
+
+.login-subtitle {
+    margin: 0;
+
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+
+/* ================================================== */
+/* DOGBUDDY FUNKTIONEN */
+/* ================================================== */
+
+.public-features {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+    padding: clamp(25px, 3.5vh, 45px) 20px 90px;
+
+    box-sizing: border-box;
+}
+
+
+/* ================================================== */
+/* FUNKTIONSÜBERSCHRIFT */
+/* ================================================== */
+
+.public-features-header {
+    max-width: 650px;
+
+    margin: 0 auto 45px;
+
+    text-align: center;
+}
+
+.public-features-header h2 {
+    margin: 0 0 12px;
+
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+.public-features-header > p:last-child {
+    margin: 0;
+
+    font-size: 1rem;
+    line-height: 1.6;
+
+    opacity: 0.75;
+}
+
+
+/* ================================================== */
+/* FUNKTIONSKARTEN */
+/* ================================================== */
+
+.public-feature-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 22px;
+}
+
+
+/* ================================================== */
+/* EINZELNE FUNKTIONSKARTE */
+/* ================================================== */
+
+.public-feature-card {
+    padding: 28px 25px;
+
+    text-align: center;
+
+    background-color: #ffffff;
+
+    border: 1px solid #e8d7d6;
+    border-radius: 18px;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.04);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.public-feature-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ================================================== */
+/* FUNKTIONS-ICON */
+/* ================================================== */
+
+.public-feature-icon {
+    display: block;
+
+    margin-bottom: 14px;
+
+    font-size: 2rem;
+}
+
+
+/* ================================================== */
+/* FUNKTIONS-TITEL */
+/* ================================================== */
+
+.public-feature-card h3 {
+    margin: 0 0 9px;
+
+    font-size: 1.15rem;
+}
+
+
+/* ================================================== */
+/* FUNKTIONS-TEXT */
+/* ================================================== */
+
+.public-feature-card p {
+    margin: 0;
+
+    font-size: 0.9rem;
+    line-height: 1.55;
+
+    opacity: 0.75;
+}
+
+
+/* ================================================== */
+/* ÖFFENTLICHER FOOTER */
+/* ================================================== */
+
+.public-footer {
+    width: 100%;
+
+    background-color: #ffffff;
+
+    border-top: 1px solid #e8d7d6;
+
+    box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.03);
+}
+
+
+/* ================================================== */
+/* FOOTER-INHALT */
+/* ================================================== */
+
+.public-footer-content {
+    width: 100%;
+
+    padding: 22px max(60px, calc((100% - 1100px) / 2));
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+}
+
+
+/* ================================================== */
+/* FOOTER-LINKS */
+/* ================================================== */
+
+.public-footer-links {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.public-footer-links a {
+    color: #4a4039;
+
+    text-decoration: none;
+
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.public-footer-links a:hover {
+    color: #9a5b2f;
+}
+
+.public-footer-links span {
+    color: #b9aaa0;
+
+    font-size: 0.8rem;
+}
+
+
+/* ================================================== */
+/* FOOTER-COPYRIGHT */
+/* ================================================== */
+
+.public-footer-copyright {
+    margin: 0;
+
+    color: #746a63;
+
+    font-size: 0.85rem;
+}
+
+
+/* ================================================== */
+/* LOGIN-POPUP - EINLEITUNG */
+/* ================================================== */
+
+.login-modal-intro {
+    margin: 0 0 25px;
+
+    color: #746a63;
+
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+
+/* ================================================== */
+/* LOGIN-POPUP - FORMULAR */
+/* ================================================== */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+
+/* ================================================== */
+/* LOGIN-POPUP - FORMULARGRUPPEN */
+/* ================================================== */
+
+.login-form-group {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.login-form-group label {
+    color: #302a26;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+
+/* ================================================== */
+/* LOGIN-POPUP - EINGABEFELDER */
+/* ================================================== */
+
+.login-form-group input {
+    width: 100%;
+
+    padding: 12px 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d8ccc3;
+    border-radius: 8px;
+
+    background-color: #ffffff;
+
+    color: #302a26;
+
+    font-family: inherit;
+    font-size: 0.95rem;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.login-form-group input:focus {
+    border-color: #9a5b2f;
+
+    box-shadow:
+        0 0 0 3px rgba(154, 91, 47, 0.10);
+}
+
+
+/* ================================================== */
+/* LOGIN-POPUP - PASSWORT VERGESSEN */
+/* ================================================== */
+
+.login-forgot-password {
+    align-self: flex-end;
+
+    margin-top: -8px;
+    padding: 0;
+
+    border: none;
+
+    background: none;
+
+    color: #9a5b2f;
+
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.login-forgot-password:hover {
+    text-decoration: underline;
+}
+
+
+/* ================================================== */
+/* LOGIN-POPUP - REGISTRIERUNG */
+/* ================================================== */
+
+.login-modal-register {
+    margin: 25px 0 0;
+
+    text-align: center;
+
+    color: #746a63;
+
+    font-size: 0.9rem;
+}
+
+.login-modal-register-button {
+    padding: 0;
+
+    border: none;
+
+    background: none;
+
+    color: #9a5b2f;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.login-modal-register-button:hover {
+    text-decoration: underline;
+}
+
+
+/* ================================================== */
+/* REGISTRIERUNGS-POPUP - EINLEITUNG */
+/* ================================================== */
+
+.register-modal-intro {
+    margin: 0 0 25px;
+
+    color: #746a63;
+
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+
+/* ================================================== */
+/* REGISTRIERUNGS-POPUP - FORMULAR */
+/* ================================================== */
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+
+/* ================================================== */
+/* REGISTRIERUNGS-POPUP - ANMELDUNG */
+/* ================================================== */
+
+.register-modal-login {
+    margin: 25px 0 0;
+
+    text-align: center;
+
+    color: #746a63;
+
+    font-size: 0.9rem;
+}
+
+.register-login-button {
+    padding: 0;
+
+    border: none;
+
+    background: none;
+
+    color: #9a5b2f;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.register-login-button:hover {
+    text-decoration: underline;
 }
 
 

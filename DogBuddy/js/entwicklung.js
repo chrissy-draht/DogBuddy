@@ -413,7 +413,7 @@ openMeasurementFormButton.addEventListener(
             
         // Button wieder auf normales Speichern stellen
         saveMeasurementButton.textContent =
-            "Messung speichern";
+            "🐾 Speichern";
 
         // Formular leeren
         resetMeasurementForm();
@@ -450,7 +450,7 @@ function closeMeasurementForm() {
 
     // Speichern-Button wieder zurücksetzen
     saveMeasurementButton.textContent =
-        "Messung speichern";
+        "🐾 Speichern";
     }
 
 
@@ -552,22 +552,24 @@ saveMeasurementButton.addEventListener(
 
 
         // ==================================================
-        // PRÜFEN, OB ALLE FELDER AUSGEFÜLLT SIND
+        // PRÜFEN, OB MINDESTENS EIN MESSWERT EINGETRAGEN IST
         // ==================================================
 
         if (
             date === "" ||
-            weight === "" ||
-            height === "" ||
-            chest === "" ||
-            neck === "" ||
-            back === ""
+            (
+                weight === "" &&
+                height === "" &&
+                chest === "" &&
+                neck === "" &&
+                back === ""
+            )
         ) {
-
+        
             alert(
-                "Bitte fülle alle Felder aus."
+                "Bitte trage mindestens einen Messwert ein."
             );
-
+        
             return;
         }
 
@@ -729,9 +731,9 @@ function displayMeasurements() {
 
 
             weightCell.textContent =
-                String(measurement.weight)
-                    .replace(".", ",") +
-                " kg";
+                measurement.weight
+                    ? String(measurement.weight).replace(".", ",") + " kg"
+                    : "–";
 
 
             // ==================================================
@@ -743,9 +745,9 @@ function displayMeasurements() {
 
 
             heightCell.textContent =
-                String(measurement.height)
-                    .replace(".", ",") +
-                " cm";
+                measurement.height
+                    ? String(measurement.height).replace(".", ",") + " cm"
+                    : "–";
 
             // ==================================================
             // BRUSTUMFANG
@@ -786,18 +788,18 @@ function displayMeasurements() {
                     : "–";
 
             // ==================================================
-// ÄNDERN-BUTTON
-// ==================================================
+            // ÄNDERN-BUTTON
+            // ==================================================
 
-const editButton =
-    document.createElement("button");
+            const editButton =
+                document.createElement("button");
 
-editButton.textContent =
-    "Ändern";
+            editButton.textContent =
+                "Ändern";
 
-editButton.classList.add(
-    "edit-measurement-button"
-);
+            editButton.classList.add(
+                "edit-measurement-button"
+            );
 
 
             // ==================================================
@@ -843,7 +845,7 @@ editButton.classList.add(
                 
                     // Speichern-Button umbenennen
                     saveMeasurementButton.textContent =
-                        "Änderung speichern";
+                        "Ändern";
                 
                 
                     // Popup öffnen
@@ -1237,15 +1239,26 @@ function displayGrowthComparison() {
     */
 
     const sortedMeasurements =
-        [...measurements].sort(
-            function (a, b) {
-
-                return new Date(b.date) -
-                    new Date(a.date);
-            }
-        );
-
-
+        [...measurements]
+            .filter(
+                function (measurement) {
+                
+                    return (
+                        measurement.weight !== undefined &&
+                        measurement.weight !== null &&
+                        measurement.weight !== ""
+                    );
+                }
+            )
+            .sort(
+                function (a, b) {
+                
+                    return new Date(b.date) -
+                        new Date(a.date);
+                }
+            );
+        
+        
     const latestMeasurement =
         sortedMeasurements[0];
 
@@ -1839,6 +1852,16 @@ function displayGrowthComparison() {
 
             const actualMeasurements =
                 measurements
+                    .filter(
+                        function (measurement) {
+                        
+                            return (
+                                measurement.weight !== undefined &&
+                                measurement.weight !== null &&
+                                measurement.weight !== ""
+                            );
+                        }
+                    )
                     .map(
                         function (measurement) {
 

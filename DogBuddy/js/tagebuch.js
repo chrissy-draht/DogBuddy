@@ -69,16 +69,19 @@ const diaryFormTitle =
 // HUNDENAME AUS DEM PROFIL LADEN
 // ==================================================
 
-const savedDog =
+const savedDiaryDog =
     localStorage.getItem("dogProfile");
 
-if (savedDog !== null) {
+if (savedDiaryDog !== null) {
 
-    const dog =
-        JSON.parse(savedDog);
+    const diaryDog =
+        JSON.parse(savedDiaryDog);
 
-    pageDogName.textContent =
-        dog.name;
+    if (pageDogName !== null) {
+
+        pageDogName.textContent =
+            diaryDog.name;
+    }
 }
 
 
@@ -150,7 +153,7 @@ openDiaryButton.addEventListener(
             "Neuer Tagebucheintrag";
 
         saveDiaryButton.textContent =
-            "Tagebucheintrag speichern";
+            "🐾 Speichern";
 
         openDiaryModal();
     }
@@ -354,7 +357,7 @@ diaryPhotoInput.addEventListener(
 
 
 // ==================================================
-// FOTO-VORSCHAU
+// FOTO- UND VIDEO-VORSCHAU
 // ==================================================
 
 function displayPhotoPreview() {
@@ -363,7 +366,7 @@ function displayPhotoPreview() {
 
 
     selectedPhotos.forEach(
-        function (photo, index) {
+        function (file, index) {
 
             const previewItem =
                 document.createElement("div");
@@ -373,26 +376,76 @@ function displayPhotoPreview() {
             );
 
 
-            const image =
-                document.createElement("img");
+            // ==================================================
+            // FOTO
+            // ==================================================
 
-            const imageUrl =
-                URL.createObjectURL(photo);
+            if (file.type.startsWith("image/")) {
 
-            image.src =
-                imageUrl;
+                const image =
+                    document.createElement("img");
 
-            image.alt =
-                "Vorschau";
+                const imageUrl =
+                    URL.createObjectURL(file);
 
-            image.onload =
-                function () {
+                image.src =
+                    imageUrl;
 
-                    URL.revokeObjectURL(
-                        imageUrl
-                    );
-                };
+                image.alt =
+                    "Foto-Vorschau";
 
+                image.onload =
+                    function () {
+
+                        URL.revokeObjectURL(
+                            imageUrl
+                        );
+                    };
+
+                previewItem.appendChild(
+                    image
+                );
+            }
+
+
+            // ==================================================
+            // VIDEO
+            // ==================================================
+
+            else if (file.type.startsWith("video/")) {
+
+                const video =
+                    document.createElement("video");
+
+                const videoUrl =
+                    URL.createObjectURL(file);
+
+                video.src =
+                    videoUrl;
+
+                video.controls =
+                    true;
+
+                video.preload =
+                    "metadata";
+
+                video.onloadedmetadata =
+                    function () {
+
+                        URL.revokeObjectURL(
+                            videoUrl
+                        );
+                    };
+
+                previewItem.appendChild(
+                    video
+                );
+            }
+
+
+            // ==================================================
+            // DATEI AUS VORSCHAU ENTFERNEN
+            // ==================================================
 
             const removeButton =
                 document.createElement("button");
@@ -421,8 +474,6 @@ function displayPhotoPreview() {
                 }
             );
 
-
-            previewItem.appendChild(image);
 
             previewItem.appendChild(
                 removeButton
@@ -497,7 +548,11 @@ saveDiaryButton.addEventListener(
             const entryId =
                 Date.now();
 
-            const photoIds = [];
+            // ==================================================
+            // NEUE FOTOS UND VIDEOS SPEICHERN
+            // ==================================================
+
+            const mediaIds = [];
 
 
             for (
@@ -505,37 +560,40 @@ saveDiaryButton.addEventListener(
                 i < selectedPhotos.length;
                 i++
             ) {
-
-                const photo =
+            
+                const file =
                     selectedPhotos[i];
-
-                const photoId =
+            
+            
+                const mediaId =
                     entryId +
                     "-" +
                     Date.now() +
                     "-" +
                     i;
-
-
+            
+            
                 try {
-
+                
                     await savePhotoToDatabase(
-                        photoId,
+                        mediaId,
                         entryId,
-                        photo
+                        file
                     );
-
-                    photoIds.push(photoId);
-
+                
+                
+                    mediaIds.push(
+                        mediaId
+                    );
+                
                 } catch (error) {
-
+                
                     console.error(
-                        "Foto konnte nicht gespeichert werden.",
+                        "Foto oder Video konnte nicht gespeichert werden.",
                         error
                     );
                 }
             }
-
 
             const newEntry = {
 
@@ -555,7 +613,7 @@ saveDiaryButton.addEventListener(
 
                 note: note,
 
-                photos: photoIds
+                photos: mediaIds
             };
 
 
@@ -634,24 +692,46 @@ saveDiaryButton.addEventListener(
                         i;
 
 
-                    try {
+                    // ==================================================
+                    // NEUE FOTOS UND VIDEOS HINZUFÜGEN
+                    // ==================================================
 
-                        await savePhotoToDatabase(
-                            photoId,
-                            entry.id,
-                            photo
-                        );
-
-                        entry.photos.push(
-                            photoId
-                        );
-
-                    } catch (error) {
-
-                        console.error(
-                            "Foto konnte nicht gespeichert werden.",
-                            error
-                        );
+                    for (
+                        let i = 0;
+                        i < selectedPhotos.length;
+                        i++
+                    ) {
+                    
+                        const file =
+                            selectedPhotos[i];
+                    
+                        const mediaId =
+                            entry.id +
+                            "-" +
+                            Date.now() +
+                            "-" +
+                            i;
+                    
+                    
+                        try {
+                        
+                            await savePhotoToDatabase(
+                                mediaId,
+                                entry.id,
+                                file
+                            );
+                        
+                            entry.photos.push(
+                                mediaId
+                            );
+                        
+                        } catch (error) {
+                        
+                            console.error(
+                                "Foto oder Video konnte nicht gespeichert werden.",
+                                error
+                            );
+                        }
                     }
                 }
             }
@@ -676,13 +756,13 @@ saveDiaryButton.addEventListener(
 
 
 // ==================================================
-// FOTO IN INDEXEDDB SPEICHERN
+// FOTO ODER VIDEO IN INDEXEDDB SPEICHERN
 // ==================================================
 
 function savePhotoToDatabase(
-    photoId,
+    mediaId,
     entryId,
-    photo
+    file
 ) {
 
     return new Promise(
@@ -711,19 +791,21 @@ function savePhotoToDatabase(
                 );
 
 
-            const photoData = {
+            const mediaData = {
 
-                id: photoId,
+                id: mediaId,
 
                 entryId: entryId,
 
-                file: photo
+                file: file,
+
+                type: file.type
             };
 
 
             const request =
                 photoStore.put(
-                    photoData
+                    mediaData
                 );
 
 
@@ -751,6 +833,11 @@ function savePhotoToDatabase(
 // ==================================================
 
 function displayDiaryEntries() {
+
+    if (diaryList === null) {
+
+        return;
+    }
 
     diaryList.innerHTML = "";
 
@@ -964,7 +1051,7 @@ function displayDiaryEntries() {
                 "button";
 
             editButton.textContent =
-                "✏ Ändern";
+                "Ändern";
 
             editButton.classList.add(
                 "edit-diary-button"
@@ -1123,7 +1210,7 @@ function editDiaryEntry(entry) {
         "Tagebucheintrag bearbeiten";
 
     saveDiaryButton.textContent =
-        "Änderungen speichern";
+        "Ändern";
 
 
     // Popup öffnen.
@@ -1192,29 +1279,85 @@ function loadPhotoFromDatabase(
             );
 
 
-            // Bild.
-
-            const image =
-                document.createElement("img");
-
-            const imageUrl =
+            // ==================================================
+            // FOTO ODER VIDEO ANZEIGEN
+            // ==================================================
+                    
+            const mediaUrl =
                 URL.createObjectURL(
                     photoData.file
                 );
-
-            image.src =
-                imageUrl;
-
-            image.alt =
-                entry.title;
-
-            image.onload =
-                function () {
-
-                    URL.revokeObjectURL(
-                        imageUrl
-                    );
-                };
+            
+            
+            if (
+                photoData.file.type.startsWith("video/")
+            ) {
+            
+                // ==================================================
+                // VIDEO
+                // ==================================================
+            
+                const video =
+                    document.createElement("video");
+            
+                video.src =
+                    mediaUrl;
+            
+                video.controls =
+                    true;
+            
+                video.preload =
+                    "metadata";
+            
+                video.classList.add(
+                    "diary-media"
+                );
+            
+                video.onloadeddata =
+                    function () {
+                    
+                        URL.revokeObjectURL(
+                            mediaUrl
+                        );
+                    };
+                
+                
+                photoContainer.appendChild(
+                    video
+                );
+            
+            } else {
+            
+                // ==================================================
+                // FOTO
+                // ==================================================
+            
+                const image =
+                    document.createElement("img");
+            
+                image.src =
+                    mediaUrl;
+            
+                image.alt =
+                    entry.title;
+            
+                image.classList.add(
+                    "diary-media"
+                );
+            
+                image.onload =
+                    function () {
+                    
+                        URL.revokeObjectURL(
+                            mediaUrl
+                        );
+                    };
+                
+                
+                photoContainer.appendChild(
+                    image
+                );
+            }
 
 
             // Foto löschen.
@@ -1253,11 +1396,6 @@ function loadPhotoFromDatabase(
                         );
                     }
                 }
-            );
-
-
-            photoContainer.appendChild(
-                image
             );
 
             photoContainer.appendChild(
