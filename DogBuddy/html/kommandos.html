@@ -34,25 +34,38 @@
         <!-- ÜBERSCHRIFT                                        -->
         <!-- ================================================== -->
 
-        <section class="discovery-page-header">
+        <section class="page-header">
 
-            <p class="eyebrow">
-                KOMMANDOZEIT
-            </p>
-
-            <h1>
-                🐾
-                <span id="page-dog-name">
-                    Major
-                </span>s Kommandos
-            </h1>
-
-            <p>
-                Neue Kommandos kennenlernen,
-                gemeinsam ausprobieren und
-                irgendwann ganz entspannt beherrschen.
-            </p>
-
+            <div class="page-header-text">
+            
+                <p class="page-eyebrow">
+                    KOMMANDOZEIT
+                </p>
+            
+                <h1 class="page-main-title">
+                    🐾
+                    <span id="page-dog-name">
+                        Major
+                    </span>s Kommandos
+                </h1>
+            
+                <p class="page-subtitle">
+                    Neue Kommandos kennenlernen,
+                    gemeinsam ausprobieren und
+                    irgendwann ganz entspannt beherrschen.
+                </p>
+            
+            </div>
+        
+            <!-- POPUP ÖFFNEN -->
+            <button
+                type="button"
+                id="add-command-button"
+                class="gallery-add-button"
+            >
+                + Kommando hinzufügen
+            </button>
+        
         </section>
 
 
@@ -120,6 +133,25 @@
 
         <section class="discovery-checklist-section">
 
+
+            <!-- ================================================== -->
+            <!-- HINWEIS                                            -->
+            <!-- ================================================== -->
+
+            <p class="command-edit-hint">
+                <em>
+                    Hinweis: Du kannst die Kommandos an deine
+                    eigenen Signalwörter anpassen,
+                    z. B. „Platz“ → „Down“.
+                </em>
+            </p>
+
+
+
+            <!-- ================================================== -->
+            <!-- KOMMANDOLISTE                                      -->
+            <!-- ================================================== -->
+
             <div id="command-checklist">
 
                 <!--
@@ -128,6 +160,7 @@
 
                     Kategorien:
 
+                    ⭐ Wunschkommandos
                     🔴 Sicherheitskommandos
                     🟠 Grundkommandos
                     🟡 Praktisch im Alltag
@@ -145,8 +178,162 @@
 
 
     <!-- ================================================== -->
+    <!-- KOMMANDO-EDITOR                                    -->
+    <!-- ================================================== -->
+
+    <div
+        id="command-editor-modal"
+        class="app-modal"
+    >
+
+        <div class="app-modal-content command-editor-modal-content">
+
+
+            <!-- ================================================== -->
+            <!-- POPUP KOPF                                        -->
+            <!-- ================================================== -->
+
+            <div class="app-modal-header">
+
+                <div>
+
+                    <p class="eyebrow">
+                        KOMMANDO
+                    </p>
+
+                    <h2 id="command-editor-title">
+                        Kommando hinzufügen
+                    </h2>
+
+                </div>
+
+
+                <!-- ================================================== -->
+                <!-- POPUP SCHLIESSEN                                   -->
+                <!-- ================================================== -->
+
+                <button
+                    type="button"
+                    id="close-command-editor"
+                    class="app-modal-close"
+                    aria-label="Popup schließen"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- POPUP INHALT                                      -->
+            <!-- ================================================== -->
+
+            <div class="app-modal-body">
+
+
+                <!-- ================================================== -->
+                <!-- SIGNALWORT                                         -->
+                <!-- ================================================== -->
+
+                <label for="command-editor-name">
+                    Signalwort
+                </label>
+
+                <input
+                    type="text"
+                    id="command-editor-name"
+                    autocomplete="off"
+                    placeholder="z. B. Down"
+                >
+
+
+                <!-- ================================================== -->
+                <!-- NOTIZ                                              -->
+                <!-- ================================================== -->
+
+                <div id="command-editor-note-area">
+
+                    <label for="command-editor-note">
+                        Notiz
+                    </label>
+
+                    <textarea
+                        id="command-editor-note"
+                        rows="3"
+                        placeholder="z. B. Handzeichen üben"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- ================================================== -->
+                <!-- ÄHNLICHE KOMMANDOS                                 -->
+                <!-- ================================================== -->
+
+                <div
+                    id="command-suggestions"
+                    class="discovery-suggestions command-suggestions"
+                    hidden
+                >
+
+                    <p class="discovery-suggestions-title">
+                        Ähnliche Kommandos bereits vorhanden:
+                    </p>
+
+                    <div id="command-suggestions-list"></div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================== -->
+            <!-- POPUP BUTTONS                                     -->
+            <!-- ================================================== -->
+
+            <div class="app-modal-buttons">
+
+                <button
+                    type="button"
+                    id="command-editor-delete"
+                    class="app-cancel-button"
+                    hidden
+                >
+                    Löschen
+                </button>
+
+
+                <button
+                    type="button"
+                    id="command-editor-cancel"
+                    class="app-cancel-button"
+                >
+                    Abbrechen
+                </button>
+
+
+                <button
+                    type="button"
+                    id="command-editor-save"
+                    class="primary-button"
+                >
+                    🐾 Speichern
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================== -->
     <!-- JAVASCRIPT                                         -->
     <!-- ================================================== -->
+
+    <!-- KOMMANDO-ACHIEVEMENTS -->
+    <script src="../js/kommandos-achievements.js"></script>
 
     <!-- Kommandos -->
     <script src="../js/kommandos.js"></script>
@@ -162,6 +349,9 @@
 
     <!-- Scroll-to-Top -->
     <script src="../js/scroll-top.js"></script>
+
+    <!-- Schwebendes Navigationsmenü -->
+    <script src="../js/floating-menu.js"></script>
 
     <!-- Dark Mode -->
     <script src="../js/dark-mode.js"></script>

@@ -287,7 +287,7 @@ openGalleryFormButton.addEventListener(
             "Foto oder Video hinzufügen";
 
         saveGalleryPhotoButton.textContent =
-            "Speichern";
+            "🐾 Speichern";
 
         openGalleryModal();
 
@@ -1172,8 +1172,12 @@ async function getDiaryPhotosForGallery() {
 
                     file: photoData.file,
 
-                    mediaType: "image"
-
+                    mediaType:
+                        getMediaType(
+                            photoData.file,
+                            photoData.type
+                        )
+                    
                 });
 
             }
@@ -1222,14 +1226,14 @@ async function getDiaryPhotosForGallery() {
             source:
                 "diary",
 
-            // Erstes Foto wird Vorschaubild
+            // Erstes Medium wird als Vorschau verwendet
             file:
                 mediaFiles[0].file,
-
+                        
             mediaType:
-                "image",
-
-            // Alle Fotos des Tagebucheintrags
+                mediaFiles[0].mediaType,
+                        
+            // Alle Fotos und Videos des Tagebucheintrags
             mediaFiles:
                 mediaFiles
 
@@ -1558,7 +1562,7 @@ function createGalleryCard(media) {
             "button";
 
         editButton.textContent =
-            "✏ Ändern";
+            "Ändern";
 
         editButton.classList.add(
             "gallery-edit-button"
@@ -1754,7 +1758,7 @@ function editGalleryEntry(entryId) {
         "Foto oder Video bearbeiten";
 
     saveGalleryPhotoButton.textContent =
-        "Änderungen speichern";
+        "Ändern";
 
 
     openGalleryModal();

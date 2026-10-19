@@ -34,33 +34,33 @@
         <!-- BEGRÜSSUNG                                         -->
         <!-- ================================================== -->
 
-        <section class="welcome">
+        <section class="page-header">
 
-            <div>
-
-                <p class="small-heading">
+            <div class="page-header-text">
+            
+                <p class="page-eyebrow">
                     DOGBUDDY DASHBOARD
                 </p>
-
-                <h1 class="welcome-title">
+            
+                <h1 class="page-main-title">
                     Willkommen bei DogBuddy
                 </h1>
-
-                <p class="welcome-text">
+            
+                <p class="page-subtitle">
                     Gemeinsam wachsen – Tag für Tag.
                 </p>
-
+            
             </div>
-
-
-            <!-- Link zum Tagebuch -->
-            <a
-                href="html/tagebuch.html"
+        
+        
+            <button
+                type="button"
+                id="open-diary-form"
                 class="main-button"
             >
                 + Neuer Tagebucheintrag
-            </a>
-
+            </button>
+        
         </section>
 
 
@@ -73,14 +73,26 @@
 
 
             <!-- Profilbild -->
-            <div class="dog-image-area">
+            <div
+                class="dog-image-area"
+                id="dog-image-area"
+            >
 
                 <img
                     src="images/profile/major-profil.png"
-                    alt="Profilbild von Major"
+                    alt="Profilbild des Hundes"
                     class="dog-profile-image"
+                    id="dog-profile-image"
                 >
 
+                <span
+                    class="profile-image-edit-icon"
+                    id="profile-image-edit-icon"
+                    aria-hidden="true"
+                >
+                    ✏️
+                </span>
+            
             </div>
 
 
@@ -190,6 +202,13 @@
                     id="profile-form"
                 >
 
+                <!-- Versteckte Dateiauswahl für das Profilbild -->
+                <input
+                    type="file"
+                    id="profile-image-input"
+                    accept="image/*"
+                    hidden
+                >
 
                     <!-- Name -->
                     <div class="form-group">
@@ -206,8 +225,6 @@
 
                     </div>
 
-
-
                     <!-- Rasse -->
                     <div class="form-group">
 
@@ -222,8 +239,6 @@
                         >
 
                     </div>
-
-
 
                     <!-- Geschlecht -->
                     <div class="form-group">
@@ -246,8 +261,6 @@
 
                     </div>
 
-
-
                     <!-- Geburtstag -->
                     <div class="form-group">
 
@@ -262,8 +275,6 @@
 
                     </div>
 
-
-
                     <!-- Einzugsdatum -->
                     <div class="form-group">
 
@@ -275,27 +286,21 @@
                             type="date"
                             id="dog-move-in"
                         >
-
-                    </div>
-
-
-
                     <!-- Buttons -->
                     <div class="form-buttons">
-
+                    
                         <button
                             type="button"
-                            class="save-button"
                             id="save-profile"
+                            class="save-button"
                         >
                             Speichern
                         </button>
-
-
+                    
                         <button
                             type="button"
-                            class="cancel-button"
                             id="cancel-profile"
+                            class="cancel-button"
                         >
                             Abbrechen
                         </button>
@@ -316,49 +321,42 @@
 
         <section class="overview">
 
-
             <!-- ================================================== -->
             <!-- GEWICHT                                            -->
             <!-- ================================================== -->
-
+                    
             <article class="info-card">
-
+            
                 <span class="card-icon">
                     ⚖️
                 </span>
-
+            
                 <div>
-
+                
                     <p class="card-title">
                         Gewicht
                     </p>
-
+                
                     <p
                         class="card-value"
                         id="dashboard-weight"
                     >
                         – kg
                     </p>
-
+                
                     <a href="html/entwicklung.html">
                         Wert eintragen
                     </a>
-
+                
                 </div>
-
+            
                 <!-- Kleine grafische Gewichtsentwicklung -->
                 <div
                     id="dashboard-weight-chart"
                     class="mini-chart">
                 </div>
-
+            
             </article>
-
-
-
-            <!-- ================================================== -->
-            <!-- GRÖSSE                                              -->
-            <!-- ================================================== -->
 
             <!-- ========================================== -->
             <!-- KÖRPERMASSE - WECHSELANZEIGE -->
@@ -737,8 +735,327 @@
                             
                             </article>
                         </section>
+
+                                <!-- ================================================== -->
+                                <!-- POPUP: TAGEBUCHEINTRAG -->
+                                <!-- ================================================== -->
+
+                                <div
+                                    id="diary-form-modal"
+                                    class="app-modal"
+                                >
+
+                                    <div class="app-modal-content diary-modal-content">
+                                    
+                                    
+                                        <!-- ================================================== -->
+                                        <!-- POPUP-KOPF -->
+                                        <!-- ================================================== -->
+                                    
+                                        <div class="app-modal-header">
+                                        
+                                            <div>
+                                            
+                                                <p class="eyebrow">
+                                                    TAGEBUCH
+                                                </p>
+                                            
+                                                <h2 id="diary-form-title">
+                                                    Neuer Tagebucheintrag
+                                                </h2>
+                                            
+                                            </div>
+                                        
+                                        
+                                            <div class="diary-header-actions">
+                                            
+                                                <label
+                                                    for="diary-photos"
+                                                    class="photo-upload-button"
+                                                >
+                                                    📷 Fotos hinzufügen
+                                                </label>
+                                            
+                                                <input
+                                                    type="file"
+                                                    id="diary-photos"
+                                                    accept="image/*"
+                                                    multiple
+                                                    hidden
+                                                >
+                                            
+                                                <button
+                                                    type="button"
+                                                    id="close-diary-form"
+                                                    class="app-modal-close"
+                                                    aria-label="Fenster schließen"
+                                                >
+                                                    ×
+                                                </button>
+                                            
+                                            </div>
+                                        
+                                        </div>
+                                    
+                                    
+                                        <!-- ================================================== -->
+                                        <!-- FORMULAR -->
+                                        <!-- ================================================== -->
+                                    
+                                        <div class="app-modal-body">
+                                        
+                                        
+                                            <!-- FOTO-VORSCHAU -->
+                                        
+                                            <div
+                                                id="photo-preview"
+                                                class="photo-preview"
+                                            ></div>
+                                        
+                                        
+                                            <!-- DATUM -->
+                                        
+                                            <div class="diary-form-group">
+                                            
+                                                <label for="diary-date">
+                                                    Datum
+                                                </label>
+                                            
+                                                <input
+                                                    type="date"
+                                                    id="diary-date"
+                                                >
+                                            
+                                            </div>
+                                        
+                                        
+                                            <!-- TITEL -->
+                                        
+                                            <div class="diary-form-group">
+                                            
+                                                <label for="diary-title">
+                                                    Titel
+                                                </label>
+                                            
+                                                <input
+                                                    type="text"
+                                                    id="diary-title"
+                                                    placeholder="z. B. Erstes Mal schwimmen"
+                                                >
+                                            
+                                            </div>
+                                        
+                                        
+                                            <!-- HEUTE GELERNT -->
+                                        
+                                            <div class="diary-form-group">
+                                            
+                                                <label for="diary-learned">
+                                                    Heute gelernt
+                                                </label>
+                                            
+                                                <textarea
+                                                    id="diary-learned"
+                                                    rows="3"
+                                                    placeholder="Was hat Major heute Neues gelernt?"
+                                                ></textarea>
+                                            
+                                            </div>
+                                        
+                                        
+                                            <!-- DAS LIEF GUT -->
+                                        
+                                            <div class="diary-form-group">
+                                            
+                                                <label for="diary-good">
+                                                    Das lief gut
+                                                </label>
+                                            
+                                                <textarea
+                                                    id="diary-good"
+                                                    rows="3"
+                                                    placeholder="Was hat heute besonders gut funktioniert?"
+                                                ></textarea>
+                                            
+                                            </div>
+                                        
+                                        
+                                            <!-- DAS WAR SCHWIERIG -->
+                                        
+                                            <div class="diary-form-group">
+                                            
+                                                <label for="diary-difficult">
+                                                    Das war schwierig
+                                                </label>
+                                            
+                                                <textarea
+                                                    id="diary-difficult"
+                                                    rows="3"
+                                                    placeholder="Was war heute noch schwierig?"
+                                                ></textarea>
+                                            
+                                            </div>
+                                        
+                                        
+                                            <!-- BESONDERER MOMENT -->
+                                        
+                                            <div class="diary-form-group">
+                                            
+                                                <label for="diary-highlight">
+                                                    Besonderer Moment
+                                                </label>
+                                            
+                                                <textarea
+                                                    id="diary-highlight"
+                                                    rows="3"
+                                                    placeholder="Gab es einen besonderen oder lustigen Moment?"
+                                                ></textarea>
+                                            
+                                            </div>
+                                        
+                                        
+                                            <!-- SONSTIGE NOTIZEN -->
+                                        
+                                            <div class="diary-form-group">
+                                            
+                                                <label for="diary-note">
+                                                    Sonstige Notizen
+                                                </label>
+                                            
+                                                <textarea
+                                                    id="diary-note"
+                                                    rows="4"
+                                                    placeholder="Alles, was du sonst noch festhalten möchtest."
+                                                ></textarea>
+                                            
+                                            </div>
+                                        
+                                        </div>
+                                    
+                                    
+                                        <!-- ================================================== -->
+                                        <!-- POPUP-BUTTONS -->
+                                        <!-- ================================================== -->
+                                    
+                                        <div class="app-modal-buttons">
+                                        
+                                            <button
+                                                type="button"
+                                                id="cancel-diary-form"
+                                                class="app-cancel-button"
+                                            >
+                                                Abbrechen
+                                            </button>
+                                        
+                                            <button
+                                                type="button"
+                                                id="save-diary"
+                                                class="primary-button"
+                                            >
+                                                🐾 Speichern
+                                            </button>
+                                        
+                                        </div>
+                                    
+                                    </div>
+                                
+                                </div>
                     
                     </main>
+
+    <!-- ================================================== -->
+    <!-- PROFILBILD ZUSCHNEIDEN                             -->
+    <!-- ================================================== -->
+                    
+    <div
+        id="profile-image-crop-modal"
+        class="app-modal"
+    >
+                    
+        <div class="app-modal-content profile-crop-content">
+        
+            <p class="eyebrow">
+                PROFILBILD
+            </p>
+        
+            <h2>
+                Bildausschnitt wählen
+            </h2>
+        
+            <button
+                type="button"
+                id="close-profile-crop"
+                class="app-modal-close profile-crop-close"
+                aria-label="Fenster schließen"
+            >
+                ×
+            </button>
+        
+            <p class="profile-crop-info">
+                Verschiebe das Bild und wähle den gewünschten Ausschnitt.
+            </p>
+        
+        
+            <!-- Vorschau -->
+            <div
+                id="profile-crop-area"
+                class="profile-crop-area"
+            >
+        
+                <img
+                    id="profile-crop-image"
+                    class="profile-crop-image"
+                    src=""
+                    alt="Vorschau des Profilbildes"
+                >
+        
+            </div>
+        
+        
+            <!-- Zoom -->
+            <div class="profile-crop-zoom">
+            
+                <span>
+                    🔍
+                </span>
+            
+                <input
+                    type="range"
+                    id="profile-crop-zoom"
+                    min="1"
+                    max="3"
+                    step="0.01"
+                    value="1"
+                    aria-label="Profilbild zoomen"
+                >
+            
+            </div>
+        
+        
+            <!-- Buttons -->
+            <div class="form-buttons">
+            
+                <button
+                    type="button"
+                    id="save-profile-crop"
+                    class="save-button"
+                >
+                    Übernehmen
+                </button>
+            
+                <button
+                    type="button"
+                    id="cancel-profile-crop"
+                    class="cancel-button"
+                >
+                    Abbrechen
+                </button>
+            
+            </div>
+        
+        </div>
+    
+    </div>
 
 
     <!-- ========================================== -->
@@ -747,7 +1064,10 @@
 
     <!-- Dashboard -->
     <script src="js/app.js"></script>
-
+                    
+    <!-- Tagebuch -->
+    <script src="js/tagebuch.js"></script>
+                    
     <!-- Gemeinsamer Header -->
     <script src="js/header.js"></script>
 
@@ -760,6 +1080,9 @@
     <!-- Scroll-to-Top -->
     <script src="js/scroll-top.js"></script>
 
+    <!-- Schwebendes Navigationsmenü -->
+    <script src="js/floating-menu.js"></script>
+    
     <!-- Dark Mode -->
     <script src="js/dark-mode.js"></script>
 
